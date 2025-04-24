@@ -7,13 +7,6 @@
     "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ISSS608-VAA",
-    "section": "",
-    "text": "Welcome to ISSS608 Visual Analytics and Applications. In this website, you will find my coursework prepared for this course."
-  },
-  {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
     "title": "Hands-on Exercise 1",
@@ -112,6 +105,13 @@
     "text": "1.4.1 Wrapping 1d sequence of panels into 2d with facet_wrap()\n\nggplot(data=exam_data,\n       aes(x=MATHS)) +\n  geom_histogram(bins=20) +\n    facet_wrap(~ CLASS)"
   },
   {
+    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#creating-matrix-of-panels-with-facet_grid",
+    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#creating-matrix-of-panels-with-facet_grid",
+    "title": "Hands-on Exercise 1",
+    "section": "1.4.2 Creating matrix of panels with facet_grid()",
+    "text": "1.4.2 Creating matrix of panels with facet_grid()\n\n# This should be similar to subplots\nggplot(data=exam_data,\n       aes(x=MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
+  },
+  {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#flipping-the-coordinates-with-coord_flip",
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#flipping-the-coordinates-with-coord_flip",
     "title": "Hands-on Exercise 1",
@@ -145,13 +145,6 @@
     "title": "Hands-on Exercise 1",
     "section": "1.7.2 Pareto Chart",
     "text": "1.7.2 Pareto Chart"
-  },
-  {
-    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#creating-matrix-of-panels-with-facet_grid",
-    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#creating-matrix-of-panels-with-facet_grid",
-    "title": "Hands-on Exercise 1",
-    "section": "1.4.2 Creating matrix of panels with facet_grid()",
-    "text": "1.4.2 Creating matrix of panels with facet_grid()\n\n# This should be similar to subplots\nggplot(data=exam_data,\n       aes(x=MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html",
@@ -203,10 +196,10 @@
     "text": "2.5.1 Creating Composite Graphics: patchwork methods\nThere are several ggplot2 extension’s functions support the needs to prepare composite figure by combining several graphs such as grid.arrange() of gridExtra package and plot_grid() of cowplot package. The extension called patchwork is specially designed for combining separate ggplot 2 graphs into a single figure.\nPatchwork package has a very simple syntax where we can create layouts super easily. Here is the general syntax that combines:\n\nTwo-column layout using the Plus sign +.\nParenthesis () to create a subplot group.\nTwo-row layout using the Division design /"
   },
   {
-    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#combing-two-ggplot2-graphs",
-    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#combing-two-ggplot2-graphs",
-    "title": "Hands-on_Ex02 - Beyond ggplot2 Fundamentals",
-    "section": "2.5.2 Combing two ggplot2 graphs",
-    "text": "2.5.2 Combing two ggplot2 graphs\nFigure in the tabset below shows a a composite of two histograms created using patchwork. Code is pretty simple.\n\npatchwork &lt;- p1 + p2\npatchwork & theme_stata()"
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ISSS608-VAA",
+    "section": "",
+    "text": "Welcome to ISSS608 Visual Analytics and Applications. In this website, you will find my coursework prepared for this course."
   }
 ]
