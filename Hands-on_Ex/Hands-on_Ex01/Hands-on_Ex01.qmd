@@ -27,6 +27,12 @@ ggplot(data=exam_data,
   geom_bar()
 ```
 # 1.1 Introduction
+The following content is created by following the tutorial on this chapter.
+
+pacman::p_load(tidyverse)
+
+exam_data <- read_csv("../data/Exam_data.csv")
+
 ## 1.1.1 Comparison of R Graphics VS ggplot
 
 ```{r}
