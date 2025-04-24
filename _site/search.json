@@ -109,7 +109,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#wrapping-1d-sequence-of-panels-into-2d-with-facet_wrap",
     "title": "Hands-on Exercise 1",
     "section": "1.4.1 Wrapping 1d sequence of panels into 2d with facet_wrap()",
-    "text": "1.4.1 Wrapping 1d sequence of panels into 2d with facet_wrap()\n\nggplot(data=exam_data,\n       aes(x=MATHS)) +\n  geom_histogram(bins=20) +\n    facet_wrap(~ CLASS)\n\n\n\n\n\n\n\n\n\n# This should be similar to subplots\nggplot(data=exam_data,\n       aes(x=MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
+    "text": "1.4.1 Wrapping 1d sequence of panels into 2d with facet_wrap()\n\nggplot(data=exam_data,\n       aes(x=MATHS)) +\n  geom_histogram(bins=20) +\n    facet_wrap(~ CLASS)"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#flipping-the-coordinates-with-coord_flip",
@@ -145,5 +145,12 @@
     "title": "Hands-on Exercise 1",
     "section": "1.7.2 Pareto Chart",
     "text": "1.7.2 Pareto Chart"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#creating-matrix-of-panels-with-facet_grid",
+    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#creating-matrix-of-panels-with-facet_grid",
+    "title": "Hands-on Exercise 1",
+    "section": "1.4.2 Creating matrix of panels with facet_grid()",
+    "text": "1.4.2 Creating matrix of panels with facet_grid()\n\n# This should be similar to subplots\nggplot(data=exam_data,\n       aes(x=MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
   }
 ]

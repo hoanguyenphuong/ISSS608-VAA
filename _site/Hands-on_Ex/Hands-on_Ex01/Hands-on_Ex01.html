@@ -189,13 +189,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#using-geom-to-update-stat" id="toc-using-geom-to-update-stat" class="nav-link" data-scroll-target="#using-geom-to-update-stat">1.3.2 Using geom() to update stat</a></li>
   <li><a href="#using-geom_smooth-to-add-best-fit-curve" id="toc-using-geom_smooth-to-add-best-fit-curve" class="nav-link" data-scroll-target="#using-geom_smooth-to-add-best-fit-curve">1.3.3 Using geom_smooth() to add best fit curve</a></li>
   </ul></li>
-  <li><a href="#facets" id="toc-facets" class="nav-link" data-scroll-target="#facets">1.4 Facets</a></li>
+  <li><a href="#facets" id="toc-facets" class="nav-link" data-scroll-target="#facets">1.4 Facets</a>
+  <ul class="collapse">
+  <li><a href="#wrapping-1d-sequence-of-panels-into-2d-with-facet_wrap" id="toc-wrapping-1d-sequence-of-panels-into-2d-with-facet_wrap" class="nav-link" data-scroll-target="#wrapping-1d-sequence-of-panels-into-2d-with-facet_wrap">1.4.1 Wrapping 1d sequence of panels into 2d with facet_wrap()</a></li>
+  <li><a href="#creating-matrix-of-panels-with-facet_grid" id="toc-creating-matrix-of-panels-with-facet_grid" class="nav-link" data-scroll-target="#creating-matrix-of-panels-with-facet_grid">1.4.2 Creating matrix of panels with facet_grid()</a></li>
+  </ul></li>
   <li><a href="#coordinates" id="toc-coordinates" class="nav-link" data-scroll-target="#coordinates">1.5 Coordinates</a>
   <ul class="collapse">
   <li><a href="#flipping-the-coordinates-with-coord_flip" id="toc-flipping-the-coordinates-with-coord_flip" class="nav-link" data-scroll-target="#flipping-the-coordinates-with-coord_flip">1.5.1 Flipping the coordinates with coord_flip()</a></li>
   <li><a href="#changing-the-y--and-x-axis-range-with-coord_cartesian" id="toc-changing-the-y--and-x-axis-range-with-coord_cartesian" class="nav-link" data-scroll-target="#changing-the-y--and-x-axis-range-with-coord_cartesian">1.5.2 Changing the y- and x-axis range with coord_cartesian()</a></li>
   </ul></li>
-  <li><a href="#themes" id="toc-themes" class="nav-link" data-scroll-target="#themes">1.6 Themes</a></li>
+  <li><a href="#themes" id="toc-themes" class="nav-link" data-scroll-target="#themes">1.6 Themes</a>
+  <ul class="collapse">
+  <li><a href="#examples-of-different-themes" id="toc-examples-of-different-themes" class="nav-link" data-scroll-target="#examples-of-different-themes">1.6.1 Examples of different themes</a></li>
+  </ul></li>
   <li><a href="#additional-plots" id="toc-additional-plots" class="nav-link" data-scroll-target="#additional-plots">1.7 Additional Plots</a>
   <ul class="collapse">
   <li><a href="#age-sex-pyramid" id="toc-age-sex-pyramid" class="nav-link" data-scroll-target="#age-sex-pyramid">1.7.1 Age-sex Pyramid</a></li>
@@ -418,6 +425,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </div>
 </div>
 </div>
+<p>The color argument in the geom_histogram() needs to be removed as it will override the previous aes()</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>MATHS,</span>
@@ -630,7 +638,9 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </section>
 <section id="facets" class="level1">
 <h1>1.4 Facets</h1>
-<p>Also known as trellis plot. In mpl it’s subplots. ## 1.4.1 Wrapping 1d sequence of panels into 2d with facet_wrap()</p>
+<p>Also known as trellis plot. In mpl it’s subplots.</p>
+<section id="wrapping-1d-sequence-of-panels-into-2d-with-facet_wrap" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-1d-sequence-of-panels-into-2d-with-facet_wrap">1.4.1 Wrapping 1d sequence of panels into 2d with facet_wrap()</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data,</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>MATHS)) <span class="sc">+</span></span>
@@ -644,6 +654,9 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </div>
 </div>
 </div>
+</section>
+<section id="creating-matrix-of-panels-with-facet_grid" class="level2">
+<h2 class="anchored" data-anchor-id="creating-matrix-of-panels-with-facet_grid">1.4.2 Creating matrix of panels with facet_grid()</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This should be similar to subplots</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data,</span>
@@ -658,6 +671,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="coordinates" class="level1">
 <h1>1.5 Coordinates</h1>
@@ -707,7 +721,9 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </section>
 <section id="themes" class="level1">
 <h1>1.6 Themes</h1>
-<p>List of built-in themes ## 1.6.1 Examples of different themes</p>
+<p>List of built-in themes</p>
+<section id="examples-of-different-themes" class="level2">
+<h2 class="anchored" data-anchor-id="examples-of-different-themes">1.6.1 Examples of different themes</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>RACE)) <span class="sc">+</span></span>
@@ -750,6 +766,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="additional-plots" class="level1">
 <h1>1.7 Additional Plots</h1>

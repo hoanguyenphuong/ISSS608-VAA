@@ -99,6 +99,7 @@ ggplot(data=exam_data,
   geom_histogram(bins=20,
                  color="grey30")
 ```
+The color argument in the geom_histogram() needs to be removed as it will override the previous aes()
 ```{r}
 ggplot(data=exam_data,
        aes(x=MATHS,
@@ -203,6 +204,7 @@ ggplot(data=exam_data,
 ```
 # 1.4 Facets
 Also known as trellis plot. In mpl it’s subplots.
+
 ## 1.4.1 Wrapping 1d sequence of panels into 2d with facet_wrap()
 ```{r}
 ggplot(data=exam_data,
@@ -210,6 +212,7 @@ ggplot(data=exam_data,
   geom_histogram(bins=20) +
     facet_wrap(~ CLASS)
 ```
+## 1.4.2 Creating matrix of panels with facet_grid()
 ```{r}
 # This should be similar to subplots
 ggplot(data=exam_data,
@@ -238,6 +241,7 @@ ggplot(data=exam_data,
 ```
 # 1.6 Themes
 List of built-in themes
+
 ## 1.6.1 Examples of different themes
 ```{r}
 ggplot(data=exam_data, 
