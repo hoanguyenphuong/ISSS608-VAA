@@ -179,14 +179,14 @@
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-ggtheme-package",
     "title": "Hands-on_Ex02 - Beyond ggplot2 Fundamentals",
     "section": "2.4.1 Working with ggtheme package",
-    "text": "2.4.1 Working with ggtheme package\nggthemes provides ggplot2 themes that replicate the look of plots by Edward Tuffe, Stephen Few, Fivethirtyeight, The Economist, ‘Stata’, ‘Excel’, and The Wall Street Journal, among others.\nIn the example below, The Economist theme is used.\n\nggplot(data=exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\",\n                 linewidth = 0.3) +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_stata()\n\n\n\n\n\n\n\n\nIt also provides some extra geoms and scales fpr ggplot2. Consult this vignette to learn more. *Link is broken as of Jan 19."
+    "text": "2.4.1 Working with ggtheme package\nggthemes provides ggplot2 themes that replicate the look of plots by Edward Tuffe, Stephen Few, Fivethirtyeight, The Economist, ‘Stata’, ‘Excel’, and The Wall Street Journal, among others.\nIn the example below, The Economist theme is used.\n\nggplot(data=exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_economist()\n\n\n\n\n\n\n\n\n\nUsed theme_stata()\n\nggplot(data=exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\",\n                 linewidth = 0.3) +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_stata()\n\n\n\n\n\n\n\n\nIt also provides some extra geoms and scales fpr ggplot2. Consult this vignette to learn more. *Link is broken as of Jan 19."
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-hrbrthemes-package",
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-hrbrthemes-package",
     "title": "Hands-on_Ex02 - Beyond ggplot2 Fundamentals",
     "section": "2.4.2 Working with hrbrthemes package",
-    "text": "2.4.2 Working with hrbrthemes package\nhrbrthemes package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.\n\nggplot(data=exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins=20,\n                 boundary=100,\n                 color=\"grey25\",\n                 fill=\"pink\") +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_ipsum()\n\n\n\n\n\n\n\n\n\nDisplay English scores.\n\nggplot(data=exam_data,\n       aes(x = ENGLISH)) +\n  geom_histogram(bins=20,\n                 boundary=100,\n                 color=\"grey25\",\n                 fill=\"grey90\") +\n  ggtitle(\"Distribution of English scores\") +\n  theme_ipsum(axis_text_size = 18,\n              base_size = 15,\n              grid = \"Y\") \n\n\n\n\n\n\n\n\n\nTip\n\naxis_title_size argument is used to increase the font size of the axis title to 18.\nbase_size argument is used to increase the default axis label to 15.\ngrid argument is used to remove the x-axis grid lines."
+    "text": "2.4.2 Working with hrbrthemes package\nhrbrthemes package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.\n\nggplot(data=exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins=20,\n                 boundary=100,\n                 color=\"grey25\",\n                 fill=\"pink\") +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_ipsum()\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins=20,\n                 boundary=100,\n                 color=\"grey25\",\n                 fill=\"grey90\") +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_ipsum()\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins=20,\n                 boundary=100,\n                 color=\"grey25\",\n                 fill=\"grey90\") +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_ipsum(axis_text_size = 18,\n              base_size = 15,\n              grid = \"Y\")\n\n\n\n\n\n\n\n\n\nDisplay English scores.\n\nggplot(data=exam_data,\n       aes(x = ENGLISH)) +\n  geom_histogram(bins=20,\n                 boundary=100,\n                 color=\"grey25\",\n                 fill=\"grey90\") +\n  ggtitle(\"Distribution of English scores\") +\n  theme_ipsum(axis_text_size = 18,\n              base_size = 15,\n              grid = \"Y\") \n\n\n\n\n\n\n\n\n\nTip\n\naxis_title_size argument is used to increase the font size of the axis title to 18.\nbase_size argument is used to increase the default axis label to 15.\ngrid argument is used to remove the x-axis grid lines."
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#creating-composite-graphics-patchwork-methods",
@@ -207,35 +207,35 @@
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#combining-two-ggplot2-graphs",
     "title": "Hands-on_Ex02 - Beyond ggplot2 Fundamentals",
     "section": "2.5.2 Combining two ggplot2 graphs",
-    "text": "2.5.2 Combining two ggplot2 graphs\nFigure in the tabset below shows a a composite of two histograms created using patchwork. Code is pretty simple.\n\np1 + p2"
+    "text": "2.5.2 Combining two ggplot2 graphs\nFigure in the tabset below shows a a composite of two histograms created using patchwork. Code is pretty simple.\n\np1 + p2\n\n\n\n\n\n\n\n\n\npatchwork &lt;- p1 + p2\npatchwork & theme_stata()"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#combining-three-ggplot2-graphs",
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#combining-three-ggplot2-graphs",
     "title": "Hands-on_Ex02 - Beyond ggplot2 Fundamentals",
     "section": "2.5.3 Combining three ggplot2 graphs",
-    "text": "2.5.3 Combining three ggplot2 graphs\nWe can plot more complex composite by using appropriate operators. For example, the composite figure below is plotted by using: - “/” operator to stack two ggplot2 graphs - “|” operator to place the plots beside each other - “()” operator to define the sequence of the plotting.\n\n(p1 / p2) | p100\n\n`geom_smooth()` using formula = 'y ~ x'"
+    "text": "2.5.3 Combining three ggplot2 graphs\nWe can plot more complex composite by using appropriate operators. For example, the composite figure below is plotted by using: - “/” operator to stack two ggplot2 graphs - “|” operator to place the plots beside each other - “()” operator to define the sequence of the plotting.\n\n(p1 / p2) | p99\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nChanged the layout\n\np99 | ( p2 / p1)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\n\nUsed theme_economist()\n\npatchwork &lt;- p99 | (p2 / p1)\npatchwork & theme_economist() +\n  theme(axis.title = element_text(size = rel(1)),\n        axis.text = element_text(size = 8))\n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#creating-a-composite-figure-with-tag",
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#creating-a-composite-figure-with-tag",
     "title": "Hands-on_Ex02 - Beyond ggplot2 Fundamentals",
     "section": "2.5.4 Creating a composite figure with tag",
-    "text": "2.5.4 Creating a composite figure with tag\nIn order to identify subplots in text, patchwork also provides auto-tagging capabilities as shown in the figure below.\n\n((p1 / p2) | p100) + \n  plot_annotation(tag_levels = 'I')\n\n`geom_smooth()` using formula = 'y ~ x'"
+    "text": "2.5.4 Creating a composite figure with tag\nIn order to identify subplots in text, patchwork also provides auto-tagging capabilities as shown in the figure below.\n\n((p1 / p2) | p99) + \n  plot_annotation(tag_levels = 'I')\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nChanged level tag and used a new theme theme_stata()\n\n((p1 / p2) | p99) +\n  plot_annotation(tag_levels = 'A') + \n  theme_stata()\n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#creating-figure-with-insert",
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#creating-figure-with-insert",
     "title": "Hands-on_Ex02 - Beyond ggplot2 Fundamentals",
     "section": "2.5.5 Creating figure with insert",
-    "text": "2.5.5 Creating figure with insert\nBeside providing functions to place plots next to each other based on the provided layout. With inset_element() of patchwork, we can place one or several plots or graphic elements freely on top or below another plot.\n\np100 + inset_element(p2, \n                   left = 0.02, \n                   bottom = 0.7, \n                   right = 0.5, \n                   top = 1)\n\n`geom_smooth()` using formula = 'y ~ x'"
+    "text": "2.5.5 Creating figure with insert\nBeside providing functions to place plots next to each other based on the provided layout. With inset_element() of patchwork, we can place one or several plots or graphic elements freely on top or below another plot.\n\np99 + inset_element(p2, \n                   left = 0.02, \n                   bottom = 0.7, \n                   right = 0.5, \n                   top = 1)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nUsed theme_economist() and altered the position of the top layer plot.\n\np99 + theme_economist() +\n  inset_element(p1,\n                   left = 0.5,\n                   bottom = 0,\n                   right = 1,\n                   top = 0.3) \n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#creating-a-composite-figure-by-using-patchwork-and-ggtheme",
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#creating-a-composite-figure-by-using-patchwork-and-ggtheme",
     "title": "Hands-on_Ex02 - Beyond ggplot2 Fundamentals",
     "section": "2.5.6 Creating a composite figure by using patchwork and ggtheme",
-    "text": "2.5.6 Creating a composite figure by using patchwork and ggtheme\nFigure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.\n\npatchwork &lt;- (p1 / p2) | p100\npatchwork & theme_economist()\n\n`geom_smooth()` using formula = 'y ~ x'"
+    "text": "2.5.6 Creating a composite figure by using patchwork and ggtheme\nFigure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.\n\npatchwork &lt;- (p1 / p2) | p100\npatchwork & theme_economist()\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nUsed theme_stata() and changed layout.\n\npatchwork &lt;- p99 | (p1 / p2) \npatchwork & theme_stata()\n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#reference",
