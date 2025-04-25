@@ -268,17 +268,37 @@ Patchwork package has a very simple syntax where we can create layouts super eas
 
 Figure in the tabset below shows a a composite of two histograms created using patchwork. Code is pretty simple.
 
+```{r}
+p1 + p2
+```
+
 ## 2.5.3 Combining three ggplot2 graphs
 
 We can plot more complex composite by using appropriate operators. For example, the composite figure below is plotted by using: - “/” operator to stack two ggplot2 graphs - “\|” operator to place the plots beside each other - “()” operator to define the sequence of the plotting.
+
+```{r}
+(p1 / p2) | p100
+```
 
 ## 2.5.4 Creating a composite figure with tag
 
 In order to identify subplots in text, patchwork also provides auto-tagging capabilities as shown in the figure below.
 
+```{r}
+((p1 / p2) | p100) + 
+  plot_annotation(tag_levels = 'I')
+```
+
 ## 2.5.5 Creating figure with insert
 
 Beside providing functions to place plots next to each other based on the provided layout. With [`inset_element()`](https://patchwork.data-imaginist.com/reference/inset_element.html) of **patchwork**, we can place one or several plots or graphic elements freely on top or below another plot.
+```{r}
+p100 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1)
+```
 
 ## 2.5.6 Creating a composite figure by using patchwork and ggtheme
 
