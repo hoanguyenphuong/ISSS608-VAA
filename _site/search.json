@@ -235,7 +235,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#creating-a-composite-figure-by-using-patchwork-and-ggtheme",
     "title": "Hands-on_Ex02 - Beyond ggplot2 Fundamentals",
     "section": "2.5.6 Creating a composite figure by using patchwork and ggtheme",
-    "text": "2.5.6 Creating a composite figure by using patchwork and ggtheme\nFigure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier."
+    "text": "2.5.6 Creating a composite figure by using patchwork and ggtheme\nFigure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.\n\npatchwork &lt;- (p1 / p2) | p100\npatchwork & theme_economist()\n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#reference",

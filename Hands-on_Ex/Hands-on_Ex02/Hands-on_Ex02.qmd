@@ -303,6 +303,10 @@ p100 + inset_element(p2,
 ## 2.5.6 Creating a composite figure by using patchwork and ggtheme
 
 Figure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.
+```{r}
+patchwork <- (p1 / p2) | p100
+patchwork & theme_economist()
+```
 
 ## 2.6 Reference
 

@@ -645,6 +645,20 @@ Tip</strong></p>
 <section id="creating-a-composite-figure-by-using-patchwork-and-ggtheme" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-composite-figure-by-using-patchwork-and-ggtheme">2.5.6 Creating a composite figure by using patchwork and ggtheme</h2>
 <p>Figure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>patchwork <span class="ot">&lt;-</span> (p1 <span class="sc">/</span> p2) <span class="sc">|</span> p100</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>patchwork <span class="sc">&amp;</span> <span class="fu">theme_economist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Hands-on_Ex02_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">2.6 Reference</h2>
