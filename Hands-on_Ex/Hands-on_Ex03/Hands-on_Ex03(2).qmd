@@ -1,0 +1,88 @@
+---
+title: "Hands-on_Ex03(2) - Programming Animated Statistical Graphics with R"
+author: "Hoa Nguyen Phuong"
+execute:
+  echo: true 
+  eval: true 
+  warning: false 
+  freeze: true
+---
+
+# [3-2.1]{style="color:mediumvioletred"} Overview
+
+When telling a visually-driven data story, animated graphics tends to attract the interest of the audience and make deeper impression than static graphics. In this hands-on exercise, I will create animated data visualisation with **gganimate** and **plotly r** packages. At the same time, I will learn how to 1/ reshape data by using **tidyr** package, and 2/ process, wrangle and transform datawith **dplyr** package.
+
+## [3-2.1.1]{style="color:mediumvioletred"} Basic concepts of animation
+
+When creating animations, the plot does not actually move. Instead, many individual plots are built and then stitched together as movie frames - like an old-school flip book or cartoon. Each frame is a different plot when conveying motion, which is built using some relevant subset of the aggregated data.The subset drives the flow of the animation when stitched back together.
+
+![](images/clipboard-224306621.png)
+
+## [3-2.1.2]{style="color:mediumvioletred"} Terminology
+
+Before diving into the steps for creating an animated statistical graph, it's important to understand some of the key concepts and terminology related to this type of visualisation.
+
+1.  **Frame:** In an animated line graph, each frame represents a different point in time or a different category. When the frame changes, the data points on the graph are updated to reflect the new data.
+2.  **Animation attributes:** The animation attributes are the settings that control how the animation behaves. For example, you can specify the duration of each frame, the easing function used to transition between frames, and whether to start the animation from the current frame or from the beginning.
+
+::: callout-tip
+Before starting making animated graphs, think of the question first:
+
+*Does it make sense to go through the effort?*
+
+If you are conducting an exploratory data analysis, an animated graphic may not be worth the time investment. However, if you are giving a presentation, a few well-placed animated graphics can help an audience connect with your topic remarkably better than static counterparts.
+:::
+
+# [3-2.2]{style="color:mediumvioletred"} Getting started
+
+## [3-2.2.1]{style="color:mediumvioletred"} Loading the R packages
+
+First, write a code chunk to check, install and load the following R packages:
+
+-   [**plotly**](https://plotly.com/r/): R library for plotting interactive statistical graphs.
+
+-   [**gganimate**](https://gganimate.com/): a ggplot extension for creating animated statistical graphs.
+
+-   [**gifski**](https://cran.r-project.org/web/packages/gifski/): converts video frames to GIF animations using pngquant's fancy features for efficient cross-frame palettes and temporal dithering. It produces animated GIFs that use thousands of colors per frame.
+
+-   [**gapminer**](https://cran.r-project.org/web/packages/gapminder/): an excerpt of the data available at Gapminder.org. We just want to use its *country_colors* scheme.
+
+-   [**tidyverse**](https://www.tidyverse.org/): a family of modern R packages specially designed to support data science, analysis and communication task including creating static statistical graphs.
+
+```{r}
+pacman::p_load(readxl, gifski, gapminder,
+               plotly, gganimate, tidyverse)
+```
+
+## [3-2.2.2]{style="color:skyblue"} Importing the data
+In this hands-on exercise, the Data worksheet from *GlobalPopulation* Excel workbook will be used.
+
+Write a code chunk to import Data worksheet from *GlobalPopulation* Excel workbook by using appropriate R package from tidyverse family.
+
+```{r}
+col <- c("Country", "Continent")
+globalPop <- read_xls("data/GlobalPopulation.xls",
+                      shee="Data") %>%
+  mutate_each_(funs(factor(.)), col) %>%
+  mutate(Year = as.integer(Year))
+```
+
+::: callout-note
+-   [`read_xls`](https://readxl.tidyverse.org/reference/read_excel.html) of **readxl** package is used to import the Excel worksheet.
+-   `mutate_each_()` of **dplyr** package is used to convert all character data type into *factor*.
+-   **mutate** of **dplyr** package is used to convert data values of Year field into *integer*.
+:::
+
+Unfortunately, `mutate_each_()` was deprecated in dplyr 0.7.0 and `funs()` was deprecated in dplyr 0.8.0. In view of this, we will re-write the code by using [`mutate_at()`](https://r4va.netlify.app/chap04) show in the code chunk below.
+
+::: column-margin
+❓ [`mutate_at()`](https://r4va.netlify.app/chap04) links back to the same page in textbook?
+:::
+
+``` r
+col <- c("Country", "Continent")
+globalPop <- read_xls("data/GlobalPopulation.xls",
+                      sheet = "Data") %>%
+  mutate_at(col, as.factor) %>%
+  mutate(Year = as.integer(Year))
+```
