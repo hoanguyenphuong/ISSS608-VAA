@@ -22,7 +22,7 @@ First, write a code chunk to check, install and launch the following R packages:
 -   [**tidyverse**](https://www.tidyverse.org/)**,** a family of modern R packages specially designed to support data science, analysis and communication task including creating static statistical graphs.
 -   [**patchwork**](https://patchwork.data-imaginist.com/) for combining multiple ggplot2 graphs into one figure.
 
-🔑 The code chunk below will be used to accomplish the task.
+🎀 The code chunk below will be used to accomplish the task.
 
 ```{r}
 pacman::p_load(ggiraph, plotly, 
@@ -104,7 +104,7 @@ girafe(
 
 ## [3.5.1]{style="color:mediumvioletred"} Displaying multiple information on tooltip
 
-🔑 The content of the tooltip can be customised by including a list object as shown in the code chunk below.
+🎀 The content of the tooltip can be customised by including a list object as shown in the code chunk below.
 
 ```{r}
 exam_data$tooltip <- c(paste0(
@@ -162,13 +162,13 @@ girafe(
 
 ## [3.6.1]{style="color:mediumvioletred"} Customising Tooltip style
 
-🔑 Code chunk below uses [`opts_tooltip()`](https://davidgohel.github.io/ggiraph/reference/opts_tooltip.html) of ggiraph to customise tooltip rendering by adding css declarations.
+🎀 Code chunk below uses [`opts_tooltip()`](https://davidgohel.github.io/ggiraph/reference/opts_tooltip.html) of ggiraph to customise tooltip rendering by adding css declarations.
 
 Notice that the background colour of the tooltip is **pink** and the font colour is white and bold.
 
 ## [3.6.2]{style="color:mediumvioletred"} Displaying statistics on tooltip
 
-🔑 Code chunk below shows an advanced way to customise tooltip. In this example, a function is used to compute 90% confident interval of the mean. The derived statistics are then displayed in the tooltip.
+🎀 Code chunk below shows an advanced way to customise tooltip. In this example, a function is used to compute 90% confident interval of the mean. The derived statistics are then displayed in the tooltip.
 
 ```{r}
 tooltip <- function(y, ymax, accuracy = .01) {
@@ -198,7 +198,7 @@ girafe(ggobj = gg_point,
 
 ## [3.6.3]{style="color:mediumvioletred"} Hover effect with *data_id* aesthetic
 
-🔑 Code chunk below shows the second interactive feature of ggiraph, namely `data_id`.
+🎀 Code chunk below shows the second interactive feature of ggiraph, namely `data_id`.
 
 ```{r eval=FALSE}
 p <- ggplot(data=exam_data,
@@ -279,7 +279,7 @@ Different from previous example, in this example the css customisation request a
 
 ## [3.6.5]{style="color:mediumvioletred"} Combining tooltip and hover effect
 
-🔑 There are time when we want to combine tooltip and hover effect on the interactive statistical graph as shown in the code chunk below.
+🎀 There are time when we want to combine tooltip and hover effect on the interactive statistical graph as shown in the code chunk below.
 
 ```{r}
 p <- ggplot(data=exam_data,
@@ -308,7 +308,9 @@ Interactivity: Elements associated with a *data_id* (i.e. CLASS) will be highlig
 
 ## [3.6.6]{style="color:mediumvioletred"} Click effect with **onclick**
 
-`onclick` argument of ggiraph provides hotlink interactivity on the web. 🔑 The code chunk below shown an example of `onclick`.
+`onclick` argument of ggiraph provides hotlink interactivity on the web.
+
+🎀 The code chunk below shown an example of `onclick`.
 
 ```{r}
 exam_data$onclick <- sprintf("window.open(\"%s%s\")",
@@ -377,7 +379,7 @@ girafe(code = print(p1 + p2),
 
 ```
 
-🐳 Note that when a data point of one of the dotplot is selected, the corresponding data point ID on the second data visualisation will be highlighted too.
+⚠️ Note that when a data point of one of the dotplot is selected, the corresponding data point ID on the second data visualisation will be highlighted too.
 
 In order to build a coordinated multiple views as shown in the example above, the following programming strategy will be used:
 
@@ -385,7 +387,7 @@ In order to build a coordinated multiple views as shown in the example above, th
 2.  *patchwork* function of [patchwork](https://patchwork.data-imaginist.com/) package will be used inside girafe function to create the interactive coordinated multiple views.
 
 ::: column-margin
-🦄 The goal of `patchwork` is to make it ridiculously simple to combine separate ggplots into the same graphic. As such it tries to solve the same problem as [`gridExtra::grid.arrange()`](https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html) and `cowplot::plot_grid` but using an API that incites exploration and iteration, and scales to arbitrarily complex layouts.
+🎯 The goal of `patchwork` is to make it ridiculously simple to combine separate ggplots into the same graphic. As such it tries to solve the same problem as [`gridExtra::grid.arrange()`](https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html) and `cowplot::plot_grid` but using an API that incites exploration and iteration, and scales to arbitrarily complex layouts.
 :::
 
 ``` r
@@ -429,7 +431,8 @@ Plotly's R graphing library create interactive web graphics from **ggplot2** gra
 ![](images/clipboard-574240139.png)
 
 ## [3.7.1]{style="color:mediumvioletred"} Creating an interactive scatter plot: `plot_ly()` method
-🔑 The tabset below shows an example of a basic interactive plot created with *`plot_ly()`*.
+
+🎀 The tabset below shows an example of a basic interactive plot created with *`plot_ly()`*.
 
 ::: panel-tabset
 ## Plot
@@ -440,6 +443,7 @@ plot_ly(
   x = ~MATHS,
   y = ~ENGLISH) 
 ```
+
 ## Code chunk
 
 ``` r
@@ -452,6 +456,7 @@ plot_ly(
 :::
 
 ## [3.7.2]{style="color:mediumvioletred"} Working with visual variable: `plot_ly()` method
+
 In the code chunk below, *color* argument is mapped to a qualitative visual variable (i.e. RACE).
 
 ::: panel-tabset
@@ -475,6 +480,7 @@ plot_ly(data=exam_data,
 :::
 
 ## [3.7.3]{style="color:mediumvioletred"} Creating an interactive scatter plot: `ggplotly()` method
+
 The code chunk below plots an interactive scatter plot by using *`ggplot()`*.
 
 ::: panel-tabset
@@ -505,7 +511,7 @@ ggplotly(p)
 
 Notice that the only extra line needed in the code chunk is ggplotly()
 
-## 🦖 Practice
+## 🌸 Practice
 
 ```{r}
 p <- ggplot(data=exam_data, 
@@ -520,6 +526,7 @@ ggplotly(p)
 :::
 
 ## [3.7.4]{style="color:mediumvioletred"} Coordinated multiple views with plotly
+
 The creation of a coordinated linked plot by using plotly involves three steps:
 
 1.  [`highlight_key()`](https://www.rdocumentation.org/packages/plotly/versions/4.9.2/topics/highlight_key) of **plotly** package is used as **shared data**.
@@ -529,9 +536,9 @@ The creation of a coordinated linked plot by using plotly involves three steps:
 :::: column-margin
 <div>
 
-🦄 **`highlight_key()`**: This function simply creates an object of class [**crosstalk::SharedData**](https://www.rdocumentation.org/link/crosstalk%3A%3ASharedData?package=plotly&version=4.9.2&to=crosstalk%3ASharedData). The reason it exists is to make it easier to teach others how to leverage its functionality in plotly. It also makes it more discoverable if one is already aware of [**highlight**](https://www.rdocumentation.org/link/highlight?package=plotly&version=4.9.2).
+⚠️ **`highlight_key()`**: This function simply creates an object of class [**crosstalk::SharedData**](https://www.rdocumentation.org/link/crosstalk%3A%3ASharedData?package=plotly&version=4.9.2&to=crosstalk%3ASharedData). The reason it exists is to make it easier to teach others how to leverage its functionality in plotly. It also makes it more discoverable if one is already aware of [**highlight**](https://www.rdocumentation.org/link/highlight?package=plotly&version=4.9.2).
 
-🎯 Read more on [`subplot()`](https://plotly.com/r/subplots/)
+🗺️ Read more on [`subplot()`](https://plotly.com/r/subplots/)
 
 </div>
 ::::
@@ -582,7 +589,7 @@ subplot(ggplotly(p1),
         ggplotly(p2))
 ```
 
-## 🦖 Practice I
+## 🌸 Practice I
 
 ```{r}
 d <- highlight_key(exam_data)
@@ -605,7 +612,7 @@ subplot(ggplotly(p1),
         ggplotly(p2))
 ```
 
-## 🦖 Practice II
+## 🌸 Practice II
 
 ```{r}
 d <- highlight_key(exam_data)
@@ -635,17 +642,21 @@ Things to learn from the code chunk:
 -   Learn more about [crosswalk](https://rstudio.github.io/crosstalk/).
 
 # [3.8]{style="color:mediumvioletred"} Interactive Data Visualisation - crosstalk methods!
+
 [Crosstalk](https://rstudio.github.io/crosstalk/) is an add-on to the htmlwidgets package. It extends htmlwidgets with a set of classes, functions, and conventions for implementing cross-widget interactions (currently, linked brushing and filtering).
 
 ## [3.8.1]{style="color:mediumvioletred"} Interactive Data Table: DT package
+
 -   A wrapper of the JavaScript Library [DataTables](https://datatables.net/)
 -   Data objects in R can be rendered as HTML tables using the JavaScript Library 'DataTables' (typically via R Markdown or Shiny).
+
 ```{r}
 DT::datatable(exam_data, class = "compact")
 
 ```
 
 ## [3.8.2]{style="color:mediumvioletred"} Linked brushing: crosstalk method
+
 ::: panel-tabset
 ## Plot
 
@@ -687,7 +698,9 @@ crosstalk::bscols(gg,
 :::
 
 # [3.9]{style="color:mediumvioletred"} Reference
+
 ## [3.9.1]{style="color:mediumvioletred"} ggiraph
+
 This [link](https://davidgohel.github.io/ggiraph/) provides online version of the reference gude and several useful articles. Use this [link](https://cran.r-project.org/web/packages/ggiraph/ggiraph.pdf) to download the PDF version of the reference guide.
 
 -   [How to plot with ggiraph](https://www.r-bloggers.com/2018/04/how-to-plot-with-ggiraph/)
@@ -696,6 +709,7 @@ This [link](https://davidgohel.github.io/ggiraph/) provides online version of th
 -   This [link](https://github.com/d-qn/2016_08_02_rioOlympicsAthletes) provides code example on how ggiraph is used to create interactive graphs for [Swiss Olympians - the solo specialists](https://www.swissinfo.ch/eng/rio-2016-_swiss-olympiansthe-solo-specialists-/42349156?utm_content=bufferd148b&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer).
 
 ## [3.9.2]{style="color:mediumvioletred"} plotly for R
+
 -   Getting started with Plotly in R
 -   A collection of plotly R graphs are available via this \[link\]
 -   Carson Sievert (2020) Interactive web-based data visualization with R, plotly, and shiny, Chapman and Hall/CRC is the best resource to learn plotly for R. The online version is available via this \[link\]
