@@ -1,4 +1,5 @@
 /* css styles */
+
 /* Set background to white and text to black */
 body {
   background-color: white;
@@ -9,6 +10,11 @@ body {
 .sidebar, .nav-sidebar, .nav-page {
   background-color: white;
   color: black;
+}
+
+/* Header navbar background */
+.navbar {
+  background-color: #fff7fb; /* softer very light pink */
 }
 
 /* General headings */
@@ -35,4 +41,10 @@ h3 > a {
 /* Hover effect for TOC links */
 .toc a:hover {
   color: #ff69b4;
+}
+
+/* Code block background - force override */
+pre, code {
+  background-color: #fff0f5 !important; /* very soft lavender pink */
+  color: black; /* make text black inside code block */
 }
