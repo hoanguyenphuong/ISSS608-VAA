@@ -484,9 +484,9 @@ plot_ly(data=exam_data,
 The code chunk below plots an interactive scatter plot by using *`ggplot()`*.
 
 ::: panel-tabset
-## Plot
+## Original
 
-```{r, echo=FALSE}
+```{r}
 p <- ggplot(data=exam_data,
        aes(x = MATHS,
            y = ENGLISH)) +
@@ -495,18 +495,6 @@ p <- ggplot(data=exam_data,
                   ylim = c(0,100))
 ggplotly(p)
 
-```
-
-## Code chunk
-
-``` r
-p <- ggplot(data=exam_data, 
-            aes(x = MATHS,
-                y = ENGLISH)) +
-  geom_point(size=1) +
-  coord_cartesian(xlim=c(0,100),
-                  ylim=c(0,100))
-ggplotly(p)
 ```
 
 Notice that the only extra line needed in the code chunk is ggplotly()
@@ -544,9 +532,9 @@ The creation of a coordinated linked plot by using plotly involves three steps:
 ::::
 
 ::: panel-tabset
-## Plot
+## Original
 
-```{r, echo=FALSE}
+```{r}
 d <- highlight_key(exam_data)
 p1 <- ggplot(data=d, 
             aes(x = MATHS,
@@ -567,27 +555,6 @@ subplot(ggplotly(p1),
 
 -   Hover over on a data point in one of the scatterplots. A tooltip will appear and show its scores.
 -   Click on a data point in one of the scatterplots, and the corresponding point in the other plot will appear.
-
-## Code chunk
-
-``` r
-d <- highlight_key(exam_data)
-p1 <- ggplot(data=d, 
-            aes(x = MATHS,
-                y = ENGLISH)) +
-  geom_point(size=1) +
-  coord_cartesian(xlim=c(0,100),
-                  ylim=c(0,100))
-
-p2 <- ggplot(data=d, 
-            aes(x = MATHS,
-                y = SCIENCE)) +
-  geom_point(size=1) +
-  coord_cartesian(xlim=c(0,100),
-                  ylim=c(0,100))
-subplot(ggplotly(p1),
-        ggplotly(p2))
-```
 
 ## 🌸 Practice I
 
