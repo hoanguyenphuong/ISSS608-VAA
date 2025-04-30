@@ -175,6 +175,48 @@
     "text": "3-2.2.1 Loading the R packages\nFirst, write a code chunk to check, install and load the following R packages:\n\nplotly: R library for plotting interactive statistical graphs.\ngganimate: a ggplot extension for creating animated statistical graphs.\ngifski: converts video frames to GIF animations using pngquant’s fancy features for efficient cross-frame palettes and temporal dithering. It produces animated GIFs that use thousands of colors per frame.\ngapminer: an excerpt of the data available at Gapminder.org. We just want to use its country_colors scheme.\ntidyverse: a family of modern R packages specially designed to support data science, analysis and communication task including creating static statistical graphs.\n\n\npacman::p_load(readxl, gifski, gapminder,\n               plotly, gganimate, tidyverse)"
   },
   {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#importing-the-data",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#importing-the-data",
+    "title": "Hands-on_Ex03(2) - Programming Animated Statistical Graphics with R",
+    "section": "3-2.2.2 Importing the data",
+    "text": "3-2.2.2 Importing the data\nIn this hands-on exercise, the Data worksheet from GlobalPopulation Excel workbook will be used.\nWrite a code chunk to import Data worksheet from GlobalPopulation Excel workbook by using appropriate R package from tidyverse family.\n\ncol &lt;- c(\"Country\", \"Continent\")\nglobalPop &lt;- read_xls(\"GlobalPopulation.xls\",\n                      shee=\"Data\") %&gt;%\n  mutate_each_(funs(factor(.)), col) %&gt;%\n  mutate(Year = as.integer(Year))\n\n\n\n\n\n\n\nNote\n\n\n\n\nread_xls of readxl package is used to import the Excel worksheet.\nmutate_each_() of dplyr package is used to convert all character data type into factor.\nmutate of dplyr package is used to convert data values of Year field into integer.\n\n\n\nUnfortunately, mutate_each_() was deprecated in dplyr 0.7.0 and funs() was deprecated in dplyr 0.8.0. In view of this, we will re-write the code by using mutate_at() show in the code chunk below.\n\n\n❓ mutate_at() links back to the same page in textbook?\ncol &lt;- c(\"Country\", \"Continent\")\nglobalPop &lt;- read_xls(\"GlobalPopulation.xls\",\n                      sheet = \"Data\") %&gt;%\n  mutate_at(col, as.factor) %&gt;%\n  mutate(Year = as.integer(Year))\nInstead of using mutate_at(), across() can be used to derive the same outputs.\n\ncol &lt;- c(\"Country\", \"Continent\")\nglobalPop &lt;- read_xls(\"GlobalPopulation.xls\",\n                      sheet = \"Data\") %&gt;%\n  mutate(across(col, as.factor)) %&gt;%\n  mutate(Year = as.integer(Year))"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#building-a-static-population-bubble-plot",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#building-a-static-population-bubble-plot",
+    "title": "Hands-on_Ex03(2) - Programming Animated Statistical Graphics with R",
+    "section": "3-2.3.1 Building a static population bubble plot",
+    "text": "3-2.3.1 Building a static population bubble plot\nIn the code chunk below, the basic ggplot2 functions are used to create a static bubble plot.\n\nggplot(globalPop, aes(x = Old, y = Young,\n                      size = Population,\n                      colour = Country)) +\n  geom_point(alpha = 0.7,\n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2,12)) +\n  labs(title = 'Year: {frame_time}',\n       x = '% Aged',\n       y = '% Young')"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#building-the-animated-bubble-plot",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#building-the-animated-bubble-plot",
+    "title": "Hands-on_Ex03(2) - Programming Animated Statistical Graphics with R",
+    "section": "3-2.3.2 Building the animated bubble plot",
+    "text": "3-2.3.2 Building the animated bubble plot\nIn the code chunk below, - transition_time() of gganimate is used to create transition through distinct states in time (i.e. Year) - ease_aes() is used to control easing of aesthetics. The default is linear. Other methods are: quadratic, cubic, quartic, quintic, sine, circular, exponential, elastic, back, and bounce.\n\n🌸 PracticeOriginal\n\n\n🌸 Different theme and title, ease_aes\n\nggplot(globalPop, aes(x = Old, y = Young,\n                      size = Population,\n                      colour = Country)) +\n  geom_point(alpha = 0.7,\n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(title = 'The animated bubble chart | Year: {frame_time}',\n       x = '% Aged',\n       y = '% Young') +\n  transition_time(Year) +\n  ease_aes('cubic-in-out') +\n  theme_dark()\n\n\n\n\n\n\n\n\n\n\n\nggplot(globalPop, aes(x = Old, y = Young, \n                      size = Population, \n                      colour = Country)) +\n  geom_point(alpha = 0.7, \n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(title = 'Year: {frame_time}', \n       x = '% Aged', \n       y = '% Young') +\n  transition_time(Year) +       \n  ease_aes('linear')"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#plot",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#plot",
+    "title": "Hands-on_Ex03(2) - Programming Animated Statistical Graphics with R",
+    "section": "Plot",
+    "text": "Plot\n\n\n\n\n\n\nThe animated bubble plot above includes a play/pause button and a slider component for controlling the animation. ## Code\ngg &lt;- ggplot(globalPop, \n       aes(x = Old, \n           y = Young, \n           size = Population, \n           colour = Country)) +\n  geom_point(aes(size = Population,\n                 frame = Year),\n             alpha = 0.7, \n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(x = '% Aged', \n       y = '% Young')\n\nggplotly(gg)\n::: Notice that although show.legend=FALSE argument was used, the legend still appears on the plot.\nTo overcome this problem, `theme(legend.position=‘none’) should be used. ::: panel-tabset ## Plot"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#code",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#code",
+    "title": "Hands-on_Ex03(2) - Programming Animated Statistical Graphics with R",
+    "section": "Code",
+    "text": "Code\ngg &lt;- ggplot(globalPop, \n       aes(x = Old, \n           y = Young, \n           size = Population, \n           colour = Country)) +\n  geom_point(aes(size = Population,\n                 frame = Year),\n             alpha = 0.7) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(x = '% Aged', \n       y = '% Young') + \n  theme(legend.position='none')\n\nggplotly(gg)\n:::"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#building-an-animated-bubble-plot-plot_ly-method",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html#building-an-animated-bubble-plot-plot_ly-method",
+    "title": "Hands-on_Ex03(2) - Programming Animated Statistical Graphics with R",
+    "section": "3-2.4.2 Building an animated bubble plot: plot_ly() method",
+    "text": "3-2.4.2 Building an animated bubble plot: plot_ly() method\nIn this sub-section, we will learn how to create an animated bubble plot with plot_ly() method.\n\n🌸 PracticeOriginal\n\n\n🌸 Adjusted bubble sizes\n\nbp2 &lt;- globalPop %&gt;%\n  plot_ly(x = ~Old,\n          y = ~ Young,\n          size = ~Population,\n          color = ~Continent,\n          sizes = c(2,500),\n          frame = ~Year,\n          text = ~Country,\n          hoverinfo = \"text\",\n          type = 'scatter',\n          mode = 'markers'\n          ) %&gt;%\n  layout(showlegend = FALSE)\n\nbp2\n\n\n\n\n\n\n\n\nbp &lt;- globalPop %&gt;%\n  plot_ly(x = ~Old,\n          y = ~ Young,\n          size = ~Population,\n          color = ~Continent,\n          sizes = c(2,100),\n          frame = ~Year,\n          text = ~Country,\n          hoverinfo = \"text\",\n          type = 'scatter',\n          mode = 'markers'\n          ) %&gt;%\n  layout(showlegend = FALSE)\n\nbp"
+  },
+  {
     "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(1).html",
     "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(1).html",
     "title": "Hands-on_Ex03 (1) - Programming Interactive Data Visualisation with R",
