@@ -1,0 +1,554 @@
+---
+title: "Take-home_Ex01: Investigating Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex at June 2024 by Data Visualisations"
+author: "Hoa Nguyen Phuong"
+execute:
+  echo: true 
+  eval: true 
+  warning: false 
+  freeze: true
+---
+
+# [1]{style="color:mediumvioletred"} Overview
+
+## [1.1]{style="color:mediumvioletred"} Background
+
+The Singapore Department of Statistics regularly publishes data to provide a comprehensive view of the nation’s demographic landscape. One such dataset, Singapore Residents by Planning Area/Subzone, Single Year of Age and Sex (June 2024), offers granular insights into the spatial and age-sex distribution of Singapore’s resident population. It captures critical population attributes down to single years of age, disaggregated by gender and geographically mapped across planning areas and subzones defined under the Urban Redevelopment Authority’s Master Plan 2019.
+
+These statistics serve as a foundational reference for urban planners, policymakers, and researchers to assess trends in population ageing, gender balance, and regional population concentration. In particular, they support decisions on infrastructure planning, public service allocation, and housing development strategies. Understanding the demographic structure in such detail allows for better anticipation of future needs across education, healthcare, and eldercare.
+
+## [1.2]{style="color:mediumvioletred"} The Task
+
+Assuming the role of the graphical editor at a local media company, the task is to create compelling visualizations that highlight Singapore’s demographic structures and distribution in 2024. Using appropriate Exploratory Data Analysis (EDA) techniques and ggplot2, this post aims to:
+
+• Uncover the age and sex distribution across Singapore’s planning areas and subzones.
+
+• Identify population concentration hotspots and patterns of demographic imbalance.
+
+• Convey insights through at most three clear and informative data visualisations suitable for a general audience in a digital publication.
+
+# [2]{style="color:mediumvioletred"} Loading Packages
+
+The following code chunk uses `p_load()` of [**pacman**](https://rpubs.com/akshaypatankar/594834) package to check if tidyverse packages are installed in the computer. If they are, the libraries will be called into R.
+
+```{r}
+pacman::p_load(
+  tidyverse, ggplot2, haven, knitr, patchwork, ggthemes, scales, 
+  ggridges, ggpubr, gganimate, ggdist, ggtext, ggalt, ggExtra, cowplot, 
+  ggnewscale, colorspace, magrittr, RColorBrewer, ggstatsplot, egg, 
+  geomtextpath, readxl, performance, parameters, see, ggiraph, 
+  treemap, treemapify
+)
+```
+
+# [3]{style="color:mediumvioletred"} Preparing Data
+
+The dataset **Singapore Residents by Planning Area/Subzone, Single Year of Age and Sex** is obtained from the **Singapore Department of Statistics**. It provides detailed demographic information on residents by planning area and subzone, segmented by age and sex as of June 2024. Each row in the dataset represents a specific demographic group within a given planning area, making it suitable for visualising population distribution and structure across the country.
+
+## [3.1]{style="color:mediumvioletred"} Importing File and Cheking
+
+### [3.1.1]{style="color:mediumvioletred"} Importing File
+
+The code chunk below is used to import the dataset (csv file) using `read_csv()`.
+
+```{r}
+respop <- read_csv("respopagesex2024/respopagesex2024.csv")
+```
+
+### [3.1.2]{style="color:mediumvioletred"} Scanning the Data
+
+Next, for a better understanding of the dataset, glimpse() will be utilized to observe the variables and their data types:
+
+```{r}
+glimpse(respop)
+```
+
+As shown, the dataset consists of 6 columns and over 60,424 rows (observations). Each observation represents a specific demographic segment of Singapore’s resident population, defined by:
+
+-   **PA**: Planning Area
+
+-   **SZ**: Subzone
+
+-   **Age**: Single year of age (0–100+)
+
+-   **Sex**: Male or Female
+
+Based on the output of the code, there are **4 categorical variables** (PA, SZ, Age, and Sex), **1 numerical variable** (Pop), and **1 time variable** (Time).
+
+### [3.1.3]{style="color:mediumvioletred"} Checking for Duplicates
+
+To ensure data integrity, a check for duplicated records was conducted. Duplicate entries can result in inaccurate analysis due to double counting. The following code block uses group_by_all() and filter(n()\>1) from the dplyr package to identify fully duplicated rows:
+
+```{r}
+duplicate <- respop %>%
+  group_by_all() %>%
+  filter(n() > 1) %>%
+  ungroup()
+
+duplicate
+```
+
+The result confirms that no duplicate rows exist.
+
+To further verify that each record is unique, the number of distinct combinations across the key demographic variables (PA, SZ, Age, Sex, and Time) was computed:
+
+```{r}
+n_distinct(respop %>% select(PA, SZ, Age, Sex, Time))
+```
+
+This confirms that all 60,424 rows in the dataset represent unique combinations, with no repetition across the key variables.
+
+### [3.1.4]{style="color:mediumvioletred"} Checking for Missing Values
+
+Before proceeding with analysis, it is also important to verify whether the dataset contains any missing values, as these may influence the accuracy and integrity of results.
+
+An initial check was conducted using is.na() and sum() to detect any missing entries:
+
+```{r}
+which(is.na(respop))
+sum(is.na(respop))
+```
+
+This confirms that there are **no missing values** in the dataset. All six variables (PA, SZ, AG, SEX, Pop, and Time) are complete and require no additional cleaning or row removal. Thus, the dataset is ready for subsequent analysis without further preprocessing.
+
+## [3.2]{style="color:mediumvioletred"} Data Wrangling
+
+### [3.2.1]{style="color:mediumvioletred"} Selecting Variables
+
+Variable selection is a common step in data analysis, particularly when working with datasets containing numerous attributes—some of which may be redundant depending on the analysis objectives. However, the respopagesex dataset is already well-structured and concise, consisting of six essential variables:
+
+::: panel-tabset
+## Plot
+
+```{r, echo=FALSE}
+respop_description <- data.frame(
+  Category = c("Geography", "Geography", "Demographics", "Demographics", "Demographics", "Metadata"),
+  `Variable Name` = c("PA", "SZ", "Age", "Sex", "Pop", "Time"),
+  Description = c("Planning Area",
+                  "Subzone",
+                  "Age group (single year of age)",
+                  "Gender",
+                  "Resident population count (Rounded to nearest 10)",
+                  "Year of observation"),
+  Type = c("char", "char", "char", "char", "dbl", "dbl"),
+  Value = c("e.g. Ang Mo Kio",
+            "e.g. Ang Mo Kio Town Centre",
+            "0 to 90+",
+            "Males, Females",
+            "0, 10, 20, 30, ..., 1180",
+            "2024")
+)
+
+library(kableExtra)
+
+kable(respop_description) %>%
+  kable_styling(full_width = FALSE) %>%
+  row_spec(0, bold = TRUE) %>%
+  add_header_above(c("Description of Variables in the `respopagesex` Dataset" = ncol(respop_description)), 
+                   bold = TRUE, font_size = 16, color = "#222222")
+```
+
+## Code
+
+```{r, eval=FALSE}
+respop_description <- data.frame(
+  Category = c("Geography", "Geography", "Demographics", "Demographics", "Demographics", "Metadata"),
+  `Variable Name` = c("PA", "SZ", "Age", "Sex", "Pop", "Time"),
+  Description = c("Planning Area",
+                  "Subzone",
+                  "Age group (single year of age)",
+                  "Gender",
+                  "Resident population count (Rounded to nearest 10)",
+                  "Year of observation"),
+  Type = c("char", "char", "char", "char", "dbl", "dbl"),
+  Value = c("e.g. Ang Mo Kio",
+            "e.g. Ang Mo Kio Town Centre",
+            "0 to 90+",
+            "Males, Females",
+            "0, 10, 20, 30, ..., 1180",
+            "2024")
+)
+
+library(kableExtra)
+
+kable(respop_description) %>%
+  kable_styling(full_width = FALSE) %>%
+  row_spec(0, bold = TRUE) %>%
+  add_header_above(c("Description of Variables in the `respopagesex` Dataset" = ncol(respop_description)), 
+                   bold = TRUE, font_size = 16, color = "#222222")
+```
+:::
+
+While the Time column contains only a single value (2024), indicating that the dataset reflects the demographic structure of Singapore for that year, it was retained to support reproducibility. This ensures compatibility should additional years be introduced in the future. As such, no variables were removed or renamed during the data preparation phase.
+
+### [3.2.2]{style="color:mediumvioletred"} Correcting Data Types
+
+As shown above, the current data types of the variables are:
+
+::: panel-tabset
+## Plot
+
+```{r, echo=FALSE}
+respop_description <- data.frame(
+  `Variable Name` = c("PA", "SZ", "Age", "Sex", "Pop", "Time"),
+  Description = c("Planning Area",
+                  "Subzone",
+                  "Age group (single year of age)",
+                  "Gender",
+                  "Resident population count (Rounded to nearest 10)",
+                  "Year of observation"),
+  Type = c("char", "char", "char", "char", "dbl", "dbl"),
+  Value = c("e.g. Ang Mo Kio",
+            "e.g. Ang Mo Kio Town Centre",
+            "0 to 90+",
+            "Males, Females",
+            "0, 10, 20, 30, ..., 1180",
+            "2024")
+)
+
+library(kableExtra)
+
+kable(respop_description) %>%
+  kable_styling(full_width = FALSE) %>%
+  row_spec(0, bold = TRUE) %>%
+  add_header_above(c("Description of Variables in the `respopagesex` Dataset" = ncol(respop_description)), 
+                   bold = TRUE, font_size = 16, color = "#222222")
+```
+
+## Code
+
+```{r, eval=FALSE}
+respop_description <- data.frame(
+  `Variable Name` = c("PA", "SZ", "Age", "Sex", "Pop", "Time"),
+  Description = c("Planning Area",
+                  "Subzone",
+                  "Age group (single year of age)",
+                  "Gender",
+                  "Resident population count (Rounded to nearest 10)",
+                  "Year of observation"),
+  Type = c("char", "char", "char", "char", "dbl", "dbl"),
+  Value = c("e.g. Ang Mo Kio",
+            "e.g. Ang Mo Kio Town Centre",
+            "0 to 90+",
+            "Males, Females",
+            "0, 10, 20, 30, ..., 1180",
+            "2024")
+)
+
+library(kableExtra)
+
+kable(respop_description) %>%
+  kable_styling(full_width = FALSE) %>%
+  row_spec(0, bold = TRUE) %>%
+  add_header_above(c("Description of Variables in the `respopagesex` Dataset" = ncol(respop_description)), 
+                   bold = TRUE, font_size = 16, color = "#222222")
+```
+:::
+
+The first four variables (**PA**, **SZ**, **AG**, **Sex**), all are currently typed as character. While character and factor are both used to store categorical values in R, their purposes differ:
+
+• character is more flexible for free-form text, such as names or labels that may change over time.
+
+• factor is more structured and suited for categorical data with a known, limited set of possible values, often used for grouping or plotting.
+
+Given this distinction:
+
+• **PA** (Planning Area), **SZ** (Subzone), and **AG** (Age group) are correctly stored as character since they represent a wide range of labels or identifiers that are not necessarily fixed.
+
+• **Sex**, however, only contains a small set of known categories (“Males”, “Females”), and is better modeled as a factor for consistency in grouping, analysis, and visualization.
+
+To reflect this, the following code converts the **Sex** column to a factor with an explicit level order:
+
+```{r}
+respop$Sex <- factor(respop$Sex, levels = c("Males", "Females"))
+```
+
+This change ensures that Sex is treated as a proper categorical variable in downstream analysis and plotting.
+
+The last two variables, **Pop** and **Time**, were initially stored as double-precision numeric values (\<dbl\>), which is the default numeric type in R for both whole numbers and decimals. However, since both variables contain **only whole numbers**, it is more semantically accurate and memory-efficient to convert them to **integer (\<int\>)** type.
+
+-   **Pop**, which stores resident population counts (rounded to the nearest 10), also holds only whole number values. Converting it to integer reinforces its role as a count-based measure.
+
+-   **Time** represents the year of observation and contains a single repeated value (2024). Converting it to integer clarifies its role as a discrete temporal marker.
+
+The conversion is performed using as.integer() as follows:
+
+```{r}
+respop$Time <- as.integer(respop$Time)
+respop$Pop <- as.integer(respop$Pop)
+```
+
+After applying the necessary type corrections, the variables and their data types are now summarized below:
+
+::: panel-tabset
+## Plot
+
+```{r, echo=FALSE}
+respop_description <- data.frame(
+  `Variable Name` = c("PA", "SZ", "Age", "Sex", "Pop", "Time"),
+  Description = c("Planning Area",
+                  "Subzone",
+                  "Age group (single year of age)",
+                  "Gender",
+                  "Resident population count (Rounded to nearest 10)",
+                  "Year of observation"),
+  Type = c("char", "char", "char", "fct", "int", "int"),
+  Value = c("e.g. Ang Mo Kio",
+            "e.g. Ang Mo Kio Town Centre",
+            "0 to 90+",
+            "Males, Females",
+            "0, 10, 20, 30, ..., 1180",
+            "2024")
+)
+
+library(kableExtra)
+
+kable(respop_description) %>%
+  kable_styling(full_width = FALSE) %>%
+  row_spec(0, bold = TRUE) %>%
+  add_header_above(c("Revised Description of Variables in the `respopagesex` Dataset" = ncol(respop_description)), 
+                   bold = TRUE, font_size = 16, color = "#222222")
+```
+
+## Code
+
+```{r, ecval=FALSE}
+respop_description <- data.frame(
+  `Variable Name` = c("PA", "SZ", "Age", "Sex", "Pop", "Time"),
+  Description = c("Planning Area",
+                  "Subzone",
+                  "Age group (single year of age)",
+                  "Gender",
+                  "Resident population count (Rounded to nearest 10)",
+                  "Year of observation"),
+  Type = c("char", "char", "char", "fct", "int", "int"),
+  Value = c("e.g. Ang Mo Kio",
+            "e.g. Ang Mo Kio Town Centre",
+            "0 to 90+",
+            "Males, Females",
+            "0, 10, 20, 30, ..., 1180",
+            "2024")
+)
+
+library(kableExtra)
+
+kable(respop_description) %>%
+  kable_styling(full_width = FALSE) %>%
+  row_spec(0, bold = TRUE) %>%
+  add_header_above(c("Revised Description of Variables in the `respopagesex` Dataset" = ncol(respop_description)), 
+                   bold = TRUE, font_size = 16, color = "#222222")
+```
+:::
+
+This can be confirmed via:
+
+```{r}
+glimpse(respop)
+```
+
+### [3.2.3]{style="color:mediumvioletred"} Creating New Variables
+
+To facilitate age-based demographic analysis, a new variable Age_Group was created by binning the Age field into 10-year intervals. This transformation enables grouped aggregation and more interpretable visualizations.
+
+The Age variable in the dataset is stored as a character string, containing values such as "0", "1", …, "89", and "90_and_Over". Using mutate() and case_when() from the dplyr package, each age was categorized into its respective age band, ranging from "0-9" up to "90+".
+
+```{r}
+respop <- respop %>%
+  mutate(Age_Group = case_when(
+    Age %in% as.character(0:9) ~ "0-9",
+    Age %in% as.character(10:19) ~ "10-19",
+    Age %in% as.character(20:29) ~ "20-29",
+    Age %in% as.character(30:39) ~ "30-39",
+    Age %in% as.character(40:49) ~ "40-49",
+    Age %in% as.character(50:59) ~ "50-59",
+    Age %in% as.character(60:69) ~ "60-69",
+    Age %in% as.character(70:79) ~ "70-79",
+    Age %in% as.character(80:89) ~ "80-89",
+    Age == "90_and_Over" ~ "90+"
+  ))
+```
+
+After this transformation, the dataset now includes a new column Age_Group, which categorizes each individual into broader age segments, supporting age-grouped aggregation for subsequent visual and statistical analysis.
+
+```{r}
+glimpse (respop)
+```
+
+# [4]{style="color:mediumvioletred"} Demographic Structures and Distribution of Singapore (2024)
+
+This section explores the distribution of individual variables within the respop dataset, providing foundational insights into Singapore’s demographic profile for the year 2024. Each variable is visualized independently to understand its structure, concentration, and variability.
+
+## [4.1]{style="color:mediumvioletred"} Population by **Age Group**
+
+To understand the age structure of the population, a bar chart was generated to visualize the total resident population by single-year age group (AG). The chart displays a clear distribution across age brackets ranging from infancy (age 0) to the elderly population (90+). This allows for the identification of key demographic cohorts, such as school-age children, working-age adults, and seniors.
+
+::: panel-tabset
+## Plot
+
+```{r, echo=FALSE}
+ggplot(respop, aes(x = Age_Group, y = Pop)) +
+  geom_col(fill = "#A6CEE3") +  
+  labs(
+    x = "Age Group",
+    y = "Resident Population"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5),
+    plot.background = element_rect(fill = "#f5f5f5", colour = "#f5f5f5")
+  )
+```
+
+## Code
+
+```{r, eval=FALSE}
+ggplot(respop, aes(x = Age_Group, y = Pop)) +
+  geom_col(fill = "#A6CEE3") +  
+  labs(
+    x = "Age Group",
+    y = "Resident Population"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5),
+    plot.background = element_rect(fill = "#f5f5f5", colour = "#f5f5f5")
+  )
+```
+:::
+
+The visualisations reveal clear patterns in Singapore’s demographic structure. The first bar chart shows that the population is concentrated in the working-age groups (30–59), which collectively form the largest segments. This suggests a strong labour force base. Meanwhile, the youngest age groups (0–9, 10–19) and the elderly (80–89, 90+) represent smaller proportions, pointing to a gradually ageing population and possibly declining birth rates. The second visualisation, which ranks the top 40 planning areas by population, highlights that Tampines, Bedok, and Sengkang are the most densely populated regions. This likely reflects areas of extensive residential development and accessibility. The gradient fill further accentuates the disparity between top and bottom-ranked areas. Overall, these charts underscore both the age distribution challenges (ageing population) and spatial concentration trends that are vital for planning housing, healthcare, and infrastructure.
+
+## [4.2]{style="color:mediumvioletred"} **Population by Gender and Age Group**
+
+To gain further insight into population distribution across genders and age brackets, a grouped bar chart is plotted. This visual groups males and females side-by-side for each age group bin, offering a straightforward comparison across life stages. Each gender is assigned a distinct and consistent color to enhance interpretability.
+
+::: panel-tabset
+## Plot
+
+```{r, echo=FALSE}
+ggplot(respop, aes(x = Age_Group, y = Pop, fill = Sex)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("Males" = "#336699", "Females" = "#CC3366")) +
+  labs(
+    x = "Age Group",
+    y = "Resident Population",
+    fill = "Gender"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5),
+    plot.background = element_rect(fill = "#f5f5f5", colour = "#f5f5f5")
+  )
+```
+
+## Code
+
+```{r, eval=FALSE}
+ggplot(respop, aes(x = Age_Group, y = Pop, fill = Sex)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("Males" = "#336699", "Females" = "#CC3366")) +
+  labs(
+    x = "Age Group",
+    y = "Resident Population",
+    fill = "Gender"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5),
+    plot.background = element_rect(fill = "#f5f5f5", colour = "#f5f5f5")
+  )
+```
+:::
+
+The gender-disaggregated age distribution highlights both demographic symmetry and divergence across life stages. From ages 0 to 59, the number of males and females is relatively balanced, with minor fluctuations. However, starting from the 60–69 group, females begin to outnumber males significantly—a trend that continues into the older cohorts. This disparity becomes especially prominent in the 90+ group, where the female population is almost double that of males. The visualisation reflects Singapore’s broader demographic patterns: gender parity during working ages and a widening longevity gap in later years. These insights underscore the importance of gender-sensitive planning in eldercare services and retirement policies.
+
+## [4.3]{style="color:mediumvioletred"} **Population by Planning Area**
+
+The PA variable, representing Planning Area, was analyzed to understand the spatial distribution of Singapore’s resident population. The dataset was grouped by planning areas, and the total population within each area was computed. A horizontal bar chart was plotted, with areas sorted in descending order of total population to clearly highlight disparities between more and less densely populated regions. To maintain legibility and avoid overcrowding the chart, only the top 40 planning areas were displayed. This selection provides a balanced view of the most relevant population centers while ensuring the visualization remains clear and interpretable.
+
+::: panel-tabset
+## Plot
+
+```{r, echo=FALSE}
+respop %>%
+  group_by(PA) %>%
+  summarise(Total = sum(Pop)) %>%
+  arrange(desc(Total)) %>%
+  slice_head(n = 40) %>%
+  ggplot(aes(x = reorder(PA, Total), y = Total, fill = Total)) +
+  geom_col() +
+  coord_flip() +
+  scale_fill_gradient(low = "#c6dbef", high = "#08306b") +  # Light to deep blue
+  labs(
+    title = "Top 40 Planning Areas by Resident Population",
+    x = "Planning Area",
+    y = "Resident Population"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.background = element_rect(fill = "#f5f5f5", colour = "#f5f5f5"),
+    legend.position = "none"
+  )
+```
+
+## Code
+
+```{r, eval=FALSE}
+respop %>%
+  group_by(PA) %>%
+  summarise(Total = sum(Pop)) %>%
+  arrange(desc(Total)) %>%
+  slice_head(n = 40) %>%
+  ggplot(aes(x = reorder(PA, Total), y = Total, fill = Total)) +
+  geom_col() +
+  coord_flip() +
+  scale_fill_gradient(low = "#c6dbef", high = "#08306b") +  # Light to deep blue
+  labs(
+    title = "Top 40 Planning Areas by Resident Population",
+    x = "Planning Area",
+    y = "Resident Population"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.background = element_rect(fill = "#f5f5f5", colour = "#f5f5f5"),
+    legend.position = "none"
+  )
+```
+:::
+
+This visualisation ranks the top 40 planning areas in Singapore by resident population, offering insights into spatial population concentration. Tampines, Bedok, and Sengkang emerge as the most populated areas, each exceeding 200,000 residents. In contrast, areas like Western Water Catchment and Sungei Kadut sit at the lower end of the scale. The gradient color fill emphasizes the stark contrast between high- and low-density regions. Limiting the chart to the top 40 ensures legibility and focuses attention on significant population clusters, excluding sparsely populated or industrial zones. This distribution supports targeted infrastructure planning and resource allocation across urban zones.
+
+# [5]{style="color:mediumvioletred"} Summary
+
+This report explores Singapore’s resident population in 2024 using the respopagesex dataset. The analysis focuses on demographic distribution across age groups, gender, and planning areas. Each visualisation highlights a different facet of the population structure, offering insights into Singapore’s demographic composition relevant for planning, policy, and service delivery.
+
+**Key Findings:**
+
+• The population is most concentrated within the 30–59 age range, indicating a dominant working-age segment in the country.
+
+• Gender distribution is balanced in younger and middle age groups but shifts in older cohorts, where females outnumber males, likely reflecting differences in life expectancy.
+
+• Among the 55 planning areas, Tampines, Bedok, and Sengkang have the highest resident populations, while less populated areas are primarily industrial or peripheral zones.
+
+• To ensure clarity in spatial visualisation, only the top 40 planning areas were displayed.
+
+**Recommendations for future research:**
+
+• Disaggregated analysis: Further analysis at subzone level could uncover micro-level population concentrations useful for localised planning.
+
+• Longitudinal trends: Incorporating data from past years can reveal temporal changes in demographic patterns, supporting long-term urban development strategies.
+
+• Dependency ratio estimation: Grouping populations into children, working-age, and elderly brackets may provide clearer implications for workforce and healthcare policies.
+
+• Integrating socio-economic indicators: Linking this demographic data with income, housing, or education datasets can reveal relationships between population structure and social outcomes.
+
+By expanding the scope of analysis, future research can provide more actionable insights into Singapore’s demographic dynamics and support more targeted policy interventions.
+
+# [6]{style="color:mediumvioletred"} References
+
+Department of Statistics Singapore. (2024). *Population Trends 2024*. Retrieved from <https://www.singstat.gov.sg/publications/population/population-trends>
+
+Kam, T. S. (2025). *R for visual analytics*. Retrieved from <https://r4va.netlify.app/>
+
+Scherer, C. (2025). *Exciting data visualizations with ggplot2 extensions*. Retrieved from <https://z3tt.github.io/exciting-extensions/slides.html#/course-materials>
+
+Wickham, H., & Grolemund, G. (2017). *R for Data Science: Import, Tidy, Transform, Visualize, and Model Data*. O’Reilly Media. Retrieved from <https://r4ds.hadley.nz/>

@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Hoa Nguyen Phuong">
+
+<title>Take-home_Ex01: Investigating Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex at June 2024 by Data Visualisations – ISSS608-VAA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ISSS608-VAA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercise" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Hands-on Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html">
+ <span class="dropdown-text">Hands-on Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html">
+ <span class="dropdown-text">Hands-on Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(1).html">
+ <span class="dropdown-text">Hands-on Exercise 3_1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03(2).html">
+ <span class="dropdown-text">Hands-on Exercise 3_2</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Take-home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html">
+ <span class="dropdown-text">Take-home Exercise 1</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span style="color:mediumvioletred">1</span> Overview</a>
+  <ul class="collapse">
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span style="color:mediumvioletred">1.1</span> Background</a></li>
+  <li><a href="#the-task" id="toc-the-task" class="nav-link" data-scroll-target="#the-task"><span style="color:mediumvioletred">1.2</span> The Task</a></li>
+  </ul></li>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages"><span style="color:mediumvioletred">2</span> Loading Packages</a></li>
+  <li><a href="#preparing-data" id="toc-preparing-data" class="nav-link" data-scroll-target="#preparing-data"><span style="color:mediumvioletred">3</span> Preparing Data</a>
+  <ul class="collapse">
+  <li><a href="#importing-file-and-cheking" id="toc-importing-file-and-cheking" class="nav-link" data-scroll-target="#importing-file-and-cheking"><span style="color:mediumvioletred">3.1</span> Importing File and Cheking</a>
+  <ul class="collapse">
+  <li><a href="#importing-file" id="toc-importing-file" class="nav-link" data-scroll-target="#importing-file"><span style="color:mediumvioletred">3.1.1</span> Importing File</a></li>
+  <li><a href="#scanning-the-data" id="toc-scanning-the-data" class="nav-link" data-scroll-target="#scanning-the-data"><span style="color:mediumvioletred">3.1.2</span> Scanning the Data</a></li>
+  <li><a href="#checking-for-duplicates" id="toc-checking-for-duplicates" class="nav-link" data-scroll-target="#checking-for-duplicates"><span style="color:mediumvioletred">3.1.3</span> Checking for Duplicates</a></li>
+  <li><a href="#checking-for-missing-values" id="toc-checking-for-missing-values" class="nav-link" data-scroll-target="#checking-for-missing-values"><span style="color:mediumvioletred">3.1.4</span> Checking for Missing Values</a></li>
+  </ul></li>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span style="color:mediumvioletred">3.2</span> Data Wrangling</a>
+  <ul class="collapse">
+  <li><a href="#selecting-variables" id="toc-selecting-variables" class="nav-link" data-scroll-target="#selecting-variables"><span style="color:mediumvioletred">3.2.1</span> Selecting Variables</a></li>
+  <li><a href="#correcting-data-types" id="toc-correcting-data-types" class="nav-link" data-scroll-target="#correcting-data-types"><span style="color:mediumvioletred">3.2.2</span> Correcting Data Types</a></li>
+  <li><a href="#creating-new-variables" id="toc-creating-new-variables" class="nav-link" data-scroll-target="#creating-new-variables"><span style="color:mediumvioletred">3.2.3</span> Creating New Variables</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#demographic-structures-and-distribution-of-singapore-2024" id="toc-demographic-structures-and-distribution-of-singapore-2024" class="nav-link" data-scroll-target="#demographic-structures-and-distribution-of-singapore-2024"><span style="color:mediumvioletred">4</span> Demographic Structures and Distribution of Singapore (2024)</a>
+  <ul class="collapse">
+  <li><a href="#population-by-age-group" id="toc-population-by-age-group" class="nav-link" data-scroll-target="#population-by-age-group"><span style="color:mediumvioletred">4.1</span> Population by <strong>Age Group</strong></a></li>
+  <li><a href="#population-by-gender-and-age-group" id="toc-population-by-gender-and-age-group" class="nav-link" data-scroll-target="#population-by-gender-and-age-group"><span style="color:mediumvioletred">4.2</span> <strong>Population by Gender and Age Group</strong></a></li>
+  <li><a href="#population-by-planning-area" id="toc-population-by-planning-area" class="nav-link" data-scroll-target="#population-by-planning-area"><span style="color:mediumvioletred">4.3</span> <strong>Population by Planning Area</strong></a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span style="color:mediumvioletred">5</span> Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span style="color:mediumvioletred">6</span> References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Take-home_Ex01: Investigating Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex at June 2024 by Data Visualisations</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Hoa Nguyen Phuong </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level1">
+<h1><span style="color:mediumvioletred">1</span> Overview</h1>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background"><span style="color:mediumvioletred">1.1</span> Background</h2>
+<p>The Singapore Department of Statistics regularly publishes data to provide a comprehensive view of the nation’s demographic landscape. One such dataset, Singapore Residents by Planning Area/Subzone, Single Year of Age and Sex (June 2024), offers granular insights into the spatial and age-sex distribution of Singapore’s resident population. It captures critical population attributes down to single years of age, disaggregated by gender and geographically mapped across planning areas and subzones defined under the Urban Redevelopment Authority’s Master Plan 2019.</p>
+<p>These statistics serve as a foundational reference for urban planners, policymakers, and researchers to assess trends in population ageing, gender balance, and regional population concentration. In particular, they support decisions on infrastructure planning, public service allocation, and housing development strategies. Understanding the demographic structure in such detail allows for better anticipation of future needs across education, healthcare, and eldercare.</p>
+</section>
+<section id="the-task" class="level2">
+<h2 class="anchored" data-anchor-id="the-task"><span style="color:mediumvioletred">1.2</span> The Task</h2>
+<p>Assuming the role of the graphical editor at a local media company, the task is to create compelling visualizations that highlight Singapore’s demographic structures and distribution in 2024. Using appropriate Exploratory Data Analysis (EDA) techniques and ggplot2, this post aims to:</p>
+<p>• Uncover the age and sex distribution across Singapore’s planning areas and subzones.</p>
+<p>• Identify population concentration hotspots and patterns of demographic imbalance.</p>
+<p>• Convey insights through at most three clear and informative data visualisations suitable for a general audience in a digital publication.</p>
+</section>
+</section>
+<section id="loading-packages" class="level1">
+<h1><span style="color:mediumvioletred">2</span> Loading Packages</h1>
+<p>The following code chunk uses&nbsp;<code>p_load()</code>&nbsp;of&nbsp;<a href="https://rpubs.com/akshaypatankar/594834"><strong>pacman</strong></a>&nbsp;package to check if tidyverse packages are installed in the computer. If they are, the libraries will be called into R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  tidyverse, ggplot2, haven, knitr, patchwork, ggthemes, scales, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  ggridges, ggpubr, gganimate, ggdist, ggtext, ggalt, ggExtra, cowplot, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  ggnewscale, colorspace, magrittr, RColorBrewer, ggstatsplot, egg, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  geomtextpath, readxl, performance, parameters, see, ggiraph, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  treemap, treemapify</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="preparing-data" class="level1">
+<h1><span style="color:mediumvioletred">3</span> Preparing Data</h1>
+<p>The dataset <strong>Singapore Residents by Planning Area/Subzone, Single Year of Age and Sex</strong> is obtained from the <strong>Singapore Department of Statistics</strong>. It provides detailed demographic information on residents by planning area and subzone, segmented by age and sex as of June 2024. Each row in the dataset represents a specific demographic group within a given planning area, making it suitable for visualising population distribution and structure across the country.</p>
+<section id="importing-file-and-cheking" class="level2">
+<h2 class="anchored" data-anchor-id="importing-file-and-cheking"><span style="color:mediumvioletred">3.1</span> Importing File and Cheking</h2>
+<section id="importing-file" class="level3">
+<h3 class="anchored" data-anchor-id="importing-file"><span style="color:mediumvioletred">3.1.1</span> Importing File</h3>
+<p>The code chunk below is used to import the dataset (csv file) using&nbsp;<code>read_csv()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>respop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"respopagesex2024/respopagesex2024.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="scanning-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="scanning-the-data"><span style="color:mediumvioletred">3.1.2</span> Scanning the Data</h3>
+<p>Next, for a better understanding of the dataset, glimpse() will be utilized to observe the variables and their data types:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(respop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 60,424
+Columns: 6
+$ PA   &lt;chr&gt; "Ang Mo Kio", "Ang Mo Kio", "Ang Mo Kio", "Ang Mo Kio", "Ang Mo K…
+$ SZ   &lt;chr&gt; "Ang Mo Kio Town Centre", "Ang Mo Kio Town Centre", "Ang Mo Kio T…
+$ Age  &lt;chr&gt; "0", "0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", …
+$ Sex  &lt;chr&gt; "Males", "Females", "Males", "Females", "Males", "Females", "Male…
+$ Pop  &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 30, 10, 20, 10, 20, 30, 30, 10, 3…
+$ Time &lt;dbl&gt; 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024,…</code></pre>
+</div>
+</div>
+<p>As shown, the dataset consists of 6 columns and over 60,424 rows (observations). Each observation represents a specific demographic segment of Singapore’s resident population, defined by:</p>
+<ul>
+<li><p><strong>PA</strong>: Planning Area</p></li>
+<li><p><strong>SZ</strong>: Subzone</p></li>
+<li><p><strong>Age</strong>: Single year of age (0–100+)</p></li>
+<li><p><strong>Sex</strong>: Male or Female</p></li>
+</ul>
+<p>Based on the output of the code, there are <strong>4 categorical variables</strong> (PA, SZ, Age, and Sex), <strong>1 numerical variable</strong> (Pop), and <strong>1 time variable</strong> (Time).</p>
+</section>
+<section id="checking-for-duplicates" class="level3">
+<h3 class="anchored" data-anchor-id="checking-for-duplicates"><span style="color:mediumvioletred">3.1.3</span> Checking for Duplicates</h3>
+<p>To ensure data integrity, a check for duplicated records was conducted. Duplicate entries can result in inaccurate analysis due to double counting. The following code block uses group_by_all() and filter(n()&gt;1) from the dplyr package to identify fully duplicated rows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>duplicate <span class="ot">&lt;-</span> respop <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by_all</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>duplicate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 6
+# ℹ 6 variables: PA &lt;chr&gt;, SZ &lt;chr&gt;, Age &lt;chr&gt;, Sex &lt;chr&gt;, Pop &lt;dbl&gt;,
+#   Time &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>The result confirms that no duplicate rows exist.</p>
+<p>To further verify that each record is unique, the number of distinct combinations across the key demographic variables (PA, SZ, Age, Sex, and Time) was computed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(respop <span class="sc">%&gt;%</span> <span class="fu">select</span>(PA, SZ, Age, Sex, Time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 60424</code></pre>
+</div>
+</div>
+<p>This confirms that all 60,424 rows in the dataset represent unique combinations, with no repetition across the key variables.</p>
+</section>
+<section id="checking-for-missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="checking-for-missing-values"><span style="color:mediumvioletred">3.1.4</span> Checking for Missing Values</h3>
+<p>Before proceeding with analysis, it is also important to verify whether the dataset contains any missing values, as these may influence the accuracy and integrity of results.</p>
+<p>An initial check was conducted using is.na() and sum() to detect any missing entries:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">is.na</span>(respop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>integer(0)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(respop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>This confirms that there are <strong>no missing values</strong> in the dataset. All six variables (PA, SZ, AG, SEX, Pop, and Time) are complete and require no additional cleaning or row removal. Thus, the dataset is ready for subsequent analysis without further preprocessing.</p>
+</section>
+</section>
+<section id="data-wrangling" class="level2">
+<h2 class="anchored" data-anchor-id="data-wrangling"><span style="color:mediumvioletred">3.2</span> Data Wrangling</h2>
+<section id="selecting-variables" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-variables"><span style="color:mediumvioletred">3.2.1</span> Selecting Variables</h3>
+<p>Variable selection is a common step in data analysis, particularly when working with datasets containing numerous attributes—some of which may be redundant depending on the analysis objectives. However, the respopagesex dataset is already well-structured and concise, consisting of six essential variables:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px; font-weight: bold; color: rgba(34, 34, 34, 255) !important; font-size: 16px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Description of Variables in the `respopagesex` Dataset
+</div></th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Category</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Variable.Name</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Description</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Type</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Geography</td>
+<td style="text-align: left;">PA</td>
+<td style="text-align: left;">Planning Area</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">e.g. Ang Mo Kio</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Geography</td>
+<td style="text-align: left;">SZ</td>
+<td style="text-align: left;">Subzone</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">e.g. Ang Mo Kio Town Centre</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Demographics</td>
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">Age group (single year of age)</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">0 to 90+</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Demographics</td>
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">Gender</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">Males, Females</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Demographics</td>
+<td style="text-align: left;">Pop</td>
+<td style="text-align: left;">Resident population count (Rounded to nearest 10)</td>
+<td style="text-align: left;">dbl</td>
+<td style="text-align: left;">0, 10, 20, 30, ..., 1180</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Metadata</td>
+<td style="text-align: left;">Time</td>
+<td style="text-align: left;">Year of observation</td>
+<td style="text-align: left;">dbl</td>
+<td style="text-align: left;">2024</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>respop_description <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Category =</span> <span class="fu">c</span>(<span class="st">"Geography"</span>, <span class="st">"Geography"</span>, <span class="st">"Demographics"</span>, <span class="st">"Demographics"</span>, <span class="st">"Demographics"</span>, <span class="st">"Metadata"</span>),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Variable Name</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"PA"</span>, <span class="st">"SZ"</span>, <span class="st">"Age"</span>, <span class="st">"Sex"</span>, <span class="st">"Pop"</span>, <span class="st">"Time"</span>),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Description =</span> <span class="fu">c</span>(<span class="st">"Planning Area"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Subzone"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Age group (single year of age)"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Gender"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Resident population count (Rounded to nearest 10)"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Year of observation"</span>),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="fu">c</span>(<span class="st">"char"</span>, <span class="st">"char"</span>, <span class="st">"char"</span>, <span class="st">"char"</span>, <span class="st">"dbl"</span>, <span class="st">"dbl"</span>),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(<span class="st">"e.g. Ang Mo Kio"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"e.g. Ang Mo Kio Town Centre"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"0 to 90+"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Males, Females"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"0, 10, 20, 30, ..., 1180"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"2024"</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(respop_description) <span class="sc">%&gt;%</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">"Description of Variables in the `respopagesex` Dataset"</span> <span class="ot">=</span> <span class="fu">ncol</span>(respop_description)), </span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">font_size =</span> <span class="dv">16</span>, <span class="at">color =</span> <span class="st">"#222222"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>While the Time column contains only a single value (2024), indicating that the dataset reflects the demographic structure of Singapore for that year, it was retained to support reproducibility. This ensures compatibility should additional years be introduced in the future. As such, no variables were removed or renamed during the data preparation phase.</p>
+</section>
+<section id="correcting-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="correcting-data-types"><span style="color:mediumvioletred">3.2.2</span> Correcting Data Types</h3>
+<p>As shown above, the current data types of the variables are:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th colspan="4" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px; font-weight: bold; color: rgba(34, 34, 34, 255) !important; font-size: 16px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Description of Variables in the `respopagesex` Dataset
+</div></th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Variable.Name</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Description</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Type</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PA</td>
+<td style="text-align: left;">Planning Area</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">e.g. Ang Mo Kio</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SZ</td>
+<td style="text-align: left;">Subzone</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">e.g. Ang Mo Kio Town Centre</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">Age group (single year of age)</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">0 to 90+</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">Gender</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">Males, Females</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pop</td>
+<td style="text-align: left;">Resident population count (Rounded to nearest 10)</td>
+<td style="text-align: left;">dbl</td>
+<td style="text-align: left;">0, 10, 20, 30, ..., 1180</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Time</td>
+<td style="text-align: left;">Year of observation</td>
+<td style="text-align: left;">dbl</td>
+<td style="text-align: left;">2024</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>respop_description <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Variable Name</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"PA"</span>, <span class="st">"SZ"</span>, <span class="st">"Age"</span>, <span class="st">"Sex"</span>, <span class="st">"Pop"</span>, <span class="st">"Time"</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Description =</span> <span class="fu">c</span>(<span class="st">"Planning Area"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Subzone"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Age group (single year of age)"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Gender"</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Resident population count (Rounded to nearest 10)"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Year of observation"</span>),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="fu">c</span>(<span class="st">"char"</span>, <span class="st">"char"</span>, <span class="st">"char"</span>, <span class="st">"char"</span>, <span class="st">"dbl"</span>, <span class="st">"dbl"</span>),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(<span class="st">"e.g. Ang Mo Kio"</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"e.g. Ang Mo Kio Town Centre"</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"0 to 90+"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Males, Females"</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"0, 10, 20, 30, ..., 1180"</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"2024"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(respop_description) <span class="sc">%&gt;%</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">"Description of Variables in the `respopagesex` Dataset"</span> <span class="ot">=</span> <span class="fu">ncol</span>(respop_description)), </span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">font_size =</span> <span class="dv">16</span>, <span class="at">color =</span> <span class="st">"#222222"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>The first four variables (<strong>PA</strong>, <strong>SZ</strong>, <strong>AG</strong>, <strong>Sex</strong>), all are currently typed as character. While character and factor are both used to store categorical values in R, their purposes differ:</p>
+<p>• character is more flexible for free-form text, such as names or labels that may change over time.</p>
+<p>• factor is more structured and suited for categorical data with a known, limited set of possible values, often used for grouping or plotting.</p>
+<p>Given this distinction:</p>
+<p>• <strong>PA</strong> (Planning Area), <strong>SZ</strong> (Subzone), and <strong>AG</strong> (Age group) are correctly stored as character since they represent a wide range of labels or identifiers that are not necessarily fixed.</p>
+<p>• <strong>Sex</strong>, however, only contains a small set of known categories (“Males”, “Females”), and is better modeled as a factor for consistency in grouping, analysis, and visualization.</p>
+<p>To reflect this, the following code converts the <strong>Sex</strong> column to a factor with an explicit level order:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>respop<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(respop<span class="sc">$</span>Sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Males"</span>, <span class="st">"Females"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This change ensures that Sex is treated as a proper categorical variable in downstream analysis and plotting.</p>
+<p>The last two variables, <strong>Pop</strong> and <strong>Time</strong>, were initially stored as double-precision numeric values (&lt;dbl&gt;), which is the default numeric type in R for both whole numbers and decimals. However, since both variables contain <strong>only whole numbers</strong>, it is more semantically accurate and memory-efficient to convert them to <strong>integer (&lt;int&gt;)</strong> type.</p>
+<ul>
+<li><p><strong>Pop</strong>, which stores resident population counts (rounded to the nearest 10), also holds only whole number values. Converting it to integer reinforces its role as a count-based measure.</p></li>
+<li><p><strong>Time</strong> represents the year of observation and contains a single repeated value (2024). Converting it to integer clarifies its role as a discrete temporal marker.</p></li>
+</ul>
+<p>The conversion is performed using as.integer() as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>respop<span class="sc">$</span>Time <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(respop<span class="sc">$</span>Time)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>respop<span class="sc">$</span>Pop <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(respop<span class="sc">$</span>Pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After applying the necessary type corrections, the variables and their data types are now summarized below:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th colspan="4" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px; font-weight: bold; color: rgba(34, 34, 34, 255) !important; font-size: 16px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Revised Description of Variables in the `respopagesex` Dataset
+</div></th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Variable.Name</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Description</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Type</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PA</td>
+<td style="text-align: left;">Planning Area</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">e.g. Ang Mo Kio</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SZ</td>
+<td style="text-align: left;">Subzone</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">e.g. Ang Mo Kio Town Centre</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">Age group (single year of age)</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">0 to 90+</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">Gender</td>
+<td style="text-align: left;">fct</td>
+<td style="text-align: left;">Males, Females</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pop</td>
+<td style="text-align: left;">Resident population count (Rounded to nearest 10)</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">0, 10, 20, 30, ..., 1180</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Time</td>
+<td style="text-align: left;">Year of observation</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">2024</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell" data-ecval="false">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>respop_description <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Variable Name</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"PA"</span>, <span class="st">"SZ"</span>, <span class="st">"Age"</span>, <span class="st">"Sex"</span>, <span class="st">"Pop"</span>, <span class="st">"Time"</span>),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Description =</span> <span class="fu">c</span>(<span class="st">"Planning Area"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Subzone"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Age group (single year of age)"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Gender"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Resident population count (Rounded to nearest 10)"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Year of observation"</span>),</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="fu">c</span>(<span class="st">"char"</span>, <span class="st">"char"</span>, <span class="st">"char"</span>, <span class="st">"fct"</span>, <span class="st">"int"</span>, <span class="st">"int"</span>),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(<span class="st">"e.g. Ang Mo Kio"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"e.g. Ang Mo Kio Town Centre"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"0 to 90+"</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Males, Females"</span>,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"0, 10, 20, 30, ..., 1180"</span>,</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"2024"</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(respop_description) <span class="sc">%&gt;%</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">"Revised Description of Variables in the `respopagesex` Dataset"</span> <span class="ot">=</span> <span class="fu">ncol</span>(respop_description)), </span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">font_size =</span> <span class="dv">16</span>, <span class="at">color =</span> <span class="st">"#222222"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th colspan="4" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px; font-weight: bold; color: rgba(34, 34, 34, 255) !important; font-size: 16px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Revised Description of Variables in the `respopagesex` Dataset
+</div></th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Variable.Name</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Description</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Type</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PA</td>
+<td style="text-align: left;">Planning Area</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">e.g. Ang Mo Kio</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SZ</td>
+<td style="text-align: left;">Subzone</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">e.g. Ang Mo Kio Town Centre</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">Age group (single year of age)</td>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">0 to 90+</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">Gender</td>
+<td style="text-align: left;">fct</td>
+<td style="text-align: left;">Males, Females</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pop</td>
+<td style="text-align: left;">Resident population count (Rounded to nearest 10)</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">0, 10, 20, 30, ..., 1180</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Time</td>
+<td style="text-align: left;">Year of observation</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">2024</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>This can be confirmed via:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(respop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 60,424
+Columns: 6
+$ PA   &lt;chr&gt; "Ang Mo Kio", "Ang Mo Kio", "Ang Mo Kio", "Ang Mo Kio", "Ang Mo K…
+$ SZ   &lt;chr&gt; "Ang Mo Kio Town Centre", "Ang Mo Kio Town Centre", "Ang Mo Kio T…
+$ Age  &lt;chr&gt; "0", "0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", …
+$ Sex  &lt;fct&gt; Males, Females, Males, Females, Males, Females, Males, Females, M…
+$ Pop  &lt;int&gt; 10, 10, 10, 10, 10, 10, 10, 10, 30, 10, 20, 10, 20, 30, 30, 10, 3…
+$ Time &lt;int&gt; 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024,…</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-new-variables" class="level3">
+<h3 class="anchored" data-anchor-id="creating-new-variables"><span style="color:mediumvioletred">3.2.3</span> Creating New Variables</h3>
+<p>To facilitate age-based demographic analysis, a new variable Age_Group was created by binning the Age field into 10-year intervals. This transformation enables grouped aggregation and more interpretable visualizations.</p>
+<p>The Age variable in the dataset is stored as a character string, containing values such as “0”, “1”, …, “89”, and “90_and_Over”. Using mutate() and case_when() from the dplyr package, each age was categorized into its respective age band, ranging from “0-9” up to “90+”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>respop <span class="ot">&lt;-</span> respop <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Age_Group =</span> <span class="fu">case_when</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">%in%</span> <span class="fu">as.character</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>) <span class="sc">~</span> <span class="st">"0-9"</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">%in%</span> <span class="fu">as.character</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">19</span>) <span class="sc">~</span> <span class="st">"10-19"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">%in%</span> <span class="fu">as.character</span>(<span class="dv">20</span><span class="sc">:</span><span class="dv">29</span>) <span class="sc">~</span> <span class="st">"20-29"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">%in%</span> <span class="fu">as.character</span>(<span class="dv">30</span><span class="sc">:</span><span class="dv">39</span>) <span class="sc">~</span> <span class="st">"30-39"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">%in%</span> <span class="fu">as.character</span>(<span class="dv">40</span><span class="sc">:</span><span class="dv">49</span>) <span class="sc">~</span> <span class="st">"40-49"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">%in%</span> <span class="fu">as.character</span>(<span class="dv">50</span><span class="sc">:</span><span class="dv">59</span>) <span class="sc">~</span> <span class="st">"50-59"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">%in%</span> <span class="fu">as.character</span>(<span class="dv">60</span><span class="sc">:</span><span class="dv">69</span>) <span class="sc">~</span> <span class="st">"60-69"</span>,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">%in%</span> <span class="fu">as.character</span>(<span class="dv">70</span><span class="sc">:</span><span class="dv">79</span>) <span class="sc">~</span> <span class="st">"70-79"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">%in%</span> <span class="fu">as.character</span>(<span class="dv">80</span><span class="sc">:</span><span class="dv">89</span>) <span class="sc">~</span> <span class="st">"80-89"</span>,</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    Age <span class="sc">==</span> <span class="st">"90_and_Over"</span> <span class="sc">~</span> <span class="st">"90+"</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After this transformation, the dataset now includes a new column Age_Group, which categorizes each individual into broader age segments, supporting age-grouped aggregation for subsequent visual and statistical analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span> (respop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 60,424
+Columns: 7
+$ PA        &lt;chr&gt; "Ang Mo Kio", "Ang Mo Kio", "Ang Mo Kio", "Ang Mo Kio", "Ang…
+$ SZ        &lt;chr&gt; "Ang Mo Kio Town Centre", "Ang Mo Kio Town Centre", "Ang Mo …
+$ Age       &lt;chr&gt; "0", "0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", …
+$ Sex       &lt;fct&gt; Males, Females, Males, Females, Males, Females, Males, Femal…
+$ Pop       &lt;int&gt; 10, 10, 10, 10, 10, 10, 10, 10, 30, 10, 20, 10, 20, 30, 30, …
+$ Time      &lt;int&gt; 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, …
+$ Age_Group &lt;chr&gt; "0-9", "0-9", "0-9", "0-9", "0-9", "0-9", "0-9", "0-9", "0-9…</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="demographic-structures-and-distribution-of-singapore-2024" class="level1">
+<h1><span style="color:mediumvioletred">4</span> Demographic Structures and Distribution of Singapore (2024)</h1>
+<p>This section explores the distribution of individual variables within the respop dataset, providing foundational insights into Singapore’s demographic profile for the year 2024. Each variable is visualized independently to understand its structure, concentration, and variability.</p>
+<section id="population-by-age-group" class="level2">
+<h2 class="anchored" data-anchor-id="population-by-age-group"><span style="color:mediumvioletred">4.1</span> Population by <strong>Age Group</strong></h2>
+<p>To understand the age structure of the population, a bar chart was generated to visualize the total resident population by single-year age group (AG). The chart displays a clear distribution across age brackets ranging from infancy (age 0) to the elderly population (90+). This allows for the identification of key demographic cohorts, such as school-age children, working-age adults, and seniors.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(respop, <span class="fu">aes</span>(<span class="at">x =</span> Age_Group, <span class="at">y =</span> Pop)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#A6CEE3"</span>) <span class="sc">+</span>  </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Age Group"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Resident Population"</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#f5f5f5"</span>, <span class="at">colour =</span> <span class="st">"#f5f5f5"</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>The visualisations reveal clear patterns in Singapore’s demographic structure. The first bar chart shows that the population is concentrated in the working-age groups (30–59), which collectively form the largest segments. This suggests a strong labour force base. Meanwhile, the youngest age groups (0–9, 10–19) and the elderly (80–89, 90+) represent smaller proportions, pointing to a gradually ageing population and possibly declining birth rates. The second visualisation, which ranks the top 40 planning areas by population, highlights that Tampines, Bedok, and Sengkang are the most densely populated regions. This likely reflects areas of extensive residential development and accessibility. The gradient fill further accentuates the disparity between top and bottom-ranked areas. Overall, these charts underscore both the age distribution challenges (ageing population) and spatial concentration trends that are vital for planning housing, healthcare, and infrastructure.</p>
+</section>
+<section id="population-by-gender-and-age-group" class="level2">
+<h2 class="anchored" data-anchor-id="population-by-gender-and-age-group"><span style="color:mediumvioletred">4.2</span> <strong>Population by Gender and Age Group</strong></h2>
+<p>To gain further insight into population distribution across genders and age brackets, a grouped bar chart is plotted. This visual groups males and females side-by-side for each age group bin, offering a straightforward comparison across life stages. Each gender is assigned a distinct and consistent color to enhance interpretability.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(respop, <span class="fu">aes</span>(<span class="at">x =</span> Age_Group, <span class="at">y =</span> Pop, <span class="at">fill =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Males"</span> <span class="ot">=</span> <span class="st">"#336699"</span>, <span class="st">"Females"</span> <span class="ot">=</span> <span class="st">"#CC3366"</span>)) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Age Group"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Resident Population"</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Gender"</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#f5f5f5"</span>, <span class="at">colour =</span> <span class="st">"#f5f5f5"</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>The gender-disaggregated age distribution highlights both demographic symmetry and divergence across life stages. From ages 0 to 59, the number of males and females is relatively balanced, with minor fluctuations. However, starting from the 60–69 group, females begin to outnumber males significantly—a trend that continues into the older cohorts. This disparity becomes especially prominent in the 90+ group, where the female population is almost double that of males. The visualisation reflects Singapore’s broader demographic patterns: gender parity during working ages and a widening longevity gap in later years. These insights underscore the importance of gender-sensitive planning in eldercare services and retirement policies.</p>
+</section>
+<section id="population-by-planning-area" class="level2">
+<h2 class="anchored" data-anchor-id="population-by-planning-area"><span style="color:mediumvioletred">4.3</span> <strong>Population by Planning Area</strong></h2>
+<p>The PA variable, representing Planning Area, was analyzed to understand the spatial distribution of Singapore’s resident population. The dataset was grouped by planning areas, and the total population within each area was computed. A horizontal bar chart was plotted, with areas sorted in descending order of total population to clearly highlight disparities between more and less densely populated regions. To maintain legibility and avoid overcrowding the chart, only the top 40 planning areas were displayed. This selection provides a balanced view of the most relevant population centers while ensuring the visualization remains clear and interpretable.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>respop <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total =</span> <span class="fu">sum</span>(Pop)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Total)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">40</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PA, Total), <span class="at">y =</span> Total, <span class="at">fill =</span> Total)) <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#c6dbef"</span>, <span class="at">high =</span> <span class="st">"#08306b"</span>) <span class="sc">+</span>  <span class="co"># Light to deep blue</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Top 40 Planning Areas by Resident Population"</span>,</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Planning Area"</span>,</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Resident Population"</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#f5f5f5"</span>, <span class="at">colour =</span> <span class="st">"#f5f5f5"</span>),</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>This visualisation ranks the top 40 planning areas in Singapore by resident population, offering insights into spatial population concentration. Tampines, Bedok, and Sengkang emerge as the most populated areas, each exceeding 200,000 residents. In contrast, areas like Western Water Catchment and Sungei Kadut sit at the lower end of the scale. The gradient color fill emphasizes the stark contrast between high- and low-density regions. Limiting the chart to the top 40 ensures legibility and focuses attention on significant population clusters, excluding sparsely populated or industrial zones. This distribution supports targeted infrastructure planning and resource allocation across urban zones.</p>
+</section>
+</section>
+<section id="summary" class="level1">
+<h1><span style="color:mediumvioletred">5</span> Summary</h1>
+<p>This report explores Singapore’s resident population in 2024 using the respopagesex dataset. The analysis focuses on demographic distribution across age groups, gender, and planning areas. Each visualisation highlights a different facet of the population structure, offering insights into Singapore’s demographic composition relevant for planning, policy, and service delivery.</p>
+<p><strong>Key Findings:</strong></p>
+<p>• The population is most concentrated within the 30–59 age range, indicating a dominant working-age segment in the country.</p>
+<p>• Gender distribution is balanced in younger and middle age groups but shifts in older cohorts, where females outnumber males, likely reflecting differences in life expectancy.</p>
+<p>• Among the 55 planning areas, Tampines, Bedok, and Sengkang have the highest resident populations, while less populated areas are primarily industrial or peripheral zones.</p>
+<p>• To ensure clarity in spatial visualisation, only the top 40 planning areas were displayed.</p>
+<p><strong>Recommendations for future research:</strong></p>
+<p>• Disaggregated analysis: Further analysis at subzone level could uncover micro-level population concentrations useful for localised planning.</p>
+<p>• Longitudinal trends: Incorporating data from past years can reveal temporal changes in demographic patterns, supporting long-term urban development strategies.</p>
+<p>• Dependency ratio estimation: Grouping populations into children, working-age, and elderly brackets may provide clearer implications for workforce and healthcare policies.</p>
+<p>• Integrating socio-economic indicators: Linking this demographic data with income, housing, or education datasets can reveal relationships between population structure and social outcomes.</p>
+<p>By expanding the scope of analysis, future research can provide more actionable insights into Singapore’s demographic dynamics and support more targeted policy interventions.</p>
+</section>
+<section id="references" class="level1">
+<h1><span style="color:mediumvioletred">6</span> References</h1>
+<p>Department of Statistics Singapore. (2024). <em>Population Trends 2024</em>. Retrieved from <a href="https://www.singstat.gov.sg/publications/population/population-trends" class="uri">https://www.singstat.gov.sg/publications/population/population-trends</a></p>
+<p>Kam, T. S. (2025).&nbsp;<em>R for visual analytics</em>. Retrieved from&nbsp;<a href="https://r4va.netlify.app/" class="uri">https://r4va.netlify.app/</a></p>
+<p>Scherer, C. (2025).&nbsp;<em>Exciting data visualizations with ggplot2 extensions</em>. Retrieved from&nbsp;<a href="https://z3tt.github.io/exciting-extensions/slides.html#/course-materials" class="uri">https://z3tt.github.io/exciting-extensions/slides.html#/course-materials</a></p>
+<p>Wickham, H., &amp; Grolemund, G. (2017). <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. O’Reilly Media. Retrieved from <a href="https://r4ds.hadley.nz/" class="uri">https://r4ds.hadley.nz/</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
