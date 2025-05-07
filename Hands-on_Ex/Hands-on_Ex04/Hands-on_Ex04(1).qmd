@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex04 (1) - Visualising Distribution"
+title: "Hands-on_Ex04 (1) - Visualising Distribution "
 author: "Hoa Nguyen Phuong"
 format: html
 date-modified: "last-modified" 
