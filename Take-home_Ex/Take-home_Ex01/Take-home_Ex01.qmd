@@ -1,5 +1,5 @@
 ---
-title: "Take-home_Ex01: Investigating Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex at June 2024 by Data Visualisations "
+title: "Take-home_Ex01: Investigating Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex at June 2024 by Data Visualisations"
 author: "Hoa Nguyen Phuong"
 date-modified: "last-modified" 
 execute:

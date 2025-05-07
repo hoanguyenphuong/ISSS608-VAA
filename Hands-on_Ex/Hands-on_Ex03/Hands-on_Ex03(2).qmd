@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex03(2) - Programming Animated Statistical Graphics with R"
+title: "Hands-on_Ex03 (2) - Programming Animated Statistical Graphics with R"
 author: "Hoa Nguyen Phuong"
 date-modified: "last-modified" 
 execute:
