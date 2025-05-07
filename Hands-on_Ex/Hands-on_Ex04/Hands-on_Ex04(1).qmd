@@ -201,7 +201,7 @@ Besides providing additional geom objects to support the need to plot ridgeline 
 Figure below is plotted by mapping the probabilities calculated by using `stat(ecdf)` which represent the empirical cumulative density function for the distribution of English score.
 
 ::: panel-tabset
-## Practice
+## 🌸 Practice
 
 Used `scale_fill_viridis_b` to replace `scale_fill_viridis_c`, and changed theme colour.
 
