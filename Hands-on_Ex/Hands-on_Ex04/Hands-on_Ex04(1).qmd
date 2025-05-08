@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex04 (1) - Visualising Distribution "
+title: "Hands-on_Ex04 (1) - Visualising Distribution"
 author: "Hoa Nguyen Phuong"
 format: html
 date-modified: "last-modified" 
@@ -135,8 +135,6 @@ ggplot(exam,
   scale_y_discrete(name = NULL, expand = expansion(add=c(0.2, 2.6))) +
   theme_ridges()
 ```
-
-
 :::
 
 ### [3.2]{style="color:mediumvioletred"} Verying fill colors along the x axis
@@ -191,7 +189,6 @@ ggplot(exam,
   scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +
     theme_ridges()
 ```
-
 :::
 
 ### [3.3]{style="color:mediumvioletred"} Mapping the probabilities directly onto color
@@ -235,7 +232,6 @@ ggplot(exam,
                        direction = -1) +
   theme_ridges() 
 ```
-
 :::
 
 ::: callout-important
@@ -287,7 +283,6 @@ ggplot(exam,
   theme_ridges()
 
 ```
-
 :::
 
 Instead of using number to define the quantiles, we can also specify quantiles by cutting points such as 2.5% and 97.5% tails to colour the ridgeline plot, shown in figure below.
@@ -342,7 +337,6 @@ ggplot(exam,
   ) +
   theme_ridges()
 ```
-
 ::::
 
 ## [4]{style="color:mediumvioletred"} Visualsing Distribution with Raincloud Plot
@@ -401,8 +395,6 @@ ggplot(exam,
 
 We remove the slab interval by setting `.width = 0` and `point_colour = NA`.
 :::
-
-
 ::::
 
 ### [4.2]{style="color:mediumvioletred"} Adding boxplot with `geom_boxplot()`
@@ -448,7 +440,6 @@ ggplot(exam,
   geom_boxplot(width = 0.2,
                outlier.shape = NA)
 ```
-
 :::
 
 ### [4.3]{style="color:mediumvioletred"} Adding dot plot with `stat_dots`
@@ -504,8 +495,6 @@ ggplot(exam,
             binwidth = .5,
             dotsize = 2)
 ```
-
-
 :::
 
 ### [4.4]{style="color:mediumvioletred"} Finishing touch
@@ -587,13 +576,12 @@ ggplot(exam,
   coord_flip() +
   theme_economist()
 ```
-
 :::
 
 ### [5]{style="color:mediumvioletred"} Reference
 
 -   [Introducing Ridgeline Plots (formerly Joyplots)](https://blog.revolutionanalytics.com/2017/07/joyplots.html)
--    Claus O. Wilke [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) especially Chapter [6](https://clauswilke.com/dataviz/visualizing-amounts.html), [7](https://clauswilke.com/dataviz/histograms-density-plots.html), [8](https://clauswilke.com/dataviz/ecdf-qq.html), [9](https://clauswilke.com/dataviz/boxplots-violins.html) and [10](https://clauswilke.com/dataviz/visualizing-proportions.html).
+-   Claus O. Wilke [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) especially Chapter [6](https://clauswilke.com/dataviz/visualizing-amounts.html), [7](https://clauswilke.com/dataviz/histograms-density-plots.html), [8](https://clauswilke.com/dataviz/ecdf-qq.html), [9](https://clauswilke.com/dataviz/boxplots-violins.html) and [10](https://clauswilke.com/dataviz/visualizing-proportions.html).
 -   Allen M, Poggiali D, Whitaker K et al. [“Raincloud plots: a multi-platform tool for robust data. visualization”](https://wellcomeopenresearch.org/articles/4-63) \[version 2; peer review: 2 approved\]. Welcome Open Res 2021, pp. 4:63.
 -   [Dots + interval stats and geoms](https://mjskay.github.io/ggdist/articles/dotsinterval.html)
 -   Additional reference: [Cedric Scherer Data Visualization & Info Disign](https://www.cedricscherer.com/) \[[slides](https://z3tt.github.io/exciting-extensions/slides.html#/title-slide)\]
