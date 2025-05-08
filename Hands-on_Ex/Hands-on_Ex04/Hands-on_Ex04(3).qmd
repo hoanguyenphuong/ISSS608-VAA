@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex04(3) - Visualising Uncertainty"
+title: "Hands-on_Ex04(3) - Visualising Uncertainty "
 author: "Hoa Nguyen Phuong"
 format: html
 date-modified: "last-modified" 
