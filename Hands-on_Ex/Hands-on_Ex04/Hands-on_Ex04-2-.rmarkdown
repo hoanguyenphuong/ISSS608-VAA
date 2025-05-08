@@ -10,6 +10,8 @@ execute:
   freeze: true  
 ---
 
+
+
 ## [1]{style="color:mediumvioletred"} Learning Outcome
 
 In this hands-on exercise, we will gain hands-on experience on using:
@@ -34,9 +36,13 @@ For example, here are results from a robust t-test:
 
 In this exercise, g**gstatsplot** and **tidyverse** will be used.
 
+
+
 ```{r}
 pacman::p_load(ggstatsplot, tidyverse)
 ```
+
+
 
 ### [3.2]{style="color:mediumvioletred"} Importing data
 
@@ -45,14 +51,20 @@ pacman::p_load(ggstatsplot, tidyverse)
 
 Import Exam-csv data by using appropriate tidyverse package.
 
+
+
 ```{r}
 exam <- read_csv("Exam_data.csv")
 ```
+
+
 :::
 
 ### [3.3]{style="color:mediumvioletred"} One-sample test: *`gghistostats()`* method
 
 In the code chunk below, [*`gghistostats()`*](https://indrajeetpatil.github.io/ggstatsplot/reference/gghistostats.html) is used to build an visual of one-sample test on English scores.
+
+
 
 ```{r}
 #| code-fold: true
@@ -67,6 +79,8 @@ gghistostats(
   xlab = "English scores"
 )
 ```
+
+
 
 Default information:
 
@@ -112,6 +126,8 @@ One of the most common interpretation is this one - first proposed by Harold Jef
 
 In the code chunk below, [ggbetweenstats()](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for two-sample mean test of Maths scores by gender.
 
+
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -125,11 +141,15 @@ ggbetweenstats(
 
 ```
 
+
+
 Default information: statistical details / Bayes factor / samples sizes / distribution summary
 
 ### [3.7]{style="color:mediumvioletred"} Oneway ANOVA Test: *`ggbetweentats()`* method
 
 In the code chunk below, [ggbetweenstats()](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for One-way ANOVA test on English scores by race.
+
+
 
 ```{r}
 #| code-fold: true
@@ -146,6 +166,8 @@ ggbetweenstats(
   message = FALSE
 )
 ```
+
+
 
 -   "na" -\> only non-significant
 -   "s" -\> only significant
@@ -191,6 +213,8 @@ In the code chunk below, [`ggscatterstats()`](https://indrajeetpatil.github.io/g
 
 Maths x Science; use labels to indicate races scoring 90 for both subjects.
 
+
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -205,9 +229,13 @@ ggscatterstats(
   
 ```
 
+
+
 ## 🌸 Practice II
 
 English x Science; use labels to indicate genders scoring 90 for both subjects.
+
+
 
 ```{r}
 #| code-fold: true
@@ -222,7 +250,11 @@ ggscatterstats(
 )
 ```
 
+
+
 ## Example
+
+
 
 ```{r}
 #| code-fold: true
@@ -234,11 +266,15 @@ ggscatterstats(
   marginal = FALSE
 )
 ```
+
+
 :::
 
 ### [3.9]{style="color:mediumvioletred"} Significant test of association (dependence): *`ggbarstats()`*
 
 Code chunk below, the Maths scores are binned into a 4-class variable with [`cut()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cut)
+
+
 
 ```{r}
 #load library
@@ -249,6 +285,8 @@ exam1 <- exam |>
            cut(MATHS,
                breaks = c(0,60,75,85,100)))
 ```
+
+
 
 [`ggbarstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbarstats.html) is used to build a visual for Significant Test of Association in the code below.
 
@@ -296,6 +334,8 @@ ggbarstats(
 
 To see English scores by genders.
 
+
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -310,9 +350,13 @@ ggbarstats(exam_E,
 
 ```
 
+
+
 ## 🌸 Science by RACE
 
 To see Science scores by races.
+
+
 
 ```{r}
 #| code-fold: true
@@ -328,11 +372,18 @@ ggbarstats(exam_S,
 
 ```
 
+
+
 ## Example
+
+
 
 ```{r}
 ggbarstats(exam1,
            x = MATHS_bins,
            y = GENDER)
 ```
+
+
 :::
+
