@@ -204,6 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span style="color:mediumvioletred">Introduction</span></a></li>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation"><span style="color:mediumvioletred">Preparation</span></a></li>
   <li><a href="#visualisation-1-population-by-planning-area-bar-chart-by-enrico-sebastian" id="toc-visualisation-1-population-by-planning-area-bar-chart-by-enrico-sebastian" class="nav-link" data-scroll-target="#visualisation-1-population-by-planning-area-bar-chart-by-enrico-sebastian"><span style="color:mediumvioletred">Visualisation 1</span> Population by Planning Area (Bar chart by Enrico Sebastian)</a>
   <ul class="collapse">
   <li><a href="#three-strengths" id="toc-three-strengths" class="nav-link" data-scroll-target="#three-strengths">✅ Three Strengths</a></li>
@@ -219,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#visualisation-3-population-in-tampiness-subzones-bar-chart-and-box-plot-by-andre-ong-jia-kang" id="toc-visualisation-3-population-in-tampiness-subzones-bar-chart-and-box-plot-by-andre-ong-jia-kang" class="nav-link" data-scroll-target="#visualisation-3-population-in-tampiness-subzones-bar-chart-and-box-plot-by-andre-ong-jia-kang"><span style="color:mediumvioletred">Visualisation 3</span> Population in Tampines’s Subzones (Bar chart and Box plot by Andre Ong Jia Kang)</a>
   <ul class="collapse">
   <li><a href="#three-strengths-2" id="toc-three-strengths-2" class="nav-link" data-scroll-target="#three-strengths-2">✅ Three Strengths</a></li>
-  <li><a href="#three-areas-for-improvement-1" id="toc-three-areas-for-improvement-1" class="nav-link" data-scroll-target="#three-areas-for-improvement-1">⚠️ Three Areas for Improvement</a></li>
+  <li><a href="#four-areas-for-improvement-1" id="toc-four-areas-for-improvement-1" class="nav-link" data-scroll-target="#four-areas-for-improvement-1">⚠️ Four Areas for Improvement</a></li>
   <li><a href="#makeover-version-2" id="toc-makeover-version-2" class="nav-link" data-scroll-target="#makeover-version-2">🔁 Makeover Version</a></li>
   </ul></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span style="color:mediumvioletred">Summary</span></a></li>
@@ -263,6 +264,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction"><span style="color:mediumvioletred">Introduction</span></h2>
 <p>In this section, the visualization work submitted by Enrico Sebastian and Andre Ong Jia Kang will be evaluated. For each of the three visualizations, three well-executed design elements will be identified, along with three to four areas identified for improvement. Based on this evaluation, a revised version of each visualization will be developed to address the noted shortcomings while preserving the strengths.</p>
+</section>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation"><span style="color:mediumvioletred">Preparation</span></h2>
 <p>To begin the peer evaluation and makeover process, the necessary packages will be reloaded and the dataset will be re-imported. This ensures the working environment is properly prepared and consistent with the earlier analysis. Once the setup is complete, the three peer-submitted visualizations will be reviewed and enhanced.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
@@ -279,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="visualisation-1-population-by-planning-area-bar-chart-by-enrico-sebastian" class="level2">
 <h2 class="anchored" data-anchor-id="visualisation-1-population-by-planning-area-bar-chart-by-enrico-sebastian"><span style="color:mediumvioletred">Visualisation 1</span> Population by Planning Area (Bar chart by Enrico Sebastian)</h2>
-<p>This chart is intended to compare the population distribution across all planning areas in Singapore based on 2024 data. It uses a horizontal bar chart to show which areas are the most and least populated, allowing for a quick visual assessment of population density across the country.</p>
+<p>This chart is intended to compare the population distribution across all planning areas in Singapore in 2024. It uses a horizontal bar chart to show which areas are the most and least populated, allowing for a quick visual assessment of population density across the country.</p>
 <p><img src="images/clipboard-31872337.png" class="img-fluid"></p>
 <section id="three-strengths" class="level3">
 <h3 class="anchored" data-anchor-id="three-strengths">✅ Three Strengths</h3>
@@ -312,7 +316,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Lack of color variation limits interpretability</strong></li>
 </ol>
 <p>The chart applies the same color to all bars, which flattens the visual presentation and makes it harder to distinguish high-population areas from lower ones. This uniform appearance underplays the variation in population sizes.</p>
-<p>To improve this, apply a population-based color gradient to the bars. Although displaying the exact values on each bar is typically effective for showing precise comparisons, doing so here—where there are 55 bars—would result in visual clutter and significantly reduce readability. Instead, using a gradient—where darker shades represent populations above 200,000, medium shades for 100,000–200,000, and lighter shades for under 100,000—preserves clarity while still visually conveying the relative magnitude of each planning area.</p>
+<p>To improve this, apply a population-based color gradient to the bars. Although displaying the exact values on each bar is typically effective for showing precise comparisons, doing so here —where there are 55 bars — would result in visual clutter and significantly reduce readability. Instead, using a gradient — where darker shades represent populations above 200,000, medium shades for 100,000–200,000, and lighter shades for under 100,000—preserves clarity while still visually conveying the relative magnitude of each planning area.</p>
 </section>
 <section id="makeover-version" class="level3">
 <h3 class="anchored" data-anchor-id="makeover-version">🔁 Makeover Version</h3>
@@ -383,7 +387,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><strong>Great Choice of Chart Type</strong></li>
 </ol>
-<p>The pyramid chart is a strong fit for visualizing a bar chart with two distinct categories—in this case, gender. It enables clear, side-by-side comparison of male and female populations across age groups, making demographic patterns easy to interpret.</p>
+<p>The pyramid chart is a strong fit for visualizing a bar chart with two distinct categories — in this case, gender. It enables clear, side-by-side comparison of male and female populations across age groups, making demographic patterns easy to interpret.</p>
 <ol start="2" type="1">
 <li><strong>Intuitive Color Coding by Gender</strong></li>
 </ol>
@@ -540,8 +544,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>The subzones appear in the same order — Tampines West, North, East, Simei — across both panels. This consistent alignment makes it easy for viewers to navigate between the bar chart and boxplots without confusion.</p>
 </section>
-<section id="three-areas-for-improvement-1" class="level3">
-<h3 class="anchored" data-anchor-id="three-areas-for-improvement-1">⚠️ Three Areas for Improvement</h3>
+<section id="four-areas-for-improvement-1" class="level3">
+<h3 class="anchored" data-anchor-id="four-areas-for-improvement-1">⚠️ Four Areas for Improvement</h3>
 <ol type="1">
 <li><strong>Titles of both charts lack emphasis</strong></li>
 </ol>

@@ -10,9 +10,11 @@ execute:
   freeze: true
 ---
 
-## [Introduction]{style="color:mediumvioletred"} 
+## [Introduction]{style="color:mediumvioletred"}
 
 In this section, the visualization work submitted by Enrico Sebastian and Andre Ong Jia Kang will be evaluated. For each of the three visualizations, three well-executed design elements will be identified, along with three to four areas identified for improvement. Based on this evaluation, a revised version of each visualization will be developed to address the noted shortcomings while preserving the strengths.
+
+## [Preparation]{style="color:mediumvioletred"}
 
 To begin the peer evaluation and makeover process, the necessary packages will be reloaded and the dataset will be re-imported. This ensures the working environment is properly prepared and consistent with the earlier analysis. Once the setup is complete, the three peer-submitted visualizations will be reviewed and enhanced.
 
@@ -32,7 +34,7 @@ respop <- read_csv("respopagesex2024/respopagesex2024.csv")
 
 ## [Visualisation 1]{style="color:mediumvioletred"} Population by Planning Area (Bar chart by Enrico Sebastian)
 
-This chart is intended to compare the population distribution across all planning areas in Singapore based on 2024 data. It uses a horizontal bar chart to show which areas are the most and least populated, allowing for a quick visual assessment of population density across the country.
+This chart is intended to compare the population distribution across all planning areas in Singapore in 2024. It uses a horizontal bar chart to show which areas are the most and least populated, allowing for a quick visual assessment of population density across the country.
 
 ![](images/clipboard-31872337.png)
 
@@ -68,7 +70,7 @@ To improve this, reorder the bars in descending order of population to allow for
 
 The chart applies the same color to all bars, which flattens the visual presentation and makes it harder to distinguish high-population areas from lower ones. This uniform appearance underplays the variation in population sizes.
 
-To improve this, apply a population-based color gradient to the bars. Although displaying the exact values on each bar is typically effective for showing precise comparisons, doing so here—where there are 55 bars—would result in visual clutter and significantly reduce readability. Instead, using a gradient—where darker shades represent populations above 200,000, medium shades for 100,000–200,000, and lighter shades for under 100,000—preserves clarity while still visually conveying the relative magnitude of each planning area.
+To improve this, apply a population-based color gradient to the bars. Although displaying the exact values on each bar is typically effective for showing precise comparisons, doing so here —where there are 55 bars — would result in visual clutter and significantly reduce readability. Instead, using a gradient — where darker shades represent populations above 200,000, medium shades for 100,000–200,000, and lighter shades for under 100,000—preserves clarity while still visually conveying the relative magnitude of each planning area.
 
 ### 🔁 Makeover Version
 
@@ -166,7 +168,7 @@ This chart is intended to visualize the distribution of Singapore’s resident p
 
 1.  **Great Choice of Chart Type**
 
-The pyramid chart is a strong fit for visualizing a bar chart with two distinct categories—in this case, gender. It enables clear, side-by-side comparison of male and female populations across age groups, making demographic patterns easy to interpret.
+The pyramid chart is a strong fit for visualizing a bar chart with two distinct categories — in this case, gender. It enables clear, side-by-side comparison of male and female populations across age groups, making demographic patterns easy to interpret.
 
 2.  **Intuitive Color Coding by Gender**
 
@@ -398,7 +400,7 @@ The bar chart provides an intuitive representation of total population counts ac
 
 The subzones appear in the same order — Tampines West, North, East, Simei — across both panels. This consistent alignment makes it easy for viewers to navigate between the bar chart and boxplots without confusion.
 
-### ⚠️ Three Areas for Improvement
+### ⚠️ Four Areas for Improvement
 
 1.  **Titles of both charts lack emphasis**
 
@@ -412,13 +414,13 @@ The current order of subzones does not follow a logical or alphabetical pattern,
 
 To improve this, reorder the subzones as Tampines East → Tampines North → Tampines West → Simei for a more familiar presentation.
 
-3. 	**Visual redundancy in explanatory note**
+3.  **Visual redundancy in explanatory note**
 
 The annotation stating “Bars = total pop; Boxes = age spread” at the bottom right is unnecessary, as this distinction is already evident from the respective chart titles.
 
 To improve this, remove the note to streamline the visuals and avoid clutter.
 
-4.	**Inconsistent color usage across charts**
+4.  **Inconsistent color usage across charts**
 
 The bar chart uses a single color for all subzones, while the boxplots use four distinct colors — causing a visual disconnect when trying to compare across both.
 
@@ -430,6 +432,7 @@ Below is the revised version of the original chart, applying all suggested impro
 
 ::: panel-tabset
 ## Plot
+
 ```{r, echo=FALSE}
 # Filter Tampines and get top 4 subzones by total population
 top4_subzones <- respop %>%
@@ -569,4 +572,4 @@ box_plot <- ggplot(box_data, aes(x = SZ, y = Age, fill = SZ)) +
 
 ## [Summary]{style="color:mediumvioletred"}
 
-Through this peer evaluation and makeover exercise, important design lessons were surfaced—from optimizing chart types for clarity to ensuring visual consistency and interpretability. By carefully analyzing the original strengths and addressing identified weaknesses, each revised visualization now communicates insights more effectively while preserving the intent of the original work.
+Through this peer evaluation and makeover exercise, important design lessons were surfaced — from optimizing chart types for clarity to ensuring visual consistency and interpretability. By carefully analyzing the original strengths and addressing identified weaknesses, each revised visualization now communicates insights more effectively while preserving the intent of the original work.
