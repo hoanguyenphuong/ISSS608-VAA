@@ -12,7 +12,7 @@ execute:
 
 ## [Introduction]{style="color:mediumvioletred"}
 
-In this section, the visualization work submitted by Enrico Sebastian and Andre Ong Jia Kang will be evaluated. For each of the three visualizations, three well-executed design elements will be identified, along with three to four areas identified for improvement. Based on this evaluation, a revised version of each visualization will be developed to address the noted shortcomings while preserving the strengths.
+In this section, the visualization work submitted by [Enrico Sebastian](https://iss608-vaa.netlify.app/take-home_ex/take-home_ex01/take%20home%20exercise%201#references) and [Andre Ong Jia Kang](https://isss608-ay2025-aprilterm.netlify.app/take-home_ex/take-home_ex01/take-home_ex01) will be evaluated. For each of the three visualizations, three well-executed design elements will be identified, along with three to four areas identified for improvement. Based on this evaluation, a revised version of each visualization will be developed to address the noted shortcomings while preserving the strengths.
 
 ## [Preparation]{style="color:mediumvioletred"}
 
