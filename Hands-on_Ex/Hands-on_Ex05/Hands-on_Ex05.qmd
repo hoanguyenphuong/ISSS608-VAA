@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex05 - Modelling, Visualising and Analysing Network Data with R "
+title: "Hands-on_Ex05 - Modelling, Visualising and Analysing Network Data with R"
 author: "Hoa Nguyen Phuong"
 format: html
 date-modified: "last-modified" 
