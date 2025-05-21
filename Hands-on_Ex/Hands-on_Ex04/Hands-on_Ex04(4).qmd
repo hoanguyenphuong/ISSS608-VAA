@@ -45,7 +45,7 @@ covid19 <- read_csv("COVID-19_DKI_Jakarta.csv") %>%
 ```
 
 |  |  |  |  |  |  |  |
-|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+|----|----|----|----|----|----|----|
 | **Sub-district ID** | **City** | **District** | **Sub-district** | **Positive** | **Recovered** | **Death** |
 | 3172051003 | JAKARTA UTARA | PADEMANGAN | ANCOL | 1776 | 1691 | 26 |
 | 3173041007 | JAKARTA BARAT | TAMBORA | ANGKE | 1783 | 1720 | 29 |
