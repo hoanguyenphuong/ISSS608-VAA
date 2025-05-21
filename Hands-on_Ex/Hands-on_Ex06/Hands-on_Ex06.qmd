@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex06 - Visualising and Analysing Time-oriented Data"
+title: "Hands-on_Ex06 - Visualising and Analysing Time-oriented Data "
 author: "Hoa Nguyen Phuong"
 format: html
 date-modified: "last-modified" 
