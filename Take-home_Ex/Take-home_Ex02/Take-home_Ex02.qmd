@@ -1,8 +1,7 @@
 ---
 title: "Take-home_Ex02 - VAST Challenge 2025 - Mini Challenge 3"
 author: "Hoa Nguyen Phuong"
-format:
-  docx: default
+format: html
 date-modified: "last-modified" 
 execute:
   echo: true 
