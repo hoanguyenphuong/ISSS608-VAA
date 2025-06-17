@@ -31,13 +31,13 @@ This take home exercise 3 objective is to:
 
 # [3]{style="color:#d496d4; background:none;"} Storyboard {#storyboard}
 
-**The first app**, [Temporal Pattern and Communication Network](#app1), focuses on visual exploration of the intercepted communication metadata. The app will be divided into 4 main section that will be further detailed in [Chapter 4](#app1). It will be focusing on:
+**The first app**, [Temporal Pattern and Communication Network](#app1), focuses on visual exploration of the intercepted communication metadata. The app will be divided into 4 main section that will be further detailed in [Chapter 7.1](#app1). It will be focusing on:
 
 -   Identifying temporal patterns in communications.
 
 -   Revealing relationships and influence among entities (people, vessels, groups).
 
-**The second app**, [Relationship Clusters and Pseudonyms](#app2), will be based on Part 2 - Relationship Cluster and Pseudonym: [Hoa's Take Home Exercise 2](https://isss608-ay2024-25t.netlify.app/take-home_ex/take-home_ex02/take-home_ex02). It aims to deepen the analysis of communication networks by identifying patterns of association and hidden identities through an interactive platform for revealing the structure and semantics behind the communication web, and will be further detailed in [Chapter 4](#app2). It will be focusing on:
+**The second app**, [Relationship Clusters and Pseudonyms](#app2), will be based on Part 2 - Relationship Cluster and Pseudonym: [Hoa's Take Home Exercise 2](https://isss608-ay2024-25t.netlify.app/take-home_ex/take-home_ex02/take-home_ex02). It aims to deepen the analysis of communication networks by identifying patterns of association and hidden identities through an interactive platform for revealing the structure and semantics behind the communication web, and will be further detailed in [Chapter 7.2](#app2). It will be focusing on:
 
 -   Uncovering interactions and relationships between vessels and individuals in the network.
 
@@ -53,7 +53,7 @@ This take home exercise 3 objective is to:
 
 -   Summarizing her activities over time through temporal and network-based visualizations to support or refute Clepper’s suspicions.
 
-This app combines time series trends and social network dynamics to track Nadia’s role and influence within the broader network, and will be elaborated in [Chapter 4](#app3).
+This app combines time series trends and social network dynamics to track Nadia’s role and influence within the broader network, and will be elaborated in [Chapter 7.3](#app3).
 
 # [4]{style="color:#d496d4; background:none;"} UI Design {#uidesign}
 
@@ -87,9 +87,125 @@ According to [uxdesigninstitute](https://www.uxdesigninstitute.com/blog/guide-to
 | -   Graph type: Full vs. person-to-person communication           |                                                                             |
 +-------------------------------------------------------------------+-----------------------------------------------------------------------------+
 
-### [4.1.3]{style="color:#d496d4; background:none;"} Shiny App Panel Tabs UI Design
+### [4.1.3]{style="color:#d496d4; background:none;"} UI objects used
 
-#### [4.1.3.1]{style="color:#d496d4; background:none;"} **Temporal Pattern**
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| **UI Component**                    | **Purpose**                                                                                |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `titlePanel()`                      | App's title                                                                                |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `sidebarLayout()`                   | Two-column layout with input controls on the side and output in the main area              |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `tabsetPanel()`                     | Separate tabs for the different visualization                                              |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `selectInput()`                     | Select an entity or type (e.g., person, vessel), and Filter by Week Label (e.g., Week 1/2) |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `textInput()` or `selectizeInput()` | Allows one or more selection sender/receiver                                               |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `checkboxGroupInput()`              | Select multiple weeks or types                                                             |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `dateRangeInput()`                  | Filter by date range                                                                       |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `sliderInput()`                     | Filter by hour of day (0–23)                                                               |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `plotOutput()`                      | Static ggplot visualizations (content to be defined under `Server \<- function segment`)   |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `dataTableOutput()`                 | Render data table (content to be defined under `Server \<- function segment`)              |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `visNetworkOutput()`                | Interactive network graph (content to be defined under `Server \<- function segment`)      |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+| `actionButton()`                    | Apply filters                                                                              |
++-------------------------------------+--------------------------------------------------------------------------------------------+
+
+### [4.1.4]{style="color:#d496d4; background:none;"} R packages needed for Shiny application {#rpkg}
+
+As we will be adapting our Take Home Exercise 2 graphs to Shiny Application, we need to ensure that we have all the necessary R packages needed for this conversion such as:
+
+-   [**shiny**](https://shiny.posit.co/){target="_blank"}**:** Easy web apps for data science without the compromises.
+-   [**dplyr**](https://cran.r-project.org/package=dplyr){target="_blank"}: A grammar of data manipulation, making data wrangling concise, fast, and readable.
+-   [**ggplot2**](https://cran.r-project.org/package=ggplot2){target="_blank"}: A versatile and widely used R package for creating elegant data visualizations based on the Grammar of Graphics.
+-   [**visNetwork**](https://datastorm-open.github.io/visNetwork/){target="_blank"}: Enables interactive network visualizations in R using the vis.js JavaScript library.
+
+### [4.1.5]{style="color:#d496d4; background:none;"} Test the specific R codes can be run
+
+Most preparation have been done in [Take Home Exercise 2](https://isss608-vriadi.netlify.app/take-home_ex/take-home_ex02/take-home_ex02).
+
+In this section we will prepare and test the specific R codes can be run and return the correct output as expected.
+
+First we load the requred R packages
+
+```{r}
+#| code-fold: true
+pacman::p_load(tidyverse, tidygraph, ggraph, jsonlite, ggplot2,SmartEDA, lubridate, ggthemes, readr, readxl, knitr, dplyr, visNetwork)
+```
+
+Next we load the data in
+
+```{r}
+#| code-fold: true
+comm_full <- read.csv("data/communications_full.csv")
+```
+
+#### [4.1.5.1]{style="color:#d496d4; background:none;"} **Temporal Pattern**
+
+```{r}
+#| code-fold: true
+comm_full %>%
+  count(week_label, date) %>%
+  ggplot(aes(x = date, y = n, group = week_label)) +
+  geom_line(color = "steelblue", size = 1.2) +
+  facet_wrap(~ week_label, scales = "free_x", ncol = 1, labeller = label_value) +
+  labs(
+    title = "Daily Communication Volume Per Week",
+    x = "Date", y = "Number of Messages"
+  ) +
+  theme_minimal()
+```
+
+#### [4.1.5.2]{style="color:#d496d4; background:none;"} **Communication Heatmap**
+
+```{r}
+#| code-fold: true
+comm_hourly_weekly <- comm_full %>%
+  count(week_label, weekday, hour)
+
+ggplot(comm_hourly_weekly, aes(x = hour, y = weekday, fill = n)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis_c(option = "plasma", name = "Message Count") +
+  labs(title = "Communication Intensity by Hour and Weekday",
+       x = "Hour of Day", y = "Day of Week") +
+  facet_wrap(~ week_label, ncol = 1) +
+  theme_minimal()
+
+```
+
+#### [4.1.5.3]{style="color:#d496d4; background:none;"} **Communication Network Graph**
+
+```{r}
+#| code-fold: true
+# Create edge list
+graph_edges <- comm_full %>%
+  count(sender_label, receiver_label) %>%
+  filter(!is.na(sender_label), !is.na(receiver_label)) %>%
+  rename(from = sender_label, to = receiver_label, value = n)
+
+# Create node list from edges
+graph_nodes <- tibble(name = unique(c(graph_edges$from, graph_edges$to))) %>%
+  mutate(id = name, label = name, group = name)
+
+# visNetwork expects numeric node IDs, but we can use labels for both
+visNetwork(nodes = graph_nodes, edges = graph_edges) %>%
+  visEdges(arrows = "to") %>%
+  visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
+  visLayout(randomSeed = 123) %>%
+  visPhysics(stabilization = TRUE) %>%
+  visInteraction(navigationButtons = TRUE) %>%
+  visLegend()
+```
+
+### [4.1.6]{style="color:#d496d4; background:none;"} Shiny App Panel Tabs UI Design
+
+#### [4.1.6.1]{style="color:#d496d4; background:none;"} **Temporal Pattern**
 
 Purpose: Reveal day-to-day communication rhythms.
 
@@ -105,7 +221,7 @@ This helps Clepper pinpoint temporal spikes, such as bursts of chatter before cr
 
 ![](images/temporalpattern.jpg){fig-align="center"}
 
-#### [4.1.3.2]{style="color:#d496d4; background:none;"} **Heatmap**
+#### [4.1.6.2]{style="color:#d496d4; background:none;"} **Heatmap**
 
 Purpose: Explore patterns by time-of-day and communication density.
 
@@ -119,7 +235,7 @@ Effective for isolating habitual communicators or unusual off-hour messages (pot
 
 ![](images/heatmap.jpg){fig-align="center"}
 
-#### [4.1.3.3]{style="color:#d496d4; background:none;"} **Communication Network**
+#### [4.1.6.3]{style="color:#d496d4; background:none;"} **Communication Network**
 
 Purpose: Visualize the social graph of communication.
 
@@ -133,7 +249,7 @@ This is key for identifying influence hubs, peripheral actors, and communication
 
 ![](images/commsnetwork.jpg){fig-align="center"}
 
-#### [4.1.3.4]{style="color:#d496d4; background:none;"} **Receipts**
+#### [4.1.6.4]{style="color:#d496d4; background:none;"} **Receipts**
 
 This tab allow users to read the communication messages (or as investigators we can call them receipts).
 
@@ -149,91 +265,85 @@ Useful for identifying suspicious message contents and linking disguised persona
 
 ![](images/receipts.jpg){fig-align="center"}
 
-### [4.1.4]{style="color:#d496d4; background:none;"} UI objects used
+## [4.2]{style="color:#d496d4; background:none;"} App 2: Relationship Clusters and Pseudonyms {#app2}
 
-|  |  |
-|----|----|
-| **UI Component** | **Purpose** |
-| `titlePanel()` | App's title |
-| `sidebarLayout()` | Two-column layout with input controls on the side and output in the main area |
-| `tabsetPanel()` | Separate tabs for the different visualization |
-| `selectInput()` | Select an entity or type (e.g., person, vessel), and Filter by Week Label (e.g., Week 1/2) |
-| `textInput()` or `selectizeInput()` | Allows one or more selection sender/receiver |
-| `checkboxGroupInput()` | Select multiple weeks or types |
-| `dateRangeInput()` | Filter by date range |
-| `sliderInput()` | Filter by hour of day (0–23) |
-| `plotOutput()` | Static ggplot visualizations (content to be defined under `Server \<- function segment`) |
-| `dataTableOutput()` | Render data table (content to be defined under `Server \<- function segment`) |
-| `visNetworkOutput()` | Interactive network graph (content to be defined under `Server \<- function segment`) |
-| `actionButton()` | Apply filters |
+### [4.2.1]{style="color:#d496d4; background:none;"} UI Design Goals
 
-### [4.1.5]{style="color:#d496d4; background:none;"} R packages needed for Shiny application {#rpkg}
+### [4.2.2]{style="color:#d496d4; background:none;"} Parameters and outputs that will be exposed on the Shiny applications
 
-As we will be adapting our Take Home Exercise 2 graphs to Shiny Application, we need to ensure that we have all the necessary R packages needed for this conversion such as:
+### [4.2.3]{style="color:#d496d4; background:none;"} UI objects used
 
--   [**shiny**](https://shiny.posit.co/){target="_blank"}**:** Easy web apps for data science without the compromises.
--   [**dplyr**](https://cran.r-project.org/package=dplyr){target="_blank"}: A grammar of data manipulation, making data wrangling concise, fast, and readable.
--   [**ggplot2**](https://cran.r-project.org/package=ggplot2){target="_blank"}: A versatile and widely used R package for creating elegant data visualizations based on the Grammar of Graphics.
--   [**visNetwork**](https://datastorm-open.github.io/visNetwork/){target="_blank"}: Enables interactive network visualizations in R using the vis.js JavaScript library.
+### [4.2.4]{style="color:#d496d4; background:none;"} R packages needed for Shiny application
 
-### [4.1.6]{style="color:#d496d4; background:none;"} Test the specific R codes can be run {#prototype}
+### [4.2.5]{style="color:#d496d4; background:none;"} Test the specific R codes can be run
 
-Most preparation have been done in [Take Home Exercise 2](https://isss608-vriadi.netlify.app/take-home_ex/take-home_ex02/take-home_ex02).
+#### [4.2.5.1]{style="color:#d496d4; background:none;"} **Module 1**
 
-In this section we will prepare and test the specific R codes can be run in Shiny and return the correct output as expected.
+#### [4.2.5.2]{style="color:#d496d4; background:none;"} **Module 2**
+
+### [4.2.6]{style="color:#d496d4; background:none;"} Shiny App Panel Tabs UI Design
+
+#### [4.2.6.1]{style="color:#d496d4; background:none;"} **Module 1**
+
+#### [4.2.6.2]{style="color:#d496d4; background:none;"} **Module 2**
+
+## [4.3]{style="color:#d496d4; background:none;"} App 2: Relationship Clusters and Pseudonyms
+
+### [4.3.1]{style="color:#d496d4; background:none;"} UI Design Goals
+
+### [4.3.2]{style="color:#d496d4; background:none;"} Parameters and outputs that will be exposed on the Shiny applications
+
+### [4.3.3]{style="color:#d496d4; background:none;"} UI objects used
+
+### [4.3.4]{style="color:#d496d4; background:none;"} R packages needed for Shiny application
+
+### [4.3.5]{style="color:#d496d4; background:none;"} Test the specific R codes can be run
+
+#### [4.3.5.1]{style="color:#d496d4; background:none;"} **Module 1**
+
+#### [4.3.5.2]{style="color:#d496d4; background:none;"} **Module 2**
+
+#### [4.3.5.3]{style="color:#d496d4; background:none;"} **Module 3**
+
+#### [4.3.5.4]{style="color:#d496d4; background:none;"} **Module 4**
+
+#### [4.3.5.5]{style="color:#d496d4; background:none;"} **Module 5**
+
+#### [4.3.5.6]{style="color:#d496d4; background:none;"} **Module 6**
+
+### [4.3.6]{style="color:#d496d4; background:none;"} Shiny App Panel Tabs UI Design
+
+#### [4.3.6.1]{style="color:#d496d4; background:none;"} **Module 1**
+
+#### [4.3.6.2]{style="color:#d496d4; background:none;"} **Module 2**
+
+#### [4.3.6.3]{style="color:#d496d4; background:none;"} **Module 3**
+
+#### [4.3.6.4]{style="color:#d496d4; background:none;"} **Module 4**
+
+#### [4.3.6.5]{style="color:#d496d4; background:none;"} **Module 5**
+
+#### [4.3.6.6]{style="color:#d496d4; background:none;"} **Module 6**
+
+# [5]{style="color:#d496d4; background:none;"} Prototype
 
 **Scroll down and click "Update View" to load the visualization!**
 
-### View on [![](/images/Posit_logo.png){height="20"}](https://vriadi.shinyapps.io/reefwhispers_app1/){target="_blank"}
+### View on [![](/images/Posit_logo.png){height="20"}](https://vriadi.shinyapps.io/reefwhispers_proto1/){target="_blank"}
 
 ```{=html}
 <div style="width: 100%; height: 600px; padding: 0; overflow: hidden;">
   <iframe 
-    src="https://vriadi.shinyapps.io/reefwhispers_app1/" 
+    src="https://vriadi.shinyapps.io/reefwhispers_proto1/" 
     title="CMAP-RSI Explorer"
     style="width: 135%; height: 135%; transform: scale(0.75); transform-origin: top left; border: none;">
   </iframe>
 </div>
 ```
 
-## [4.2]{style="color:#d496d4; background:none;"} App 2: Communication Clusters and Pseudonyms {#app2}
+*Interactive prototype currently only available for App 1.*
 
-### [4.2.1]{style="color:#d496d4; background:none;"} UI Design Goals
-
-• Break down the interface into focused tabs for Communication Network & Cluster Detection, Predominant Topic Discovery, and Pseudonym Usage & Exploration.
-
-• Use expressive and interactive visuals (e.g., multi-cluster & force-directed relationship graph, filterable tables, searchable bar chart & heatmap) to highlight communicative interaction & clusters and pseudonymous insights in the network.
-
-• Support investigative usability by enabling Clepper to uncover hidden communication tendency, closely associated groups, and individuals hidden under multiple aliases.
-
-### [4.2.2]{style="color:#d496d4; background:none;"} Parameters and outputs that will be exposed on the Shiny application
-
-| **Parameters (UI Inputs)** | **Outputs (UI Outputs)** |
-|----|----|
-| **Week Selection** (select box) | **All charts:** Charts filtered by the selected week(s) |
-| **Date Range Input** (free-text boxes) | **All charts:** Charts filtered by the specific selected date range |
-| **Individual ID Selection** (dropdown) | **Chart 1:** Force-directed network graph that highlights the selected ID and all directly connected nodes |
-| **Cluster Selection** (dropdown) | **Chart 1:** Force-directed network graph that highlights the selected cluster with all belonged nodes |
-| **Cluster Selection** (dropdown) | **Chart 2:** Table that displays top keywords mentioned in the messages of nodes belonging to the selected cluster |
-| **Number of Top Keywords Input** (slider) | **Chart 2:** Table that shows top *k* keywords mentioned in the messages of nodes (belonging to the selected cluster) |
-| **Threshold for Pseudonym Frequency Input** (slider) | **Chart 3:** Bar chart of pseudonyms whose frequency ≥ threshold |
-| **Threshold for Pseudonym Mentions** (slider) | **Chart 4:** Heatmap of pseudonym mentions with frequency ≥ threshold |
-
-### [4.2.3]{style="color:#d496d4; background:none;"} Shiny App Panel Tabs UI Design
-
-#### [4.2.3.1]{style="color:#d496d4; background:none;"} Communication Clusters: Closely Associated Groups
-
-#### [4.2.3.2]{style="color:#d496d4; background:none;"} **Module 2**
-
-#### [4.2.3.3]{style="color:#d496d4; background:none;"} **Module 3**
-
-### [4.2.4]{style="color:#d496d4; background:none;"} UI objects used
-
-### [4.2.5]{style="color:#d496d4; background:none;"} R packages needed for Shiny application
-
-### [4.2.6]{style="color:#d496d4; background:none;"} Test the specific R codes can be run
-
-# [5]{style="color:#d496d4; background:none;"} Reference
+# [6]{style="color:#d496d4; background:none;"} Reference
 
 -   [VAST 2024 Mini Challenge 3](https://vast-challenge.github.io/2025/MC3.html){target="_blank"}
 
@@ -243,22 +353,22 @@ In this section we will prepare and test the specific R codes can be run in Shin
 
 -   [Summer's Take Home Exercise 2](https://summernguyenn.netlify.app/take-home_ex/take-home_ex02/take-home_ex02)\
 
-## [5.1]{style="color:#d496d4; background:none;"} R Packages
+## [6.1]{style="color:#d496d4; background:none;"} R Packages
 
 -   [shiny](https://shiny.posit.co/){target="_blank"}: Easy web apps for data science without the compromises.
 -   [dplyr](https://cran.r-project.org/package=dplyr){target="_blank"}: A grammar of data manipulation, making data wrangling concise, fast, and readable.
 -   [ggplot2](https://cran.r-project.org/package=ggplot2){target="_blank"}: A versatile and widely used R package for creating elegant data visualizations based on the Grammar of Graphics.
 -   [visNetwork](https://datastorm-open.github.io/visNetwork/){target="_blank"}: Enables interactive network visualizations in R using the vis.js JavaScript library.
 
-## [5.2]{style="color:#d496d4; background:none;"} Shiny Fuctional Specs and Tutorials
+## [6.2]{style="color:#d496d4; background:none;"} Shiny Fuctional Specs and Tutorials
 
-## [5.3]{style="color:#d496d4; background:none;"} Lesson Slides
+## [6.3]{style="color:#d496d4; background:none;"} Lesson Slides
 
 -   [Lesson 6a: Shiny Basic](../lesson/Lesson06/Shiny1/Shiny1.html)
 -   [Lesson 6b: Shiny Reactivity](../lesson/Lesson06/Shiny2/Shiny2.html)
 -   [Lesson 6c: Beyond Basic Basic](../lesson/Lesson06/Shiny3/Shiny3.html)
 
-## [5.4]{style="color:#d496d4; background:none;"} Shiny Fuctional Specs and Tutorials
+## [6.4]{style="color:#d496d4; background:none;"} Shiny Fuctional Specs and Tutorials
 
 -   [Shiny from R Studio](https://shiny.rstudio.com/)
 -   [Learn Shiny](https://shiny.rstudio.com/tutorial/)
