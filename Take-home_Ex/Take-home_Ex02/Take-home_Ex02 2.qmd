@@ -1,6 +1,6 @@
 ---
-title: "Take-home_Ex02 - VAST Challenge 2025 - Mini Challenge 3 "
-author: "Hoa Nguyen Phuong "
+title: "Take-home_Ex02 - VAST Challenge 2025 - Mini Challenge 3"
+author: "Hoa Nguyen Phuong"
 format: html
 date-modified: "last-modified" 
 execute:
@@ -402,7 +402,7 @@ This **communications_full.csv** will be the basis for identifying social cluste
 
 ## [5.1]{style="color:mediumvioletred"} Question 2 - Communication Network & Group Detection
 
-To answer these two questions, we construct a interactive network graph showing who communicates with whom (among the people and vessels) based on the intercepted radio messages.
+To answer these two questions, we construct a interactive network graph showing who communicates with whom based on the intercepted radio messages.
 
 We use the cleaned **comm_full** dataset and aggregate all communications into a sender–receiver edge list. Each edge represents at least one message sent from one entity to another. The resulting network allows us to examine the structure and density of interpersonal or inter-organizational interactions.
 
@@ -420,37 +420,41 @@ This interactive network graph addresses Questions 2a and 2b by uncovering key c
 
 • Node Color & Group Labels: Each node represents an individual or entity, and is colored based on its communication cluster, which is automatically detected using the Louvain community detection algorithm. A cluster refers to a group of nodes that communicate more frequently with each other than with nodes outside their group, which might reflect underlying real-world affiliations or coordinated behavior. From the communication network, five distinct clusters are identified.
 
-• Filter: Use the “Select by id” dropdown at the top to highlight an individual node along with all entities it communicates with directly. Use the "Select by cluster" dropdown right below to highlight nodes within a certain cluster.
+• Filter: Use the “Select by id” dropdown at the top to highlight an individual node along with all entities it communicates with directly.
 
-• Interactivity: Users can zoom in and out, use the four-directional arrow controls to pan across the graph, and click the full-view button to recenter the entire network layout — making it easier to explore dense or scattered communication patterns.
+• Interactivity: It is possible to zoom in and out the graph to explore dense areas more easily.
 
 ::: panel-tabset
 # Communication Network
 
 ```{r, echo=FALSE}
-# Load required libraries
 library(igraph)
 library(visNetwork)
 library(dplyr)
 
-# Step 0: Filter only Person and Vessel interactions
 edge_list <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel")) %>%
+  select(sender_label, receiver_label) %>%
   filter(!is.na(sender_label) & !is.na(receiver_label)) %>%
   count(sender_label, receiver_label, name = "weight")
+
+graph_comm <- graph_from_data_frame(edge_list, directed = TRUE)
 
 # Step 1: Create igraph object
 graph_comm <- graph_from_data_frame(edge_list, directed = TRUE)
 
-# Step 2: Louvain clustering
+# Step 2: Louvain Clustering
 clusters <- cluster_walktrap(graph_comm)
 
-# Step 3: Cluster mapping
-cluster_names <- paste0("Cluster ", 1:5)
-cluster_map <- setNames(cluster_names, as.character(1:5))
+# Step 3: Define cluster labels (Cluster 1 to 5)
+cluster_map <- c(
+  "1" = "Cluster 1",
+  "2" = "Cluster 2",
+  "3" = "Cluster 3",
+  "4" = "Cluster 4",
+  "5" = "Cluster 5"
+)
 
-# Step 4: Node metrics
+# Step 4: Compute node-level info
 deg_sent <- degree(graph_comm, mode = "out")
 deg_recv <- degree(graph_comm, mode = "in")
 
@@ -462,54 +466,57 @@ nodes <- data.frame(
   value = deg_sent + deg_recv
 )
 
-nodes$group <- factor(nodes$group, levels = cluster_names)
+# Step 5: Factor group for legend order (Cluster 1 → Cluster 5)
+nodes$group <- factor(nodes$group, levels = paste0("Cluster ", 1:5))
 
-# Step 5: Edge prep
+# Step 6: Prepare edges
 edges <- data.frame(
   from = as_edgelist(graph_comm)[, 1],
   to = as_edgelist(graph_comm)[, 2],
   arrows = "to"
 )
 
-# Step 6: Render network with full navigation UI and "Select by cluster"
+# Step 7: Render interactive graph
 visNetwork(nodes, edges) %>%
   visOptions(
     highlightNearest = TRUE,
-    selectedBy = list(variable = "group", multiple = FALSE, main = "Select by cluster"),  # 👈 custom label
     nodesIdSelection = list(enabled = TRUE)
   ) %>%
   visLegend() %>%
-  visPhysics(solver = "forceAtlas2Based", stabilization = TRUE) %>%
-  visInteraction(navigationButtons = TRUE) %>%
+  visPhysics(solver = "forceAtlas2Based") %>%
   visLayout(randomSeed = 123)
 ```
 
 # Code
 
 ```{r, eval=FALSE}
-# Load required libraries
 library(igraph)
 library(visNetwork)
 library(dplyr)
 
-# Step 0: Filter only Person and Vessel interactions
 edge_list <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel")) %>%
+  select(sender_label, receiver_label) %>%
   filter(!is.na(sender_label) & !is.na(receiver_label)) %>%
   count(sender_label, receiver_label, name = "weight")
+
+graph_comm <- graph_from_data_frame(edge_list, directed = TRUE)
 
 # Step 1: Create igraph object
 graph_comm <- graph_from_data_frame(edge_list, directed = TRUE)
 
-# Step 2: Louvain clustering
+# Step 2: Louvain Clustering
 clusters <- cluster_walktrap(graph_comm)
 
-# Step 3: Cluster mapping
-cluster_names <- paste0("Cluster ", 1:5)
-cluster_map <- setNames(cluster_names, as.character(1:5))
+# Step 3: Define cluster labels (Cluster 1 to 5)
+cluster_map <- c(
+  "1" = "Cluster 1",
+  "2" = "Cluster 2",
+  "3" = "Cluster 3",
+  "4" = "Cluster 4",
+  "5" = "Cluster 5"
+)
 
-# Step 4: Node metrics
+# Step 4: Compute node-level info
 deg_sent <- degree(graph_comm, mode = "out")
 deg_recv <- degree(graph_comm, mode = "in")
 
@@ -521,32 +528,31 @@ nodes <- data.frame(
   value = deg_sent + deg_recv
 )
 
-nodes$group <- factor(nodes$group, levels = cluster_names)
+# Step 5: Factor group for legend order (Cluster 1 → Cluster 5)
+nodes$group <- factor(nodes$group, levels = paste0("Cluster ", 1:5))
 
-# Step 5: Edge prep
+# Step 6: Prepare edges
 edges <- data.frame(
   from = as_edgelist(graph_comm)[, 1],
   to = as_edgelist(graph_comm)[, 2],
   arrows = "to"
 )
 
-# Step 6: Render network with full navigation UI and "Select by cluster"
+# Step 7: Render interactive graph
 visNetwork(nodes, edges) %>%
   visOptions(
     highlightNearest = TRUE,
-    selectedBy = list(variable = "group", multiple = FALSE, main = "Select by cluster"),  # 👈 custom label
     nodesIdSelection = list(enabled = TRUE)
   ) %>%
   visLegend() %>%
-  visPhysics(solver = "forceAtlas2Based", stabilization = TRUE) %>%
-  visInteraction(navigationButtons = TRUE) %>%
+  visPhysics(solver = "forceAtlas2Based") %>%
   visLayout(randomSeed = 123)
 ```
 :::
 
 ### [5.1.2]{style="color:mediumvioletred"} Question 2a - Communication Network: Who Talks to Whom?
 
-• The largest nodes by size like Mako and Reef Guardians represent the most active communicators, each with a high total number of messages sent and received. In contrast to these dominant hubs, nodes like Samantha Blake and Osprey participate less frequently, possibly playing supporting roles.
+• The largest nodes by size like Mako, Oceanus City Council, and Reef Guardians represent the most active communicators, each with a high total number of messages sent and received. In contrast to these dominant hubs, nodes like Port Security and City Officials participate less frequently, possibly playing supporting roles.
 
 =\> The structure of the communication network is concentrated, with a few dominant communicators and several peripheral participants.This suggests an underlying hierarchy or coordination, potentially reflecting real-world group leadership and operational dynamics.
 
@@ -556,24 +562,24 @@ visNetwork(nodes, edges) %>%
 
 ### [5.1.3]{style="color:mediumvioletred"} Question 2b - Group Detection: Who Belongs Together?
 
-The communication network of people and vessels reveals five distinct clusters, each representing a group of entities that communicate more frequently within their group/cluster than with outside entities, suggesting likely shared objectives or roles. The clusters were derived using the Louvain algorithm, which detects tightly connected groups within the network. Each cluster is color-coded for visual clarity.
+The communication network reveals five distinct clusters, each representing a group of entities that communicate more frequently within their group/cluster than with outside entities, suggesting likely shared objectives or roles. The clusters were derived using the Louvain algorithm, which detects tightly connected groups within the network. Each cluster is color-coded for visual clarity.
 
-🔵 Cluster 1 consists of 6 nodes: The Accountant, Boss, the Middleman, Mrs. Money, The Intern, and The Lookout.
+🔴 Cluster 1 consists of 16 nodes: City Officials, Neptune, Small Fry, Davis, Remora, Mako, V. Miesel Shipping, Rodriguez, Nadia Conti, Elise, Sailor Shifts Team, Knowles, Glitters Team, Osprey, Smantha Blake, and Haacklee Harbor.
 
-🔴 Cluster 2 consist of 14 nodes: Samantha Blake, Osprey, Elise, Knowles, Liam Thorne, Mako, Small Fry, Neptune, Davis, Nadia Conti, Remora, Rodriguez, Marlin, and Serenity.
+🟢 Cluster 2 consist of 15 nodes: Port Security, Defender, Serenity, Reef Guardian, Seawatch, Horizon, Sentinel, Green Guardians, Himark Harbor, Marlin, Paackland Harbor, Northern Light, Oceanus City Council, EcoVigil, and Liam Thorne.
 
-🟣 Cluster 3 consists of 2 nodes: Sam and Kelly. These two entities barely communicate and, if they do, primarily interact with each other, as their only outside communication is with Cluster 1.
+🔵 Cluster 3 consists of 6 nodes: The Lookout, The Intern, Mrs. Money, Boss, The Middleman, and The Accountant.
 
-🟢 Cluster 4 consists of 6 nodes: EcoVigil, Defender, Reef Guardian, Seawatch, Sentinel, and Horizon.
+🟣 Cluster 4 consists of 2 nodes: Sam and Kelly. These two entities barely communicate and, if they do, primarily interact with each other, as their only outside communication is with Cluster 3.
 
 🟡 Cluster 5 consists of 2 nodes: Miranda Jordan and Clepper Jensen. These two entities barely communicate too and, if they do, only interact with each other. This makes their cluster completely isolated from the broader network, which indicates potential secrecy, independence, or exclusion from main operational flows.
 
-As we can see, the people and vessels network structure is well-organized: most entities belong to well-defined clusters with strong internal communication ties.
+As we can see, the network structure is well-organized: most entities belong to well-defined clusters with strong internal communication ties.
 
 So what is the dominant focus or topic of communication within each cluster? To explore this, the content of all messages sent or received by members of each group is analyzed. By extracting the top 20 most frequently used keywords per cluster, recurring themes can be identified to better understand the likely roles, concerns, or affiliations of each group within the broader network.
 
 ::: panel-tabset
-## 🔵 Cluster 1
+## 🔴 Cluster 1
 
 ```{r, echo=FALSE}
 # Load required libraries
@@ -591,8 +597,6 @@ node_cluster <- data.frame(
 
 # Step 2: Join cluster membership to sender and receiver in comm_full
 comm_with_cluster <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel")) %>%  # Filter to only Person/Vessel
   left_join(node_cluster, by = c("sender_label" = "label")) %>%
   rename(sender_cluster = cluster) %>%
   left_join(node_cluster, by = c("receiver_label" = "label")) %>%
@@ -614,7 +618,7 @@ tokens_by_cluster <- comm_long %>%
   filter(!word %in% stop_words$word, str_detect(word, "[a-z]")) %>%
   count(cluster, word, sort = TRUE)
 
-# Step 5: Get top 20 keywords per cluster
+# Step 5: Get top 10 keywords per cluster
 top_keywords <- tokens_by_cluster %>%
   group_by(cluster) %>%
   slice_max(n, n = 20, with_ties = FALSE) %>%
@@ -629,11 +633,11 @@ keyword_lists <- top_keywords %>%
 # (Optional) Name each list element
 names(keyword_lists) <- paste0("Cluster_", sort(unique(top_keywords$cluster)))
 
-# Preview example: View top 20 for Cluster 1
+# Preview example: View top 10 for Cluster 1
 print(keyword_lists[["Cluster_1"]])
 ```
 
-## 🔴 Cluster 2
+## 🟢 Cluster 2
 
 ```{r, echo=FALSE}
 # Load required libraries
@@ -651,8 +655,6 @@ node_cluster <- data.frame(
 
 # Step 2: Join cluster membership to sender and receiver in comm_full
 comm_with_cluster <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel")) %>%  # Filter to only Person/Vessel
   left_join(node_cluster, by = c("sender_label" = "label")) %>%
   rename(sender_cluster = cluster) %>%
   left_join(node_cluster, by = c("receiver_label" = "label")) %>%
@@ -674,7 +676,7 @@ tokens_by_cluster <- comm_long %>%
   filter(!word %in% stop_words$word, str_detect(word, "[a-z]")) %>%
   count(cluster, word, sort = TRUE)
 
-# Step 5: Get top 20 keywords per cluster
+# Step 5: Get top 10 keywords per cluster
 top_keywords <- tokens_by_cluster %>%
   group_by(cluster) %>%
   slice_max(n, n = 20, with_ties = FALSE) %>%
@@ -689,11 +691,11 @@ keyword_lists <- top_keywords %>%
 # (Optional) Name each list element
 names(keyword_lists) <- paste0("Cluster_", sort(unique(top_keywords$cluster)))
 
-# View top 20 for Cluster 2
+# Preview example: View top 10 for Cluster 1
 print(keyword_lists[["Cluster_2"]])
 ```
 
-## 🟣 Cluster 3
+## 🔵 Cluster 3
 
 ```{r, echo=FALSE}
 # Load required libraries
@@ -711,8 +713,6 @@ node_cluster <- data.frame(
 
 # Step 2: Join cluster membership to sender and receiver in comm_full
 comm_with_cluster <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel")) %>%  # Filter to only Person/Vessel
   left_join(node_cluster, by = c("sender_label" = "label")) %>%
   rename(sender_cluster = cluster) %>%
   left_join(node_cluster, by = c("receiver_label" = "label")) %>%
@@ -734,7 +734,7 @@ tokens_by_cluster <- comm_long %>%
   filter(!word %in% stop_words$word, str_detect(word, "[a-z]")) %>%
   count(cluster, word, sort = TRUE)
 
-# Step 5: Get top 20 keywords per cluster
+# Step 5: Get top 10 keywords per cluster
 top_keywords <- tokens_by_cluster %>%
   group_by(cluster) %>%
   slice_max(n, n = 20, with_ties = FALSE) %>%
@@ -749,11 +749,11 @@ keyword_lists <- top_keywords %>%
 # (Optional) Name each list element
 names(keyword_lists) <- paste0("Cluster_", sort(unique(top_keywords$cluster)))
 
-# View top 20 for Cluster 3
+# Preview example: View top 10 for Cluster 1
 print(keyword_lists[["Cluster_3"]])
 ```
 
-## 🟢 Cluster 4
+## 🟣 Cluster 4
 
 ```{r, echo=FALSE}
 # Load required libraries
@@ -771,8 +771,6 @@ node_cluster <- data.frame(
 
 # Step 2: Join cluster membership to sender and receiver in comm_full
 comm_with_cluster <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel")) %>%  # Filter to only Person/Vessel
   left_join(node_cluster, by = c("sender_label" = "label")) %>%
   rename(sender_cluster = cluster) %>%
   left_join(node_cluster, by = c("receiver_label" = "label")) %>%
@@ -794,7 +792,7 @@ tokens_by_cluster <- comm_long %>%
   filter(!word %in% stop_words$word, str_detect(word, "[a-z]")) %>%
   count(cluster, word, sort = TRUE)
 
-# Step 5: Get top 20 keywords per cluster
+# Step 5: Get top 10 keywords per cluster
 top_keywords <- tokens_by_cluster %>%
   group_by(cluster) %>%
   slice_max(n, n = 20, with_ties = FALSE) %>%
@@ -809,7 +807,7 @@ keyword_lists <- top_keywords %>%
 # (Optional) Name each list element
 names(keyword_lists) <- paste0("Cluster_", sort(unique(top_keywords$cluster)))
 
-# Preview: View top 20 for Cluster 4
+# Preview example: View top 10 for Cluster 1
 print(keyword_lists[["Cluster_4"]])
 ```
 
@@ -831,8 +829,6 @@ node_cluster <- data.frame(
 
 # Step 2: Join cluster membership to sender and receiver in comm_full
 comm_with_cluster <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel")) %>%  # Filter to only Person/Vessel
   left_join(node_cluster, by = c("sender_label" = "label")) %>%
   rename(sender_cluster = cluster) %>%
   left_join(node_cluster, by = c("receiver_label" = "label")) %>%
@@ -854,7 +850,7 @@ tokens_by_cluster <- comm_long %>%
   filter(!word %in% stop_words$word, str_detect(word, "[a-z]")) %>%
   count(cluster, word, sort = TRUE)
 
-# Step 5: Get top 20 keywords per cluster
+# Step 5: Get top 10 keywords per cluster
 top_keywords <- tokens_by_cluster %>%
   group_by(cluster) %>%
   slice_max(n, n = 20, with_ties = FALSE) %>%
@@ -869,7 +865,7 @@ keyword_lists <- top_keywords %>%
 # (Optional) Name each list element
 names(keyword_lists) <- paste0("Cluster_", sort(unique(top_keywords$cluster)))
 
-# Preview: View top 20 for Cluster 5
+# Preview example: View top 10 for Cluster 1
 print(keyword_lists[["Cluster_5"]])
 ```
 
@@ -891,8 +887,6 @@ node_cluster <- data.frame(
 
 # Step 2: Join cluster membership to sender and receiver in comm_full
 comm_with_cluster <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel")) %>%  # ✅ Only People and Vessels
   left_join(node_cluster, by = c("sender_label" = "label")) %>%
   rename(sender_cluster = cluster) %>%
   left_join(node_cluster, by = c("receiver_label" = "label")) %>%
@@ -914,7 +908,7 @@ tokens_by_cluster <- comm_long %>%
   filter(!word %in% stop_words$word, str_detect(word, "[a-z]")) %>%
   count(cluster, word, sort = TRUE)
 
-# Step 5: Get top 20 keywords per cluster
+# Step 5: Get top 10 keywords per cluster
 top_keywords <- tokens_by_cluster %>%
   group_by(cluster) %>%
   slice_max(n, n = 20, with_ties = FALSE) %>%
@@ -933,15 +927,15 @@ names(keyword_lists) <- paste0("Cluster_", sort(unique(top_keywords$cluster)))
 
 These most frequently used keywords in each cluster’s messages reveal the possible focus areas of each group:
 
-🔵 Cluster 1 shows signs of being a coordinating or facilitative cluster. Top words like “meeting”, "tomorrow", “birdwatching”, and "discuss" suggest involvement in administrative work, strategic planning, or cross-group information flow.
+-   Cluster 1 appears to be focused on maritime operations. Keywords like “equipment”, "harbor", "operation(s)", and "crew" suggest activity around marine logistics, vessel coordination, and technical operations — likely indicating a team involved in sea-based field operations or enforcement.
 
-🔴 Cluster 2 appears to be focused on maritime operations. Keywords like “equipment”, "harbor", "maintain", and "operation(s)" suggest activity around marine logistics, vessel coordination, and technical operations — likely indicating a team involved in sea-based field operations or enforcement.
+-   Cluster 2 centers around regulatory, environmental, and governance topics. Common terms such as “council”, “city”, “guardian(s)”, and "monitoring" suggest this group is tied to regulatory oversight, marine protection, and coastal coordination efforts.
 
-🟣 Cluster 3 is characterized by limited communication and does not contain any keywords of significant frequency. This lack of prominent terms makes it difficult to infer any clear thematic focus for the group.
+-   Cluster 3 shows signs of being a coordinating or facilitative cluster. Top words like “meeting”, "tomorrow", “birdwatching”, and "discuss" suggest involvement in administrative work, strategic planning, or cross-group information flow.
 
-🟢 Cluster 4 centers around spatial coordination, regulation, and oversight. Frequently used terms such as "guardian", "sentinel", "activity", "position", and "boundary" suggest a group concerned with marine surveillance, monitoring zones, and geographic boundaries.
+-   Cluster 4 is characterized by limited communication and does not contain any keywords of significant frequency. This lack of prominent terms makes it difficult to infer any clear thematic focus for the group.
 
-🟡 Cluster 5 shows slightly more communication and includes certain frequently used terms than Cluster 3. However, its complete isolation from the rest of the network limits contextual interpretation and suggests a potentially detached or non-integrated role.
+-   Cluster 5 shows slightly more communication and includes certain frequently used terms. However, its complete isolation from the rest of the network limits contextual interpretation and suggests a potentially detached or non-integrated role.
 
 ## [5.2]{style="color:mediumvioletred"} Question 3 - Pseudonym Detection and Usage
 
@@ -960,11 +954,6 @@ library(tidyr)
 library(ggplot2)
 library(forcats)
 
-# Step 0: Filter only communications between people and vessels
-comm_filtered <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel"))
-
 # Step 1: Define list of pseudonym terms (identified + suspected)
 pseudonym_terms <- c(
   "Boss", "The Lookout", "The Intern", "The Middleman", "Mrs. Money",
@@ -972,8 +961,8 @@ pseudonym_terms <- c(
   "Mako", "Remora", "Osprey", "Defender", "Serenity", "Seawatch", "Marlin"
 )
 
-# Step 2: Extract all mentions of pseudonym terms from filtered comm
-pseudonym_mentions <- comm_filtered %>%
+# Step 2: Extract all mentions of pseudonym terms from comm_full
+pseudonym_mentions <- comm_full %>%
   filter(str_detect(content, str_c(pseudonym_terms, collapse = "|"))) %>%
   mutate(
     mentioned_pseudonym = str_extract_all(content, str_c(pseudonym_terms, collapse = "|"))
@@ -996,7 +985,7 @@ plot_total <- pseudonym_mentions %>%
   theme_minimal() +
   theme(
     plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
-    plot.margin = margin(10, 40, 10, 10)
+    plot.margin = margin(10, 40, 10, 10)  # right padding to avoid number being clipped
   )
 
 # Step 3b: Heatmap by sender vs pseudonym (Plot 2)
@@ -1038,11 +1027,6 @@ library(tidyr)
 library(ggplot2)
 library(forcats)
 
-# Step 0: Filter only communications between people and vessels
-comm_filtered <- comm_full %>%
-  filter(sender_type %in% c("Person", "Vessel"),
-         receiver_type %in% c("Person", "Vessel"))
-
 # Step 1: Define list of pseudonym terms (identified + suspected)
 pseudonym_terms <- c(
   "Boss", "The Lookout", "The Intern", "The Middleman", "Mrs. Money",
@@ -1050,8 +1034,8 @@ pseudonym_terms <- c(
   "Mako", "Remora", "Osprey", "Defender", "Serenity", "Seawatch", "Marlin"
 )
 
-# Step 2: Extract all mentions of pseudonym terms from filtered comm
-pseudonym_mentions <- comm_filtered %>%
+# Step 2: Extract all mentions of pseudonym terms from comm_full
+pseudonym_mentions <- comm_full %>%
   filter(str_detect(content, str_c(pseudonym_terms, collapse = "|"))) %>%
   mutate(
     mentioned_pseudonym = str_extract_all(content, str_c(pseudonym_terms, collapse = "|"))
@@ -1074,7 +1058,7 @@ plot_total <- pseudonym_mentions %>%
   theme_minimal() +
   theme(
     plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
-    plot.margin = margin(10, 40, 10, 10)
+    plot.margin = margin(10, 40, 10, 10)  # right padding to avoid number being clipped
   )
 
 # Step 3b: Heatmap by sender vs pseudonym (Plot 2)
@@ -1109,29 +1093,31 @@ plot_tile
 
 ### [5.2.2]{style="color:mediumvioletred"} Question 3a - Pseudonym Identification & Users: Who Uses What Pseudonyms?
 
-The first chart displays how often each suspected pseudonym appears in the intercepted messages. Names like “Mako”, “Neptune”, and “Remora” are mentioned with unusually high frequency. Not only do they appear far more often than most other entities, but their naming style also deviates from conventional personal or organizational names — raising strong suspicions that they may be aliases. Names such as “Mrs. Money”, “The Lookout”, “Boss”, and “The Intern” appear less frequently than the top three, but still much more than the remainings. Their unusual phrasing — resembling roles or nicknames rather than real names — further supports earlier suspicions (including Clepper’s) that they may be pseudonyms used informally in communication. A few other names such as “The Middleman”, “Serenity”, and “Marlin”, are mentioned less often but still draw attention due to their nonstandard naming format. Despite lower frequency, their distinctiveness suggests they could also serve as aliases.
+The first chart displays how often each suspected pseudonym appears in the intercepted messages. Names like “Mako”, “Neptune”, and “Remora” are mentioned with unusually high frequency. Not only do they appear far more often than most other entities, but their naming style also deviates from conventional personal or organizational names — raising strong suspicions that they may be aliases. Names such as “Mrs. Money”, “The Lookout”, “Boss”, and “The Intern” appear less frequently than the top three, but still much more than the remainings. Their unusual phrasing — resembling roles or nicknames rather than real names — further supports earlier suspicions (including Clepper’s) that they may be pseudonyms used informally in communication. A few other names such as “Serenity”, “The Middleman”, “Marlin”, and “Seawatch” are mentioned less often but still draw attention due to their nonstandard naming format. Despite lower frequency, their distinctiveness suggests they could also serve as aliases.
 
 The second visualisation, a heatmap, reveals who is mentioning each pseudonym:
 
-• “Mako” is mentioned heavily by “Davis”, followed by “Remora” and “Neptune”.
+• “Mako” is mentioned overwhelmingly by “Seawatch”, with a smaller number of references from “The Middleman”.
 
-• “Neptune” is used most frequently by “Remora”, followed closely by “Mako”.
+• “Neptune” is used most frequently by “The Middleman”, followed closely by “Remora”.
 
-• “Remora” is most often mentioned by “Neptune”, with “Mako” and "Rodriguez" being the next most frequent users.
+• “Remora” is most often mentioned by “The Lookout”, with “The Intern” being the next most frequent user.
 
-• “Mrs. Money” is mentioned heavily by “The Intern”, followed by "The Middleman" though at lower frequencies.
+• “Mrs. Money” is largely mentioned by “Mako” and “The Intern”, though overall at lower frequencies.
 
-• “The Lookout” is heavily referenced by and only by “The Intern”.
+• “The Lookout” is heavily referenced by both “Remora” and “The Intern”
 
-• “Boss” is frequently mentioned by “The Middleman”, followed by “Mrs. Money”.
+• “Boss” is frequently mentioned by “Mrs. Money”, “Samantha Blake”, and “The Middleman”
 
-• “The Intern” is used most by “The Lookout”.
+• “The Intern” is used most by “The Lookout” and “Remora”
 
-• “The Middleman” is mainly mentioned by "Mrs. Money" and "The Accountant".
+• “Serenity” is referenced primarily by “Remora”, with some additional mentions by “Mrs. Money”.
 
-• “Serenity” is referenced primarily by “Reef Guardian”.
+• “The Middleman” is mainly mentioned by “The Intern”, with a few references from “Boss” and “The Lookout”.
 
-• “Marlin” is mentioned most often by “Reef Guardian" and "Davis".
+• “Marlin” is mentioned most often by “Remora”, with a smaller number of mentions from “Seawatch”.
+
+• “Seawatch”, despite being the top user of other pseudonyms like “Mako”, is itself occasionally referenced, mainly by “Remora” and “The Middleman”.
 
 ### [5.2.3]{style="color:mediumvioletred"} Question 3b - How Do Visualizations Aid Pseudonym Investigation?
 
