@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vanessa Riadi">
+<meta name="dcterms.date" content="2025-06-12">
+
+<title>Prototyping Modules for Visual Analytics Shiny Application – ISSS608-VAA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ISSS608-VAA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercise" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Hands-on Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html">
+ <span class="dropdown-text">Hands-on Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html">
+ <span class="dropdown-text">Hands-on Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03_1.html">
+ <span class="dropdown-text">Hands-on Exercise 3_1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03_2.html">
+ <span class="dropdown-text">Hands-on Exercise 3_2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04_1.html">
+ <span class="dropdown-text">Hands-on Exercise 4_1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04_2.html">
+ <span class="dropdown-text">Hands-on Exercise 4_2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04_3.html">
+ <span class="dropdown-text">Hands-on Exercise 4_3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04_4.html">
+ <span class="dropdown-text">Hands-on Exercise 4_4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05.html">
+ <span class="dropdown-text">Hands-on Exercise 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html">
+ <span class="dropdown-text">Hands-on Exercise 6</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex08/Hands-on_Ex08_1.html">
+ <span class="dropdown-text">Hands-on Exercise 8_1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex08/Hands-on_Ex08_2.html">
+ <span class="dropdown-text">Hands-on Exercise 8_2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex08/Hands-on_Ex08_3.html">
+ <span class="dropdown-text">Hands-on Exercise 8_3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex09/Hands-on_Ex09_1.html">
+ <span class="dropdown-text">Hands-on Exercise 9_1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex09/Hands-on_Ex09_2.html">
+ <span class="dropdown-text">Hands-on Exercise 9_2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex09/Hands-on_Ex09_3.html">
+ <span class="dropdown-text">Hands-on Exercise 9_3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex09/Hands-on_Ex09_4.html">
+ <span class="dropdown-text">Hands-on Exercise 9_4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex09/Hands-on_Ex09_5.html">
+ <span class="dropdown-text">Hands-on Exercise 9_5</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Take-home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01_1.html">
+ <span class="dropdown-text">Take-home Exercise 1_1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01_2.html">
+ <span class="dropdown-text">Take-home Exercise 1_2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex02/Take-home_Ex02.html">
+ <span class="dropdown-text">Take-home Exercise 2</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-in-class-exercise" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">In-class Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../In-class_Ex/In-class_Ex03.html">
+ <span class="dropdown-text">In-class Exercise 3</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span style="color:#d496d4; background:none;">1</span> Overview</a></li>
+  <li><a href="#objective" id="toc-objective" class="nav-link" data-scroll-target="#objective"><span style="color:#d496d4; background:none;">2</span> Objective</a></li>
+  <li><a href="#storyboard" id="toc-storyboard" class="nav-link" data-scroll-target="#storyboard"><span style="color:#d496d4; background:none;">3</span> Storyboard</a></li>
+  <li><a href="#uidesign" id="toc-uidesign" class="nav-link" data-scroll-target="#uidesign"><span style="color:#d496d4; background:none;">4</span> UI Design</a>
+  <ul class="collapse">
+  <li><a href="#app1" id="toc-app1" class="nav-link" data-scroll-target="#app1"><span style="color:#d496d4; background:none;">4.1</span> App 1: Temporal Pattern and Communication Network Graph App</a>
+  <ul class="collapse">
+  <li><a href="#ui-design-goals" id="toc-ui-design-goals" class="nav-link" data-scroll-target="#ui-design-goals"><span style="color:#d496d4; background:none;">4.1.1</span> UI Design Goals</a></li>
+  <li><a href="#parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications" id="toc-parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications" class="nav-link" data-scroll-target="#parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications"><span style="color:#d496d4; background:none;">4.1.2</span> Parameters and outputs that will be exposed on the Shiny applications</a></li>
+  <li><a href="#shiny-app-panel-tabs-ui-design" id="toc-shiny-app-panel-tabs-ui-design" class="nav-link" data-scroll-target="#shiny-app-panel-tabs-ui-design"><span style="color:#d496d4; background:none;">4.1.3</span> Shiny App Panel Tabs UI Design</a></li>
+  <li><a href="#ui-objects-used" id="toc-ui-objects-used" class="nav-link" data-scroll-target="#ui-objects-used"><span style="color:#d496d4; background:none;">4.1.4</span> UI objects used</a></li>
+  <li><a href="#rpkg" id="toc-rpkg" class="nav-link" data-scroll-target="#rpkg"><span style="color:#d496d4; background:none;">4.1.5</span> R packages needed for Shiny application</a></li>
+  <li><a href="#prototype" id="toc-prototype" class="nav-link" data-scroll-target="#prototype"><span style="color:#d496d4; background:none;">4.1.6</span> Test the specific R codes can be run</a></li>
+  <li><a href="#view-on" id="toc-view-on" class="nav-link" data-scroll-target="#view-on">View on <img src="../../images/Posit_logo.png" height="20"></a></li>
+  </ul></li>
+  <li><a href="#app2" id="toc-app2" class="nav-link" data-scroll-target="#app2"><span style="color:#d496d4; background:none;">4.2</span> App 2: Relationship Clusters and Pseudonyms</a>
+  <ul class="collapse">
+  <li><a href="#ui-design-goals-1" id="toc-ui-design-goals-1" class="nav-link" data-scroll-target="#ui-design-goals-1"><span style="color:#d496d4; background:none;">4.2.1</span> UI Design Goals</a></li>
+  <li><a href="#parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-1" id="toc-parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-1" class="nav-link" data-scroll-target="#parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-1"><span style="color:#d496d4; background:none;">4.2.2</span> Parameters and outputs that will be exposed on the Shiny applications</a></li>
+  <li><a href="#shiny-app-panel-tabs-ui-design-1" id="toc-shiny-app-panel-tabs-ui-design-1" class="nav-link" data-scroll-target="#shiny-app-panel-tabs-ui-design-1"><span style="color:#d496d4; background:none;">4.2.3</span> Shiny App Panel Tabs UI Design</a></li>
+  <li><a href="#ui-objects-used-1" id="toc-ui-objects-used-1" class="nav-link" data-scroll-target="#ui-objects-used-1"><span style="color:#d496d4; background:none;">4.2.4</span> UI objects used</a></li>
+  <li><a href="#r-packages-needed-for-shiny-application" id="toc-r-packages-needed-for-shiny-application" class="nav-link" data-scroll-target="#r-packages-needed-for-shiny-application"><span style="color:#d496d4; background:none;">4.2.5</span> R packages needed for Shiny application</a></li>
+  <li><a href="#test-the-specific-r-codes-can-be-run" id="toc-test-the-specific-r-codes-can-be-run" class="nav-link" data-scroll-target="#test-the-specific-r-codes-can-be-run"><span style="color:#d496d4; background:none;">4.2.6</span> Test the specific R codes can be run</a></li>
+  </ul></li>
+  <li><a href="#app3" id="toc-app3" class="nav-link" data-scroll-target="#app3"><span style="color:#d496d4; background:none;">4.3</span> App 3: Time Series Analysis and Social Network Graph</a>
+  <ul class="collapse">
+  <li><a href="#ui-design-goals-2" id="toc-ui-design-goals-2" class="nav-link" data-scroll-target="#ui-design-goals-2"><span style="color:#d496d4; background:none;">4.3.1</span> UI Design Goals</a></li>
+  <li><a href="#parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-2" id="toc-parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-2" class="nav-link" data-scroll-target="#parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-2"><span style="color:#d496d4; background:none;">4.3.2</span> Parameters and outputs that will be exposed on the Shiny applications</a></li>
+  <li><a href="#shiny-app-panel-tabs-ui-design-2" id="toc-shiny-app-panel-tabs-ui-design-2" class="nav-link" data-scroll-target="#shiny-app-panel-tabs-ui-design-2"><span style="color:#d496d4; background:none;">4.3.3</span> Shiny App Panel Tabs UI Design</a></li>
+  <li><a href="#ui-objects-used-2" id="toc-ui-objects-used-2" class="nav-link" data-scroll-target="#ui-objects-used-2"><span style="color:#d496d4; background:none;">4.3.4</span> UI objects used</a></li>
+  <li><a href="#r-packages-needed-for-shiny-application-1" id="toc-r-packages-needed-for-shiny-application-1" class="nav-link" data-scroll-target="#r-packages-needed-for-shiny-application-1"><span style="color:#d496d4; background:none;">4.3.5</span> R packages needed for Shiny application</a></li>
+  <li><a href="#test-the-specific-r-codes-can-be-run-1" id="toc-test-the-specific-r-codes-can-be-run-1" class="nav-link" data-scroll-target="#test-the-specific-r-codes-can-be-run-1"><span style="color:#d496d4; background:none;">4.3.6</span> Test the specific R codes can be run</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span style="color:#d496d4; background:none;">5</span> Reference</a>
+  <ul class="collapse">
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages"><span style="color:#d496d4; background:none;">5.1</span> R Packages</a></li>
+  <li><a href="#shiny-fuctional-specs-and-tutorials" id="toc-shiny-fuctional-specs-and-tutorials" class="nav-link" data-scroll-target="#shiny-fuctional-specs-and-tutorials"><span style="color:#d496d4; background:none;">5.2</span> Shiny Fuctional Specs and Tutorials</a></li>
+  <li><a href="#lesson-slides" id="toc-lesson-slides" class="nav-link" data-scroll-target="#lesson-slides"><span style="color:#d496d4; background:none;">5.3</span> Lesson Slides</a></li>
+  <li><a href="#shiny-fuctional-specs-and-tutorials-1" id="toc-shiny-fuctional-specs-and-tutorials-1" class="nav-link" data-scroll-target="#shiny-fuctional-specs-and-tutorials-1"><span style="color:#d496d4; background:none;">5.4</span> Shiny Fuctional Specs and Tutorials</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Prototyping Modules for Visual Analytics Shiny Application</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Vanessa Riadi </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 12, 2025</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">June 19, 2025</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level1">
+<h1><span style="color:#d496d4; background:none;">1</span> Overview</h1>
+<p>Still in the same storyline with the previous <a href="https://isss608-vriadi.netlify.app/take-home_ex/take-home_ex02/take-home_ex02">Take Home Exercise 2</a>, Clepper Jessen, an investigative journalist, is uncovering possible corruption in Oceanus linked to the closure of Nemo Reef and the arrival of pop star Sailor Shift. Using intercepted radio communications, a knowledge graph was created to map out interactions between people, vessels, and organizations. This Mini Challenge aims to support Clepper’s investigation through data-driven visual analytics, uncovering patterns, pseudonym usage, social groupings, and suspicious behavior—especially concerning Nadia Conti, a previously implicated figure in illegal fishing.</p>
+</section>
+<section id="objective" class="level1">
+<h1><span style="color:#d496d4; background:none;">2</span> Objective</h1>
+<p>To support this investigation, a series of three Shiny applications under the ReefWhispers project will be developed to transform this data into actionable insights through visual analytics. Details will be covered in <a href="#storyboard">Chapter 3: Storyboard</a> and <a href="#uidesign">Chapter 4: UI Design</a>.</p>
+<p>This take home exercise 3 objective is to:</p>
+<ul>
+<li>Evaluate and determine the necessary R packages needed for your Shiny application are supported in R CRAN</li>
+<li>Prepare and test the specific R codes can be run and return the correct output as expected</li>
+<li>Determine the parameters and outputs that will be exposed on the Shiny applications, and</li>
+<li>Select the appropriate Shiny UI components for exposing the parameters determine above.</li>
+</ul>
+</section>
+<section id="storyboard" class="level1">
+<h1><span style="color:#d496d4; background:none;">3</span> Storyboard</h1>
+<p><strong>The first app</strong>, <a href="#app1">Temporal Pattern and Communication Network</a>, focuses on visual exploration of the intercepted communication metadata. The app will be divided into 4 main section that will be further detailed in <a href="#app1">Chapter 4</a>. It will be focusing on:</p>
+<ul>
+<li><p>Identifying temporal patterns in communications.</p></li>
+<li><p>Revealing relationships and influence among entities (people, vessels, groups).</p></li>
+</ul>
+<p><strong>The second app</strong>, <a href="#app2">Relationship Clusters and Pseudonyms</a>, will be based on Part 2 - Relationship Cluster and Pseudonym: <a href="https://isss608-ay2024-25t.netlify.app/take-home_ex/take-home_ex02/take-home_ex02">Hoa’s Take Home Exercise 2</a>. It aims to deepen the analysis of communication networks by identifying patterns of association and hidden identities through an interactive platform for revealing the structure and semantics behind the communication web, and will be further detailed in <a href="#app2">Chapter 4</a>. It will be focusing on:</p>
+<ul>
+<li><p>Uncovering interactions and relationships between vessels and individuals in the network.</p></li>
+<li><p>Identifying tightly knit groups and inferring the dominant topics of their discussions.</p></li>
+<li><p>Detecting the use of pseudonyms and linking them back to real identities.</p></li>
+<li><p>Exploring how visual analytics can help expose common identities disguised under multiple aliases.</p></li>
+</ul>
+<p><strong>The third app</strong>, <a href="#app3">Time Series Analysis and Social Network Graph</a>, will be based on Part 3 - Time Series Analysis and Social Network graph: <a href="https://summernguyenn.netlify.app/take-home_ex/take-home_ex02/take-home_ex02">Summer’s Take Home Exercise 2</a>. It is centered around Clepper’s primary concern—whether Nadia Conti remains involved in illegal activity. It will be focusing on:</p>
+<ul>
+<li><p>Determining whether Nadia Conti is currently engaging in any unlawful behavior based on communication patterns and interactions.</p></li>
+<li><p>Summarizing her activities over time through temporal and network-based visualizations to support or refute Clepper’s suspicions.</p></li>
+</ul>
+<p>This app combines time series trends and social network dynamics to track Nadia’s role and influence within the broader network, and will be elaborated in <a href="#app3">Chapter 4</a>.</p>
+</section>
+<section id="uidesign" class="level1">
+<h1><span style="color:#d496d4; background:none;">4</span> UI Design</h1>
+<p>According to <a href="https://www.uxdesigninstitute.com/blog/guide-to-the-ui-design-process/">uxdesigninstitute</a> “designing beautiful, functional user interfaces is a (sometimes lengthy) process”. And <a href="https://designlab.com/blog/what-is-the-ux-design-process">designlab</a> break down the UX design process into easy-to-follow steps. First two is to <strong>Define</strong> and <strong>Research</strong> which we will covered in <a href="#objective">Chapter 2</a>. Third is <strong>Analysis &amp; Planning</strong> and fourth is the <strong>Design</strong> stage which we will be covering in this chapter.</p>
+<section id="app1" class="level2">
+<h2 class="anchored" data-anchor-id="app1"><span style="color:#d496d4; background:none;">4.1</span> App 1: Temporal Pattern and Communication Network Graph App</h2>
+<section id="ui-design-goals" class="level3">
+<h3 class="anchored" data-anchor-id="ui-design-goals"><span style="color:#d496d4; background:none;">4.1.1</span> UI Design Goals</h3>
+<ul>
+<li><p>Break down complexity into modular tabs for Temporal Trends, Heatmap Views, Network Graphs, and Receipts.</p></li>
+<li><p>Emphasize investigative usability—allowing Clepper to spot patterns, isolate pseudonymous actors, and visually correlate suspicious behaviors.</p></li>
+<li><p>Use interactive and expressive visuals tailored for social communication analysis.</p></li>
+</ul>
+</section>
+<section id="parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications"><span style="color:#d496d4; background:none;">4.1.2</span> Parameters and outputs that will be exposed on the Shiny applications</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Parameters (UI Inputs)</strong></th>
+<th><strong>Outputs (UI Outputs)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><ul>
+<li><p>Entity filter (e.g., person, vessel, pseudonym, organization)</p></li>
+<li><p>Week selection: Week 1 / Week 2</p></li>
+<li><p>Date range input (subset communication dates)</p></li>
+<li><p>Hour range input (to analyze time-of-day patterns)</p></li>
+<li><p>Sender / Receiver entity selection</p></li>
+<li><p>Graph type: Full vs.&nbsp;person-to-person communication</p></li>
+</ul></td>
+<td><ul>
+<li><p>Line plot of communication volume over time</p></li>
+<li><p>Heatmap of communication intensity by weekday/hour</p></li>
+<li><p>Interactive visNetwork graph</p></li>
+<li><p>Filtered table of communications (sender, receiver, message, timestamp)</p></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="shiny-app-panel-tabs-ui-design" class="level3">
+<h3 class="anchored" data-anchor-id="shiny-app-panel-tabs-ui-design"><span style="color:#d496d4; background:none;">4.1.3</span> Shiny App Panel Tabs UI Design</h3>
+<section id="temporal-pattern" class="level4">
+<h4 class="anchored" data-anchor-id="temporal-pattern"><span style="color:#d496d4; background:none;">4.1.3.1</span> <strong>Temporal Pattern</strong></h4>
+<p>Purpose: Reveal day-to-day communication rhythms.</p>
+<p>Design Elements:</p>
+<ul>
+<li><p>Line Graph: Daily message volumes per week.</p></li>
+<li><p>Interactive Controls: Week selection, date range slider, hour-of-day filter.</p></li>
+<li><p>Dropdowns: Filter by sender/receiver entity type (e.g., person, vessel, organization).</p></li>
+</ul>
+<p>This helps Clepper pinpoint temporal spikes, such as bursts of chatter before critical events (e.g., Sailor Shift’s arrival or Nemo Reef closure).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/temporalpattern.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="heatmap" class="level4">
+<h4 class="anchored" data-anchor-id="heatmap"><span style="color:#d496d4; background:none;">4.1.3.2</span> <strong>Heatmap</strong></h4>
+<p>Purpose: Explore patterns by time-of-day and communication density.</p>
+<p>Design Elements:</p>
+<ul>
+<li><p>Heatmap Matrix: Color-coded intensity based on message count by hour and date.</p></li>
+<li><p>Color Scale: Darker hues represent higher volume.</p></li>
+</ul>
+<p>Effective for isolating habitual communicators or unusual off-hour messages (potential signs of covert coordination).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/heatmap.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="communication-network" class="level4">
+<h4 class="anchored" data-anchor-id="communication-network"><span style="color:#d496d4; background:none;">4.1.3.3</span> <strong>Communication Network</strong></h4>
+<p>Purpose: Visualize the social graph of communication.</p>
+<p>Design Elements:</p>
+<ul>
+<li><p>Force-Directed Graph: Nodes for people/vessels/organizations, edges for interactions.</p></li>
+<li><p>Node Filtering: Allows selection by ID to isolate individuals.</p></li>
+</ul>
+<p>This is key for identifying influence hubs, peripheral actors, and communication silos—crucial for mapping Nadia Conti’s hidden relationships.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/commsnetwork.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="receipts" class="level4">
+<h4 class="anchored" data-anchor-id="receipts"><span style="color:#d496d4; background:none;">4.1.3.4</span> <strong>Receipts</strong></h4>
+<p>This tab allow users to read the communication messages (or as investigators we can call them receipts).</p>
+<p>Purpose: Provide a full-text view of communication logs.</p>
+<p>Design Elements:</p>
+<ul>
+<li><p>Data Table: Shows message sender, receiver, timestamp, type, and raw message content.</p></li>
+<li><p>Pseudonym Tracking: Enables Clepper to connect aliases across threads.</p></li>
+</ul>
+<p>Useful for identifying suspicious message contents and linking disguised personas (e.g., Nadia Conti under a pseudonym) to known actors.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/receipts.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="ui-objects-used" class="level3">
+<h3 class="anchored" data-anchor-id="ui-objects-used"><span style="color:#d496d4; background:none;">4.1.4</span> UI objects used</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 70%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>UI Component</strong></td>
+<td><strong>Purpose</strong></td>
+</tr>
+<tr class="even">
+<td><code>titlePanel()</code></td>
+<td>App’s title</td>
+</tr>
+<tr class="odd">
+<td><code>sidebarLayout()</code></td>
+<td>Two-column layout with input controls on the side and output in the main area</td>
+</tr>
+<tr class="even">
+<td><code>tabsetPanel()</code></td>
+<td>Separate tabs for the different visualization</td>
+</tr>
+<tr class="odd">
+<td><code>selectInput()</code></td>
+<td>Select an entity or type (e.g., person, vessel), and Filter by Week Label (e.g., Week 1/2)</td>
+</tr>
+<tr class="even">
+<td><code>textInput()</code> or <code>selectizeInput()</code></td>
+<td>Allows one or more selection sender/receiver</td>
+</tr>
+<tr class="odd">
+<td><code>checkboxGroupInput()</code></td>
+<td>Select multiple weeks or types</td>
+</tr>
+<tr class="even">
+<td><code>dateRangeInput()</code></td>
+<td>Filter by date range</td>
+</tr>
+<tr class="odd">
+<td><code>sliderInput()</code></td>
+<td>Filter by hour of day (0–23)</td>
+</tr>
+<tr class="even">
+<td><code>plotOutput()</code></td>
+<td>Static ggplot visualizations (content to be defined under <code>Server \&lt;- function segment</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>dataTableOutput()</code></td>
+<td>Render data table (content to be defined under <code>Server \&lt;- function segment</code>)</td>
+</tr>
+<tr class="even">
+<td><code>visNetworkOutput()</code></td>
+<td>Interactive network graph (content to be defined under <code>Server \&lt;- function segment</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>actionButton()</code></td>
+<td>Apply filters</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rpkg" class="level3">
+<h3 class="anchored" data-anchor-id="rpkg"><span style="color:#d496d4; background:none;">4.1.5</span> R packages needed for Shiny application</h3>
+<p>As we will be adapting our Take Home Exercise 2 graphs to Shiny Application, we need to ensure that we have all the necessary R packages needed for this conversion such as:</p>
+<ul>
+<li><a href="https://shiny.posit.co/" target="_blank"><strong>shiny</strong></a><strong>:</strong> Easy web apps for data science without the compromises.</li>
+<li><a href="https://cran.r-project.org/package=dplyr" target="_blank"><strong>dplyr</strong></a>: A grammar of data manipulation, making data wrangling concise, fast, and readable.</li>
+<li><a href="https://cran.r-project.org/package=ggplot2" target="_blank"><strong>ggplot2</strong></a>: A versatile and widely used R package for creating elegant data visualizations based on the Grammar of Graphics.</li>
+<li><a href="https://datastorm-open.github.io/visNetwork/" target="_blank"><strong>visNetwork</strong></a>: Enables interactive network visualizations in R using the vis.js JavaScript library.</li>
+</ul>
+</section>
+<section id="prototype" class="level3">
+<h3 class="anchored" data-anchor-id="prototype"><span style="color:#d496d4; background:none;">4.1.6</span> Test the specific R codes can be run</h3>
+<p>Most preparation have been done in <a href="https://isss608-vriadi.netlify.app/take-home_ex/take-home_ex02/take-home_ex02">Take Home Exercise 2</a>.</p>
+<p>In this section we will prepare and test the specific R codes can be run in Shiny and return the correct output as expected.</p>
+<p><strong>Scroll down and click “Update View” to load the visualization!</strong></p>
+</section>
+<section id="view-on" class="level3">
+<h3 class="anchored" data-anchor-id="view-on">View on <a href="https://vriadi.shinyapps.io/reefwhispers_app1/" target="_blank"><img src="../../images/Posit_logo.png" height="20"></a></h3>
+<div style="width: 100%; height: 600px; padding: 0; overflow: hidden;">
+  <iframe src="https://vriadi.shinyapps.io/reefwhispers_app1/" title="CMAP-RSI Explorer" style="width: 135%; height: 135%; transform: scale(0.75); transform-origin: top left; border: none;">
+  </iframe>
+</div>
+</section>
+</section>
+<section id="app2" class="level2">
+<h2 class="anchored" data-anchor-id="app2"><span style="color:#d496d4; background:none;">4.2</span> App 2: Relationship Clusters and Pseudonyms</h2>
+<section id="ui-design-goals-1" class="level3">
+<h3 class="anchored" data-anchor-id="ui-design-goals-1"><span style="color:#d496d4; background:none;">4.2.1</span> UI Design Goals</h3>
+<p>• Break down the interface into focused tabs for People &amp; Vessels Communication Network And Cluster Detection, Predominant Topic Discovery, and Pseudonym Usage &amp; Exploration.</p>
+<p>• Use expressive and interactive visuals (e.g., multi-cluster &amp; force-directed relationship graph, filterable tables, searchable bar chart &amp; heatmap) to highlight communicative interaction &amp; clusters and pseudonymous insights in the people and vessels network.</p>
+<p>• Support investigative usability by enabling Clepper to uncover hidden communication tendency, closely associated groups, and individuals hidden under multiple aliases in the people and vessels network.</p>
+</section>
+<section id="parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-1" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-1"><span style="color:#d496d4; background:none;">4.2.2</span> Parameters and outputs that will be exposed on the Shiny applications</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Parameters (UI Inputs)</strong></th>
+<th><strong>Outputs (UI Outputs)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Week Selection</strong> (select box)</td>
+<td><strong>All charts:</strong> Charts filtered by the selected week(s)</td>
+</tr>
+<tr class="even">
+<td><strong>Date Range Input</strong> (free-text boxes)</td>
+<td><strong>All charts:</strong> Charts filtered by the specific selected date range</td>
+</tr>
+<tr class="odd">
+<td><strong>Individual ID Selection</strong> (dropdown)</td>
+<td><strong>Chart 1:</strong> Force-directed network graph that highlights the selected ID and all directly connected nodes</td>
+</tr>
+<tr class="even">
+<td><strong>Cluster Selection</strong> (dropdown)</td>
+<td><strong>Chart 1:</strong> Force-directed network graph that highlights the selected cluster with all belonged nodes</td>
+</tr>
+<tr class="odd">
+<td><strong>Cluster Selection</strong> (dropdown)</td>
+<td><strong>Chart 2:</strong> Table that displays top keywords mentioned in the messages of nodes belonging to the selected cluster</td>
+</tr>
+<tr class="even">
+<td><strong>Number of Top Keywords Input</strong> (free-text box)</td>
+<td><strong>Chart 2:</strong> Table that shows top <em>k</em> keywords mentioned in the messages of nodes (belonging to the selected cluster)</td>
+</tr>
+<tr class="odd">
+<td><strong>Threshold for Pseudonym Frequency Input</strong> (slider)</td>
+<td><strong>Chart 3:</strong> Bar chart of pseudonyms whose frequency ≥ threshold</td>
+</tr>
+<tr class="even">
+<td><strong>Threshold for Pseudonym Mentions</strong> (slider)</td>
+<td><strong>Chart 4:</strong> Heatmap of pseudonym mentions with frequency ≥ threshold</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="shiny-app-panel-tabs-ui-design-1" class="level3">
+<h3 class="anchored" data-anchor-id="shiny-app-panel-tabs-ui-design-1"><span style="color:#d496d4; background:none;">4.2.3</span> Shiny App Panel Tabs UI Design</h3>
+<section id="communication-clusters" class="level4">
+<h4 class="anchored" data-anchor-id="communication-clusters"><span style="color:#d496d4; background:none;">4.2.3.1</span> <strong>Communication Clusters</strong></h4>
+<p><img src="images/clipboard-3842308688.png" class="img-fluid"></p>
+<p>Purpose: Reveal the interactions &amp; relationships among people and vessels as well as the tightly knit groups.</p>
+<p>Design Elements:</p>
+<p>• Force-directed network graph: Visualizes entities (people &amp; vessels) and their interactions, with distinct color-coded clusters.</p>
+<p>• Interactive Controls: Week selection and date range slider.</p>
+<p>• Dropdowns to filter by individual ID (where selecting an ID highlights that node and its directly-related nodes only) or communication cluster (where selecting a cluster highlights the nodes belonging to that cluster only).</p>
+<p>This helps Clepper better understand the interactions &amp; relationships among people and vessels in the knowledge graph, detect central &amp; supporting actors, identify hidden groupings, and see how communication flows within clusters.</p>
+</section>
+<section id="predominant-topics" class="level4">
+<h4 class="anchored" data-anchor-id="predominant-topics"><span style="color:#d496d4; background:none;">4.2.3.2</span> <strong>Predominant Topics</strong></h4>
+<p><img src="images/clipboard-2973400935.png" class="img-fluid"></p>
+<p>Purpose: Reveal the predominant topics discussed within each communication cluster.</p>
+<p>Design Elements:</p>
+<p>• Keyword frequency table: Displays the most common words used by members of each cluster and their frequency.</p>
+<p>• Interactive Controls: Week selection and date range slider.</p>
+<p>• Dropdown to filter by communication cluster, where selecting a cluster filters the keywords to those used only by that group.</p>
+<p>• Free-text box to enter the number of top used keywords that the user wants to be displayed.</p>
+<p>This helps Clepper see what each group is talking about, understand their interests and operations, and identify their predominant topics. It also offers context to uncover entities hidden behind the pseudonyms used in each cluster.</p>
+</section>
+<section id="pseudonym-general-usage" class="level4">
+<h4 class="anchored" data-anchor-id="pseudonym-general-usage"><span style="color:#d496d4; background:none;">4.2.3.3</span> <strong>Pseudonym General Usage</strong></h4>
+<p><img src="images/clipboard-3919762440.png" class="img-fluid"></p>
+<p>Purpose: Quantify how frequently identified and suspected pseudonyms appear in communications.</p>
+<p>Design Elements:</p>
+<p>• Bar chart: Displays total mention counts of selected pseudonyms across all messages of people and vessels in the network, ranked from highest to lowest frequency to aid visual comparison.</p>
+<p>• Interactive Controls: Week selection and date range slider.</p>
+<p>• Slider to set pseudonym frequency threshold: Users can filter for the only pseudonyms whose frequency satisfies a certain minimum threshold to reduce noise.</p>
+<p>This helps Clepper prioritize which ‘names’ has higher potential of being pseudonyms and which pseudonyms warrant further investigation based on communication volume.</p>
+</section>
+<section id="pseudonym-specific-mentions" class="level4">
+<h4 class="anchored" data-anchor-id="pseudonym-specific-mentions"><span style="color:#d496d4; background:none;">4.2.3.4</span> <strong>Pseudonym Specific Mentions</strong></h4>
+<p><img src="images/clipboard-1305175943.png" class="img-fluid"></p>
+<p>Purpose: Show which entities mention which pseudonyms, and how frequently, to uncover possible hidden identities.</p>
+<p>Design Elements:</p>
+<p>• Heatmap matrix: Displays senders (rows) and pseudonyms mentioned (columns), with fill intensity based on frequency.</p>
+<p>• Labelled counts: Cells display the number of times a sender referenced a particular pseudonym.</p>
+<p>• Interactive Controls: Week selection and date range slider.</p>
+<p>• Slider to set pseudonym mention frequency threshold: Users can filter for the only number of mentions that satisfy a certain minimum threshold to reduce noise.</p>
+<p>This helps Clepper better uncover identities hidden behind pseudonyms.</p>
+</section>
+</section>
+<section id="ui-objects-used-1" class="level3">
+<h3 class="anchored" data-anchor-id="ui-objects-used-1"><span style="color:#d496d4; background:none;">4.2.4</span> UI objects used</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 80%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>UI Component</strong></td>
+<td><strong>Purpose</strong></td>
+</tr>
+<tr class="even">
+<td><strong>titlePanel()</strong></td>
+<td>App’s title</td>
+</tr>
+<tr class="odd">
+<td><strong>sidebarLayout()</strong></td>
+<td>Two-column layout with input controls on the side and visual output in the main panel</td>
+</tr>
+<tr class="even">
+<td><strong>tabsetPanel()</strong></td>
+<td>Switch between the 4 modules: Communication Clusters, Predominant Topics, Pseudonym Usage, and Mentions</td>
+</tr>
+<tr class="odd">
+<td><strong>selectInput()</strong></td>
+<td>Select by ID, select by cluster, or filter pseudonym-related terms</td>
+</tr>
+<tr class="even">
+<td><strong>textInput()</strong></td>
+<td>Free-text input to define number of top keywords to display</td>
+</tr>
+<tr class="odd">
+<td><strong>sliderInput()</strong></td>
+<td>Filter by hour of day or set pseudonym frequency threshold</td>
+</tr>
+<tr class="even">
+<td><strong>dateRangeInput()</strong></td>
+<td>Filter communications by selected date range</td>
+</tr>
+<tr class="odd">
+<td><strong>plotOutput()</strong></td>
+<td>Render static ggplot visualizations (bar chart or heatmap)</td>
+</tr>
+<tr class="even">
+<td><strong>dataTableOutput()</strong></td>
+<td>Display top keyword frequency table for selected cluster</td>
+</tr>
+<tr class="odd">
+<td><strong>visNetworkOutput()</strong></td>
+<td>Show interactive communication cluster graph</td>
+</tr>
+<tr class="even">
+<td><strong>actionButton()</strong></td>
+<td>Apply filters or refresh views</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="r-packages-needed-for-shiny-application" class="level3">
+<h3 class="anchored" data-anchor-id="r-packages-needed-for-shiny-application"><span style="color:#d496d4; background:none;">4.2.5</span> R packages needed for Shiny application</h3>
+<p>As we will be adapting the visual analytics from Take-home Exercise 2 into a Shiny application, we need to ensure all required R packages are available and supported. The following packages are essential for building and rendering this application:</p>
+<p>• shiny: Easy web apps for data science without the compromises. Enables reactive interfaces and layout structure.</p>
+<p>• dplyr: A grammar of data manipulation, making data wrangling concise, fast, and readable.</p>
+<p>• ggplot2: A versatile and widely used R package for creating elegant data visualizations based on the Grammar of Graphics (used for bar charts, heatmaps).</p>
+<p>• visNetwork: Enables interactive network visualizations in R using the vis.js JavaScript library (used for rendering the communication cluster graph).</p>
+<p>• tidyr: Helps reshape data for plotting and joins, especially useful for keyword tables and pseudonym mentions.</p>
+<p>• stringr: Provides a cohesive set of functions designed to make string manipulation easier and more consistent (used for detecting pseudonym references).</p>
+<p>• forcats: Tools for working with categorical/factor variables — particularly useful in heatmap axis ordering.</p>
+</section>
+<section id="test-the-specific-r-codes-can-be-run" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-specific-r-codes-can-be-run"><span style="color:#d496d4; background:none;">4.2.6</span> Test the specific R codes can be run</h3>
+</section>
+</section>
+<section id="app3" class="level2">
+<h2 class="anchored" data-anchor-id="app3"><span style="color:#d496d4; background:none;">4.3</span> App 3: Time Series Analysis and Social Network Graph</h2>
+<section id="ui-design-goals-2" class="level3">
+<h3 class="anchored" data-anchor-id="ui-design-goals-2"><span style="color:#d496d4; background:none;">4.3.1</span> UI Design Goals</h3>
+<p><strong>1. Clarity and Visual Hierarchy: Ensure users can easily understand the content and navigation</strong></p>
+<ul>
+<li>Consistent layout and side navigation menu</li>
+<li>Tabs (“Temporal Pattern,” “Direct Relationship Network,” etc.) clearly segment tasks</li>
+<li>Color-coded charts and graphs (e.g., pie chart, bar chart, network nodes) allow users to distinguish entities and event types at a glance.</li>
+</ul>
+<p><strong>2. Interactive Exploration: Enable users to dynamically filter, explore, and uncover patterns or relationships</strong></p>
+<ul>
+<li>Filters by week, date, hour, sender/receiver type and ID.</li>
+<li>Interactive graphs (e.g., relationship graph, timeline of evidence events)</li>
+<li>Tooltips and hover-over interactivity provide contextual information without cluttering the interface.</li>
+</ul>
+<p><strong>3. Temporal and Contextual Insight: Help users identify when and how Nadia Conti was involved in activities</strong></p>
+<ul>
+<li>Temporal bar charts showing frequency and patterns by hour/day.</li>
+<li>Timeline views mapping keywords, operational focus, and evidence events to specific dates.</li>
+<li>Consistent use of timeline metaphors (e.g., “Oct 8–12” axis)</li>
+</ul>
+</section>
+<section id="parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-2" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-and-outputs-that-will-be-exposed-on-the-shiny-applications-2"><span style="color:#d496d4; background:none;">4.3.2</span> Parameters and outputs that will be exposed on the Shiny applications</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 48%">
+<col style="width: 51%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Parameters (UI Inputs)</strong></th>
+<th><strong>Outputs (UI Outputs)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Entity Filter</strong> (person, vessel, location, organization, pseudonym)</td>
+<td>- Interactive network graph (direct and inferred connections via visNetwork)</td>
+</tr>
+<tr class="even">
+<td><strong>Week Selection</strong> (Week 1 / Week 2 toggle)</td>
+<td>- Pie chart: Sent vs.&nbsp;received messages</td>
+</tr>
+<tr class="odd">
+<td><strong>Date Range Input</strong> (subset time range: e.g., 2040-10-01 to 2040-10-14)</td>
+<td>- Bar chart of message frequency by hour/day</td>
+</tr>
+<tr class="even">
+<td><strong>Hour Range Input</strong> (slider to subset by hour of day)</td>
+<td>- Temporal pattern plot of messages mentioning selected entities</td>
+</tr>
+<tr class="odd">
+<td><strong>Sender Entity Type &amp; Input</strong> (free text or dropdown)</td>
+<td>- Timeline of operational focuses and evidence events</td>
+</tr>
+<tr class="even">
+<td><strong>Receiver Entity Type &amp; Input</strong> (free text or dropdown)</td>
+<td>- Keyword frequency bar chart by selected date</td>
+</tr>
+<tr class="odd">
+<td><strong>Graph Type Selection</strong> (toggle: full network vs.&nbsp;person-to-person view)</td>
+<td>- Evidence timeline chart with hover-to-view conversations</td>
+</tr>
+<tr class="even">
+<td><strong>Message Filter by ID</strong> (dropdown/select box to inspect conversation thread)</td>
+<td>- Filtered table or tooltip displaying sender, receiver, message, and timestamp</td>
+</tr>
+<tr class="odd">
+<td><strong>Tab Selection</strong> (Temporal Pattern, Direct Relationship, Relationship Network, etc.)</td>
+<td>- Dynamic tab-specific visualizations based on focus (e.g., events, keywords, timelines)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="shiny-app-panel-tabs-ui-design-2" class="level3">
+<h3 class="anchored" data-anchor-id="shiny-app-panel-tabs-ui-design-2"><span style="color:#d496d4; background:none;">4.3.3</span> Shiny App Panel Tabs UI Design</h3>
+<section id="overview-and-temporal-of-nadia-contis-activity" class="level4">
+<h4 class="anchored" data-anchor-id="overview-and-temporal-of-nadia-contis-activity"><span style="color:#d496d4; background:none;">4.3.3.1</span> <strong>Overview and Temporal of Nadia Conti’s activity</strong></h4>
+<p><strong>Purpose:</strong><br>
+Reveal Nadia Conti’s communication rhythm by analyzing message volume, frequency, and time-of-day patterns.</p>
+<p><strong>Design Elements:</strong></p>
+<ul>
+<li><strong>Pie Chart:</strong> Shows the proportion of messages sent vs.&nbsp;received by Nadia.</li>
+<li><strong>Bar Charts:</strong>
+<ul>
+<li>Communication frequency by hour and day across the selected time window.<br>
+</li>
+<li>Temporal pattern of messages that mention Nadia.</li>
+</ul></li>
+<li><strong>Interactive Controls:</strong>
+<ul>
+<li>Week selection (<code>checkboxGroupInput</code>: Week 1 / Week 2).<br>
+</li>
+<li>Date range input (<code>dateRangeInput</code>: subset to Oct 1–14, 2040).<br>
+</li>
+<li>Hour-of-day filter (<code>sliderInput</code>).</li>
+</ul></li>
+<li><strong>Text Fields &amp; Filters:</strong>
+<ul>
+<li><code>selectInput</code> for sender/receiver entity type (e.g., person, vessel, organization).</li>
+</ul></li>
+</ul>
+<p><strong>Insight:</strong><br>
+This tab helps Clepper detect <strong>temporal anomalies</strong> or bursts of communication involving Nadia — such as sharp increases in messages during suspicious hours, or leading up to events like <strong>Reef access cancellations</strong> or <strong>unexpected ship movements</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/1.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="direct-relationship-network-tab" class="level4">
+<h4 class="anchored" data-anchor-id="direct-relationship-network-tab"><span style="color:#d496d4; background:none;">4.3.3.2</span> <strong>Direct Relationship Network Tab</strong></h4>
+<p><strong>Purpose:</strong><br>
+Visualize Nadia Conti’s direct connections with individuals, organizations, vessels, and locations to understand communication flow and interaction strength.</p>
+<p><strong>Design Elements:</strong></p>
+<ul>
+<li><strong>Interactive Network Graph (<code>visNetworkOutput</code>)</strong>:
+<ul>
+<li>Displays directional links between Nadia and other entities.<br>
+</li>
+<li>Node colors differentiate entity types (e.g., person, vessel, organization, location).<br>
+</li>
+<li>Edge thickness reflects communication frequency.</li>
+</ul></li>
+<li><strong>Select by ID Dropdown (<code>selectInput</code>)</strong>:
+<ul>
+<li>Allows users to isolate and explore Nadia’s direct communication with a specific entity.</li>
+</ul></li>
+<li><strong>Filters on the Left Sidebar:</strong>
+<ul>
+<li>Date range and hour-of-day filters to refine the timeline window.<br>
+</li>
+<li>Sender and receiver type filters (e.g., vessel, city council, individual).</li>
+</ul></li>
+</ul>
+<p><strong>Insight:</strong><br>
+This view helps analysts pinpoint Nadia’s <strong>most active communication partners</strong>, detect <strong>asymmetrical message exchanges</strong> (e.g., one-way reports or commands), and highlight clusters of influence. For instance, frequent interactions with <strong>Sailor Shifts Team</strong>, <strong>Neptune</strong>, and <strong>V. Miesel Shipping</strong> may indicate operational dependencies or hidden hierarchies.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/2.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="relationship-network-tab" class="level4">
+<h4 class="anchored" data-anchor-id="relationship-network-tab"><span style="color:#d496d4; background:none;">4.3.3.3</span> <strong>Relationship Network Tab</strong></h4>
+<p><strong>Purpose:</strong><br>
+Uncover Nadia Conti’s extended network structure, including both direct and indirect communication events, to trace relationships and evidence paths.</p>
+<p><strong>Design Elements:</strong></p>
+<ul>
+<li><strong>Interactive Network Graph (<code>visNetworkOutput</code>)</strong>:
+<ul>
+<li>Visualizes full interaction web with Nadia at the center.<br>
+</li>
+<li>Shows links not only between Nadia and entities, but also among events and inferred connections.<br>
+</li>
+<li>Arrows indicate communication direction; node size and color reflect event type or role (e.g., communication logs, colleagues, vessels).</li>
+</ul></li>
+<li><strong>Select by ID Dropdown (<code>selectInput</code>)</strong>:
+<ul>
+<li>Enables investigators to filter and isolate a specific communication node or trace its related paths.</li>
+</ul></li>
+<li><strong>Entity Legend on Sidebar:</strong>
+<ul>
+<li>Helps users decode node categories: Person, Vessel, Organization, Location, Event, etc.</li>
+</ul></li>
+<li><strong>Time Filters:</strong>
+<ul>
+<li>Date and hour-of-day sliders to narrow the communication window for clarity.</li>
+</ul></li>
+</ul>
+<p><strong>Insight:</strong><br>
+This view allows analysts to trace <strong>complex interactions</strong>, uncover <strong>hidden intermediaries</strong>, and build narratives across <strong>multiple touchpoints</strong>. It’s particularly useful when linking Nadia’s communications to suspicious events like covert meetings, unusual routing, or unauthorized access involving others like <strong>Colleagues</strong>, <strong>Sailor Shifts Team</strong>, or <strong>Event_Communication_537</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/3.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="keyword-timeline-tab" class="level4">
+<h4 class="anchored" data-anchor-id="keyword-timeline-tab"><span style="color:#d496d4; background:none;">4.3.3.4</span> <strong>Keyword Timeline Tab</strong></h4>
+<p><strong>Purpose:</strong><br>
+Identify shifts in the focus of communication by analyzing frequently used keywords in Nadia-related messages, broken down by day.</p>
+<p><strong>Design Elements:</strong></p>
+<ul>
+<li><strong>Bar Chart (<code>plotOutput</code>)</strong>:
+<ul>
+<li>Displays top keywords in Nadia’s messages per selected date.<br>
+</li>
+<li>Helps highlight topic spikes or recurring themes (e.g., “reef,” “payment,” “equipment”).</li>
+</ul></li>
+<li><strong>Date Tabs (October 8–12)</strong>:
+<ul>
+<li>Allow users to navigate across individual days to track changes in message content.</li>
+</ul></li>
+<li><strong>Interactive Controls on Sidebar:</strong>
+<ul>
+<li>Week and date range selectors (<code>checkboxGroupInput</code>, <code>dateRangeInput</code>).<br>
+</li>
+<li>Hour-of-day filter (<code>sliderInput</code>) to narrow keyword search to specific communication windows.</li>
+</ul></li>
+</ul>
+<p><strong>Insight:</strong><br>
+This tab enables Clepper to <strong>detect emerging concerns</strong> or <strong>investigative leads</strong>. For example, a surge in keywords like <em>“tomorrow,” “finalize,” “reef,”</em> or <em>“mako”</em> on October 8 may indicate a prelude to operational actions such as site closures, hidden meetings, or shipment planning.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/4.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="operational-focus-tab" class="level4">
+<h4 class="anchored" data-anchor-id="operational-focus-tab"><span style="color:#d496d4; background:none;">4.3.3.5</span> <strong>Operational Focus Tab</strong></h4>
+<p><strong>Purpose:</strong><br>
+Map the progression of Nadia’s involvement in operational activities over time, categorized by event type and strategic focus.</p>
+<p><strong>Design Elements:</strong></p>
+<ul>
+<li><strong>Timeline of Operational Focus (<code>plotOutput</code>)</strong>:
+<ul>
+<li>Displays day-by-day breakdown of Nadia’s involvement in major categories such as <em>Execution Planning</em>, <em>Escalation Response</em>, <em>Surveillance</em>, and more (Oct 8–12, 2040).</li>
+</ul></li>
+<li><strong>Stacked Bar Chart (Event Types Over Time)</strong>:
+<ul>
+<li>Shows Nadia’s message volume classified by primary event types (e.g., General, Patrol, Permit, Coordination).</li>
+</ul></li>
+<li><strong>Heatmap of Actor Involvement (<code>plotOutput</code>)</strong>:
+<ul>
+<li>Reveals which individuals or groups were most frequently associated with specific event types.</li>
+</ul></li>
+<li><strong>Interactive Filters on Sidebar:</strong>
+<ul>
+<li>Week, date, and hour range filters to narrow scope.<br>
+</li>
+<li>Sender/receiver type inputs for customizing actor focus.</li>
+</ul></li>
+</ul>
+<p><strong>Insight:</strong><br>
+This view helps investigators understand Nadia’s <strong>daily roles in the broader operation</strong>, revealing potential leadership, coordination, or compliance patterns. For example, a spike in “Permit”-related activity involving <strong>V. Miesel Shipping</strong> and <strong>Nadia Conti</strong> suggests her critical role in legal maneuvering or document approvals around October 12.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/5.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="evidence-events-tab" class="level4">
+<h4 class="anchored" data-anchor-id="evidence-events-tab"><span style="color:#d496d4; background:none;">4.3.3.6</span> <strong>Evidence Events Tab</strong></h4>
+<p><strong>Purpose:</strong><br>
+Visualize and trace specific pieces of evidence involving Nadia over time, categorized by type and associated actors.</p>
+<p><strong>Design Elements:</strong></p>
+<ul>
+<li><strong>Scatter Plot Timeline (<code>plotOutput</code>)</strong>:
+<ul>
+<li>Plots individual evidence events by type (e.g., Assessment, Movement, Patrol, Administrative).<br>
+</li>
+<li>Y-axis shows event type; X-axis shows exact date/timestamp.<br>
+</li>
+<li>Each dot is interactive—hovering reveals the full conversation or description, and the actors involved.</li>
+</ul></li>
+<li><strong>Color Legend:</strong>
+<ul>
+<li>Distinguishes which parties are linked to each piece of evidence (e.g., Davis &amp; Rodriguez, Elise &amp; Nadia, Sentinel &amp; Nadia).</li>
+</ul></li>
+<li><strong>Sidebar Filters:</strong>
+<ul>
+<li>Week, date, and hour range controls help isolate specific time frames.<br>
+</li>
+<li>Sender/receiver filters narrow focus to targeted communications.</li>
+</ul></li>
+</ul>
+<p><strong>Insight:</strong><br>
+This tab helps investigators <strong>reconstruct key moments</strong> using concrete communication evidence. For instance, the blue-labeled <em>“Access_Cancellation”</em> event shows that <strong>Nadia revoked access to Nemo Reef</strong>, while pink and red markers around October 4–5 indicate possible surveillance and traffic anomalies—signaling hidden activity or pre-event coordination.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/6.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="ui-objects-used-2" class="level3">
+<h3 class="anchored" data-anchor-id="ui-objects-used-2"><span style="color:#d496d4; background:none;">4.3.4</span> UI objects used</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>UI Component</strong></th>
+<th><strong>Purpose</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>titlePanel()</code></td>
+<td>App’s title</td>
+</tr>
+<tr class="even">
+<td><code>sidebarLayout()</code></td>
+<td>Two-column layout with input controls on the side and output in the main area</td>
+</tr>
+<tr class="odd">
+<td><code>tabsetPanel()</code></td>
+<td>Separate tabs for different visualizations</td>
+</tr>
+<tr class="even">
+<td><code>selectInput()</code></td>
+<td>Select an entity or type (e.g., person, vessel), or filter by week (Week 1 / 2)</td>
+</tr>
+<tr class="odd">
+<td><code>textInput()</code> or <code>selectizeInput()</code></td>
+<td>Input for sender or receiver (supports free-text or multiple selection)</td>
+</tr>
+<tr class="even">
+<td><code>checkboxGroupInput()</code></td>
+<td>Select multiple weeks or entity types</td>
+</tr>
+<tr class="odd">
+<td><code>dateRangeInput()</code></td>
+<td>Filter messages by date range</td>
+</tr>
+<tr class="even">
+<td><code>sliderInput()</code></td>
+<td>Filter by hour of day (0–23)</td>
+</tr>
+<tr class="odd">
+<td><code>plotOutput()</code></td>
+<td>Display <code>ggplot2</code> visualizations (defined in the <code>server</code> function)</td>
+</tr>
+<tr class="even">
+<td><code>dataTableOutput()</code></td>
+<td>Render filtered communication tables (defined in the <code>server</code> function)</td>
+</tr>
+<tr class="odd">
+<td><code>visNetworkOutput()</code></td>
+<td>Display the interactive relationship graph (defined in the <code>server</code> function)</td>
+</tr>
+<tr class="even">
+<td><code>actionButton()</code></td>
+<td>Apply or refresh filters</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="r-packages-needed-for-shiny-application-1" class="level3">
+<h3 class="anchored" data-anchor-id="r-packages-needed-for-shiny-application-1"><span style="color:#d496d4; background:none;">4.3.5</span> R packages needed for Shiny application</h3>
+<p>To support the interactive features and visualizations in the Shiny application, the following R packages are required:</p>
+<ul>
+<li><code>shiny</code>: Builds interactive web applications directly from R.</li>
+<li><code>dplyr</code>: Provides fast, concise data wrangling using a consistent grammar.</li>
+<li>`ggplot2: Enables elegant and flexible data visualizations using the Grammar of Graphics.</li>
+<li><code>visNetwork</code>: Creates interactive network visualizations using the vis.js JavaScript library in R.</li>
+</ul>
+</section>
+<section id="test-the-specific-r-codes-can-be-run-1" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-specific-r-codes-can-be-run-1"><span style="color:#d496d4; background:none;">4.3.6</span> Test the specific R codes can be run</h3>
+<p><strong>WIP</strong></p>
+</section>
+</section>
+</section>
+<section id="reference" class="level1">
+<h1><span style="color:#d496d4; background:none;">5</span> Reference</h1>
+<ul>
+<li><p><a href="https://vast-challenge.github.io/2025/MC3.html" target="_blank">VAST 2024 Mini Challenge 3</a></p></li>
+<li><p><a href="https://isss608-vriadi.netlify.app/take-home_ex/take-home_ex02/take-home_ex02">Take Home Exercise 2</a></p></li>
+<li><p><a href="https://isss608-ay2024-25t.netlify.app/take-home_ex/take-home_ex02/take-home_ex02">Hoa’s Take Home Exercise 2</a></p></li>
+<li><p><a href="https://summernguyenn.netlify.app/take-home_ex/take-home_ex02/take-home_ex02">Summer’s Take Home Exercise 2</a><br>
+</p></li>
+</ul>
+<section id="r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="r-packages"><span style="color:#d496d4; background:none;">5.1</span> R Packages</h2>
+<ul>
+<li><a href="https://shiny.posit.co/" target="_blank">shiny</a>: Easy web apps for data science without the compromises.</li>
+<li><a href="https://cran.r-project.org/package=dplyr" target="_blank">dplyr</a>: A grammar of data manipulation, making data wrangling concise, fast, and readable.</li>
+<li><a href="https://cran.r-project.org/package=ggplot2" target="_blank">ggplot2</a>: A versatile and widely used R package for creating elegant data visualizations based on the Grammar of Graphics.</li>
+<li><a href="https://datastorm-open.github.io/visNetwork/" target="_blank">visNetwork</a>: Enables interactive network visualizations in R using the vis.js JavaScript library.</li>
+</ul>
+</section>
+<section id="shiny-fuctional-specs-and-tutorials" class="level2">
+<h2 class="anchored" data-anchor-id="shiny-fuctional-specs-and-tutorials"><span style="color:#d496d4; background:none;">5.2</span> Shiny Fuctional Specs and Tutorials</h2>
+</section>
+<section id="lesson-slides" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-slides"><span style="color:#d496d4; background:none;">5.3</span> Lesson Slides</h2>
+<ul>
+<li><a href="../lesson/Lesson06/Shiny1/Shiny1.html">Lesson 6a: Shiny Basic</a></li>
+<li><a href="../lesson/Lesson06/Shiny2/Shiny2.html">Lesson 6b: Shiny Reactivity</a></li>
+<li><a href="../lesson/Lesson06/Shiny3/Shiny3.html">Lesson 6c: Beyond Basic Basic</a></li>
+</ul>
+</section>
+<section id="shiny-fuctional-specs-and-tutorials-1" class="level2">
+<h2 class="anchored" data-anchor-id="shiny-fuctional-specs-and-tutorials-1"><span style="color:#d496d4; background:none;">5.4</span> Shiny Fuctional Specs and Tutorials</h2>
+<ul>
+<li><a href="https://shiny.rstudio.com/">Shiny from R Studio</a></li>
+<li><a href="https://shiny.rstudio.com/tutorial/">Learn Shiny</a></li>
+<li><a href="http://shiny.rstudio.com/reference/shiny/latest/">Function reference</a></li>
+<li><a href="https://shiny.rstudio.com/images/shiny-cheatsheet.pdf">The Shiny Cheat sheet</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
