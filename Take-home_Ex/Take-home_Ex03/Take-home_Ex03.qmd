@@ -12,7 +12,7 @@ execute:
 
 Dear Prof. Kam,
 
-Kindly refer to Vanessa’s submission, as the work submitted is the same for all members of our group.
+Kindly refer to [Vanessa’s submission](https://isss608-vriadi.netlify.app/take-home_ex/take-home_ex03/take-home_ex03), as the work submitted is the same for all members of our group.
 
 Thank you for your understanding.
 
