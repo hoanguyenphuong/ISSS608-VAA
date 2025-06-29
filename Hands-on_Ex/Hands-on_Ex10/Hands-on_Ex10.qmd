@@ -503,4 +503,3 @@ reactable(
 # [9]{style="color:mediumvioletred"} Reference
 
 Kam, T. S. (2023, December 4). R for Visual Analytics. https://r4va.netlify.app/
-
